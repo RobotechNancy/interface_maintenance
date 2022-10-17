@@ -51,6 +51,17 @@ Route::middleware('auth')->group(function () {
 
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
 
+    Route::get('edit/{id}', [RegisteredUserController::class, 'edit'])
+                ->name('edit');
+
+    Route::put('edit', [RegisteredUserController::class, 'update']);
+
+    Route::get('show', [RegisteredUserController::class, 'show'])
+                ->name('show');
+
+    Route::get('index', [RegisteredUserController::class, 'index'])
+                ->name('users');
+
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
 });

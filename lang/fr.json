@@ -789,5 +789,11 @@
     "Show": "Voir",
     "Home": "Accueil",
     "Sign up": "S'inscrire",
-    "Not already registered?": "Pas encore inscrit(e) ?"
+    "Not already registered?": "Pas encore inscrit(e) ?",
+    "Profile edition": "Modification du profil",
+    "Edit profile": "Modifier le profil",
+    "My profile": "Mon profil",
+    "Users list": "Liste des utilisateurs",
+    "Edit my profile": "Modifier mon profil",
+    "Show my profile": "Consulter mon profil"
 }

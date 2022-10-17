@@ -1,6 +1,6 @@
 <nav class="navbar is-light is-spaced has-shadow" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item" href="/">
+        <a class="navbar-logo" href="/">
             <x-application-logo />
         </a>
     </div>
@@ -8,7 +8,7 @@
         <div class="navbar-start">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a class="button is-light" href="/">@lang('Home')</a>
+                    <a class="button is-light is-inverted is-outlined" href="/">@lang('Home')</a>
                 </div>
             </div>
         </div>
@@ -18,7 +18,8 @@
                 <div class="buttons">
                     @auth
                         <a class="button is-link" href="{{ url('/dashboard') }}">@lang('Dashboard')</a>
-                        <div class="dropdown is-hoverable">
+                        <a class="button is-link is-outlined" href="{{ route('users') }}">@lang('Users list')</a>
+                        <div class="dropdown is-hoverable is-right">
                             <div class="dropdown-trigger">
                               <button class="button" aria-haspopup="true" aria-controls="dropdown-menu-user">
                                 <span>{{ Auth::user()->name }}</span>
@@ -29,6 +30,13 @@
                             </div>
                             <div class="dropdown-menu" id="dropdown-menu-user" role="menu">
                               <div class="dropdown-content">
+                                <a href="{{ route('show') }}" class="dropdown-item">
+                                    @lang('Show my profile')
+                                </a>
+                                <a href="{{ route('edit', ['id' => Auth::user()->id]) }}" class="dropdown-item">
+                                    @lang('Edit my profile')
+                                </a>
+                                <hr class="dropdown-divider">
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); this.closest('form').submit();">
