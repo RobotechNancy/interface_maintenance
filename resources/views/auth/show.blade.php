@@ -57,7 +57,7 @@
               <div class="level-item has-text-centered">
                 <div>
                   <p class="heading">Rôle</p>
-                  <p class="title is-5">{{ $role }}</p>
+                  <p class="title is-5">{{ $role }} <?php if($user->role == 2) echo "🥇"; else if($user->role == 1) echo "🥈"; else echo "🥉"; ?></p>
                 </div>
               </div>
         </nav>

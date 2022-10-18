@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="title"> @lang('Users list') </x-slot>
     <h1 class="title is-4">Liste des utilisateurs du site</h1>
-    <table class="table mt-5 has-background-light is-fullwidth is-striped is-hoverable">
+    <table class="table mt-5 is-fullwidth is-striped is-hoverable">
         <thead>
             <tr>
                 <th>Id</th>
