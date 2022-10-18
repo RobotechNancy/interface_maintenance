@@ -37,17 +37,17 @@
                                     @lang('Edit my profile')
                                 </a>
                                 <hr class="dropdown-divider">
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); this.closest('form').submit();">
-                                        @lang('Logout')
-                                    </a>
-                                </form>
-                                <hr class="dropdown-divider">
                                 <form method="POST" action="{{ route('delete', ['user' => Auth::user()]) }}">
                                     @csrf
                                     <a class="dropdown-item" onclick="event.preventDefault(); this.closest('form').submit();">
                                         @lang('Delete profile')
+                                    </a>
+                                </form>
+                                <hr class="dropdown-divider">
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); this.closest('form').submit();">
+                                        @lang('Logout')
                                     </a>
                                 </form>
                               </div>

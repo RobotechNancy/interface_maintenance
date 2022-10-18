@@ -76,13 +76,13 @@
       <p class="help is-danger">Attention : il n'est pas possible de modifier le rôle de l'utilisateur car vous n'êtes pas administrateur.</p>
       <?php } ?>
       <?php if(Auth::user()->role != 2 && Auth::user()->id == $user->id) { ?>
-        <p class="help is-danger">Attention : il n'est pas possible de modifier votre rôle car vous n'êtes pas administrateur.</p>
+        <p class="help is-danger">Attention : il n'est pas possible de modifier le rôle de votre compte car vous n'êtes pas administrateur.</p>
         <?php } ?>
       <?php if($user->role == 2 && Auth::user()->id != $user->id) { ?>
         <p class="help is-danger">Attention : il n'est pas possible de modifier le rôle de l'utilisateur car il s'agit d'un compte administrateur.</p>
       <?php } ?>
       <?php if($user->role == 2 && Auth::user()->id == $user->id) { ?>
-        <p class="help is-danger">Attention : il n'est pas possible de modifier le rôle de votre compte car disposez déjà d'un compte administrateur.</p>
+        <p class="help is-danger">Attention : il n'est pas possible de modifier le rôle de votre compte car vous disposez déjà d'un compte administrateur.</p>
       <?php } ?>
 </x-app-layout>
 @if (session()->has('message'))

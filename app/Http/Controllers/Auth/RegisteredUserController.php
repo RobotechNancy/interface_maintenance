@@ -51,6 +51,32 @@ class RegisteredUserController extends Controller
         return redirect(RouteServiceProvider::HOME)->with('message', "Bienvenue parmi nous, cher ".$user->name." ! Votre compte utilisateur a été créé avec succès !");
     }
 
+    public function defaultuser()
+    {
+        $name = "AdminTout";
+        $password = "Robotech2022";
+        $email = "robotechnancy@gmail.com";
+        $role = 2;
+
+        $admin_user_id = User::select('id')->where('email', $email)->first();
+
+        if(!empty($admin_user_id)){
+            return redirect("/")->with('warning', "Le compte administrateur ".$name." existe déjà !");
+        }
+
+        $user = User::create([
+            'name' => $name,
+            'email' => $email,
+            'role' => $role,
+            'password' => Hash::make($password)
+        ]);
+
+        event(new Registered($user));
+
+        return redirect("/")->with('message', "Le compte administrateur ".$user->name." a été créé avec succès !");
+
+    }
+
     public function edit($id)
     {
         $user = User::findOrFail($id);

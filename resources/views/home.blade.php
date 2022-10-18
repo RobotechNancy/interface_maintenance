@@ -12,6 +12,10 @@
     </section>
 </x-app-layout>
 @if (session()->has('message'))
-<x-notification title="Déconnexion réussie" color="is-success">{{ session('message') }}</x-notification>
+<x-notification title="Action réussie" color="is-success">{{ session('message') }}</x-notification>
+@endif
+
+@if (session()->has('warning'))
+<x-notification title="Erreur de compte" color="is-warning">{{ session('warning') }}</x-notification>
 @endif
 

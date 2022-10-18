@@ -5,3 +5,6 @@
 @if (session()->has('message'))
 <x-notification title="Gestion du profil">{{ session('message') }}</x-notification>
 @endif
+@if (session()->has('warning'))
+<x-notification title="Erreur de compte" color="is-warning">{{ session('warning') }}</x-notification>
+@endif
