@@ -5,7 +5,12 @@
           <div class="tile is-child box notification is-light">
             <p class="title is-5">Commandes de contrôle</p>
             <div class="buttons">
-                <button class="button is-fullwidth">Vérification de la connectivité</button>    
+                <a class="button is-fullwidth is-link is-outlined" href="{{ route('data.create', ['id' => 1]) }}">
+                    <span>Vérification de la connectivité</span>
+                    <span class="icon">
+                        <i class="fa-solid fa-tower-cell"></i>
+                    </span>
+                </a>
             </div>
           </div>
           <div class="tile is-child box notification is-light">
@@ -15,7 +20,7 @@
         <div class="tile is-parent">
           <div class="tile is-child box notification is-light">
             <p class="title is-5">Console</p>
-            <pre class="has-background-black has-text-primary" style="height:440px; overflow: scroll;">Logs</pre>
+            <pre class="has-background-black has-text-primary logs" id="logs" style="height:440px; overflow: scroll;">Logs</pre>
           </div>
         </div>
       </div>
@@ -25,4 +30,10 @@
 @endif
 @if (session()->has('warning'))
 <x-notification title="Erreur de compte" color="is-warning">{{ session('warning') }}</x-notification>
+@endif
+@if (session()->has('actions'))
+<x-notification title="Compte rendu d'action" color="is-info">{{ session('actions') }}</x-notification>
+<script>
+    $(".logs").append("dd")
+</script>
 @endif

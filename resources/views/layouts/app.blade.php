@@ -25,10 +25,10 @@
             $(window).ready(function()
             {
                 $(".delete").click(function() {
-                    $(".notification-alert").fadeOut(250);
+                    $(".my-alert").fadeOut(250);
                 });
 
-                setTimeout(function(){ $(".notification-alert").fadeOut(250); }, 3500);
+                setTimeout(function(){ $(".my-alert").fadeOut(250); }, 3500);
             });
         </script>
     </head>
