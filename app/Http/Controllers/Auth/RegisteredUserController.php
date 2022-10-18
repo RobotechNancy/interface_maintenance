@@ -80,7 +80,7 @@ class RegisteredUserController extends Controller
     {
         $request->role = intval($request->role);
         $request->validate([
-            'role' => ['required', 'integer', 'in:0,1,2']
+            'role' => ['integer', 'in:0,1,2']
         ]);
 
         if($request->name != $user->name){
@@ -111,4 +111,16 @@ class RegisteredUserController extends Controller
         $user->save();
         return back()->with('message', "Le compte utilisateur ". $user->name ." a été modifié avec succès !");
     }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        if($user->id == Auth::user()->id){
+            return redirect('logout')->with('message', "Votre compte a été correctement supprimé.");
+        }
+
+        return back()->with('message', "Le compte utilisateur ". $user->name ." a été supprimé avec succès !");
+    }
+
 }

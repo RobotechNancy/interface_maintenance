@@ -41,7 +41,10 @@
                 <td>
                     <?php if(Auth::user()->role == 2 || $user->id == Auth::user()->id) { ?>
                         <a class="button is-link" href="{{ route('edit', ['id' => $user->id]) }}"><i class="fa-solid fa-pencil"></i></a>
-                        <a class="button is-danger" href="{{ url('/dashboard') }}"><i class="fa-regular fa-trash-can"></i></a>
+                        <form id="delete{{ $user->id }}" action="{{ route('delete', ['user' => $user]) }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        <a class="button is-danger" onclick="event.preventDefault(); document.getElementById('delete{{ $user->id }}').submit();"><i class="fa-regular fa-trash-can"></i></a>
                     <?php } ?>
                 </td>
             </tr>

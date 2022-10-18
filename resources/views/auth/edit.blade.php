@@ -10,7 +10,7 @@
                   <i class="fas fa-user"></i>
               </span>
             </div>
-            <x-input-error :messages="$errors->get('nale')" />
+            <x-input-error :messages="$errors->get('name')" />
         </div>
 
         <div class="field">
@@ -72,9 +72,12 @@
         </div>
       </form>
       <p class="help is-link">Dernière modification de ce profil le {{ $user->updated_at->format("d/m/Y") }} à {{ $user->updated_at->format("H:m:s") }}.</p>
-      <?php if(Auth::user()->role != 2) { ?>
+      <?php if(Auth::user()->role != 2 && Auth::user()->id != $user->id) { ?>
       <p class="help is-danger">Attention : il n'est pas possible de modifier le rôle de l'utilisateur car vous n'êtes pas administrateur.</p>
       <?php } ?>
+      <?php if(Auth::user()->role != 2 && Auth::user()->id == $user->id) { ?>
+        <p class="help is-danger">Attention : il n'est pas possible de modifier votre rôle car vous n'êtes pas administrateur.</p>
+        <?php } ?>
       <?php if($user->role == 2 && Auth::user()->id != $user->id) { ?>
         <p class="help is-danger">Attention : il n'est pas possible de modifier le rôle de l'utilisateur car il s'agit d'un compte administrateur.</p>
       <?php } ?>
