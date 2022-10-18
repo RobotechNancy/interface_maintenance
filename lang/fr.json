@@ -796,5 +796,6 @@
     "Users list": "Liste des utilisateurs",
     "Edit my profile": "Modifier mon profil",
     "Show my profile": "Consulter mon profil",
-    "Delete profile": "Supprimer le compte"
+    "Delete profile": "Supprimer le compte",
+    "Delete my profile": "Supprimer mon compte"
 }

@@ -59,7 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::post('update/{user}', [RegisteredUserController::class, 'update'])
             ->name('update');
 
-    Route::get('show', [RegisteredUserController::class, 'show'])
+    Route::get('profile', [RegisteredUserController::class, 'show'])
                 ->name('show');
 
     Route::get('index', [RegisteredUserController::class, 'index'])

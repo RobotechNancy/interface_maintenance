@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="title"> @lang('Users list') </x-slot>
     <h1 class="title is-4">Liste des utilisateurs du site</h1>
-    <table class="table mt-5 is-fullwidth is-striped is-hoverable is-bordered">
+    <table class="table mt-5 has-background-light is-fullwidth is-striped is-hoverable">
         <thead>
             <tr>
                 <th>Id</th>
@@ -31,20 +31,20 @@
                         break;
                 }
             ?>
-            <tr <?php if($user->id == Auth::user()->id) echo "class=\"is-selected\""; ?>>
-                <th>{{ $user->id }}</th>
+            <tr <?php if($user->id == Auth::user()->id) echo "class=\"has-background-link has-text-white\""; ?>>
+                <td><b>{{ $user->id }}</b></td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
-                <td>{{ $role }}</td>
+                <td>{{ $role }} <?php if($user->role == 2) echo "🥇"; else if($user->role == 1) echo "🥈"; else echo "🥉"; ?></td>
                 <td>le {{ $user->created_at->format("d/m/Y") }} à {{ $user->created_at->format("H:m:s") }}</td>
                 <td>le {{ $user->updated_at->format("d/m/Y") }} à {{ $user->updated_at->format("H:m:s") }}</td>
                 <td>
                     <?php if(Auth::user()->role == 2 || $user->id == Auth::user()->id) { ?>
-                        <a class="button is-link" href="{{ route('edit', ['id' => $user->id]) }}"><i class="fa-solid fa-pencil"></i></a>
+                        <a class="button is-link <?php if($user->id == Auth::user()->id) echo "is-inverted"; ?>"  href="{{ route('edit', ['id' => $user->id]) }}"><i class="fa-solid fa-pencil"></i></a>
                         <form id="delete{{ $user->id }}" action="{{ route('delete', ['user' => $user]) }}" method="POST" style="display: none;">
                             @csrf
                         </form>
-                        <a class="button is-danger" onclick="event.preventDefault(); document.getElementById('delete{{ $user->id }}').submit();"><i class="fa-regular fa-trash-can"></i></a>
+                        <a class="button is-danger <?php if($user->id == Auth::user()->id) echo "is-inverted"; ?>"" onclick="event.preventDefault(); document.getElementById('delete{{ $user->id }}').submit();"><i class="fa-regular fa-trash-can"></i></a>
                     <?php } ?>
                 </td>
             </tr>
