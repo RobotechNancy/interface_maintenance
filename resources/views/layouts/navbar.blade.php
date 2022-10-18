@@ -43,6 +43,13 @@
                                         @lang('Logout')
                                     </a>
                                 </form>
+                                <hr class="dropdown-divider">
+                                <form method="POST" action="{{ route('delete', ['user' => Auth::user()]) }}">
+                                    @csrf
+                                    <a class="dropdown-item" onclick="event.preventDefault(); this.closest('form').submit();">
+                                        @lang('Delete profile')
+                                    </a>
+                                </form>
                               </div>
                             </div>
                         </div>
