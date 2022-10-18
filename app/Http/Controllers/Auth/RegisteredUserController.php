@@ -33,9 +33,9 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'string', 'email', 'max:120', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'name' => ['required', 'string', 'alpha_num', 'max:50'],
+            'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
+            'password' => ['required', 'confirmed', 'alpha_dash', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
@@ -48,7 +48,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME)->with('message', "Votre compte utilisateur a été créé avec succès !");
+        return redirect(RouteServiceProvider::HOME)->with('message', "Bienvenue parmi nous, cher ".$user->name." ! Votre compte utilisateur a été créé avec succès !");
     }
 
     public function edit($id)
@@ -78,16 +78,37 @@ class RegisteredUserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        $request->role = intval($request->role);
         $request->validate([
-            'name' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'string', 'email', 'max:120', 'unique:users'],
-            'password' => ['required', Rules\Password::defaults()],
+            'role' => ['required', 'integer', 'in:0,1,2']
         ]);
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        if($request->name != $user->name){
+            $request->validate([
+                'name' => ['required', 'string', 'alpha_num', 'max:50']
+            ]);
+
+            $user->name = $request->name;
+        }
+
+        if($request->email != $user->email){
+            $request->validate([
+                'email' => ['required', 'string', 'email', 'max:100', 'unique:users']
+            ]);
+
+            $user->email = $request->email;
+        }
+
+        if(!empty($request->password)){
+            $request->validate([
+                'password' => ['required', 'confirmed', 'alpha_dash', Rules\Password::defaults()]
+            ]);
+
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->role = $request->role;
         $user->save();
-        return back()->with('message', "Votre compte utilisateur a bien été modifié !");
+        return back()->with('message', "Le compte utilisateur ". $user->name ." a été modifié avec succès !");
     }
 }

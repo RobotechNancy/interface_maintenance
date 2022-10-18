@@ -11,3 +11,7 @@
         </h2>
     </section>
 </x-app-layout>
+@if (session()->has('message'))
+<x-notification title="Déconnexion réussie" color="is-success">{{ session('message') }}</x-notification>
+@endif
+

@@ -21,6 +21,16 @@
 
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/font-awesome.min.js') }}"></script>
+        <script>
+            $(window).ready(function()
+            {
+                $(".delete").click(function() {
+                    $(".notification").fadeOut(250);
+                });
+
+                setTimeout(function(){ $(".notification").fadeOut(250); }, 3500);
+            });
+        </script>
     </head>
     <body>
         @include('layouts.navbar')

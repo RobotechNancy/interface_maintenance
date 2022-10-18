@@ -36,16 +36,19 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $role }}</td>
-                <td>{{ $user->created_at->format('d/m/Y H:m:s') }}</td>
-                <td>{{ $user->updated_at->format('d/m/Y H:m:s') }}</td>
+                <td>le {{ $user->created_at->format("d/m/Y") }} à {{ $user->created_at->format("H:m:s") }}</td>
+                <td>le {{ $user->updated_at->format("d/m/Y") }} à {{ $user->updated_at->format("H:m:s") }}</td>
                 <td>
-                    <?php if($role == "Administrateur" || $user->id == Auth::user()->id) { ?>
+                    <?php if(Auth::user()->role == 2 || $user->id == Auth::user()->id) { ?>
                         <a class="button is-link" href="{{ route('edit', ['id' => $user->id]) }}"><i class="fa-solid fa-pencil"></i></a>
                         <a class="button is-danger" href="{{ url('/dashboard') }}"><i class="fa-regular fa-trash-can"></i></a>
                     <?php } ?>
                 </td>
             </tr>
+            @endforeach
         </tbody>
     </table>
-    @endforeach
 </x-app-layout>
+@if (session()->has('message'))
+<x-notification title="Suppression de profil" color="is-danger">{{ session('message') }}</x-notification>
+@endif

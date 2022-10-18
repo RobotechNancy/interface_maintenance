@@ -54,7 +54,8 @@ Route::middleware('auth')->group(function () {
     Route::get('edit/{id}', [RegisteredUserController::class, 'edit'])
                 ->name('edit');
 
-    Route::put('edit', [RegisteredUserController::class, 'update']);
+    Route::post('update/{user}', [RegisteredUserController::class, 'update'])
+            ->name('update');
 
     Route::get('show', [RegisteredUserController::class, 'show'])
                 ->name('show');
