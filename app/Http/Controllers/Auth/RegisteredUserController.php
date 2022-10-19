@@ -73,6 +73,8 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
+        Auth::login($user);
+
         return redirect("/")->with('message', "Le compte administrateur ".$user->name." a été créé avec succès !");
 
     }
