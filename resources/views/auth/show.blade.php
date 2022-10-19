@@ -45,13 +45,13 @@
             <div class="level-item has-text-centered">
               <div>
                 <p class="heading">Création du compte</p>
-                <p class="title is-5">le {{ $user->created_at->format("d/m/Y") }} à {{ $user->created_at->format("H:m:s") }}</p>
+                <p class="title is-5">le {{ $user->created_at->format("d/m/Y") }} à {{ $user->created_at->format("H:i:s") }}</p>
               </div>
             </div>
             <div class="level-item has-text-centered">
                 <div>
                   <p class="heading">Dernière modification du compte</p>
-                  <p class="title is-5">le {{ $user->updated_at->format("d/m/Y") }} à {{ $user->updated_at->format("H:m:s") }}</p>
+                  <p class="title is-5">le {{ $user->updated_at->format("d/m/Y") }} à {{ $user->updated_at->format("H:i:s") }}</p>
                 </div>
               </div>
               <div class="level-item has-text-centered">

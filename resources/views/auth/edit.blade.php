@@ -71,7 +71,7 @@
             </div>
         </div>
       </form>
-      <p class="help is-link">Dernière modification de ce profil le {{ $user->updated_at->format("d/m/Y") }} à {{ $user->updated_at->format("H:m:s") }}.</p>
+      <p class="help is-link">Dernière modification de ce profil le {{ $user->updated_at->format("d/m/Y") }} à {{ $user->updated_at->format("H:i:s") }}.</p>
       <?php if(Auth::user()->role != 2 && Auth::user()->id != $user->id) { ?>
       <p class="help is-danger">Attention : il n'est pas possible de modifier le rôle de l'utilisateur car vous n'êtes pas administrateur.</p>
       <?php } ?>

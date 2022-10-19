@@ -36,8 +36,8 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $role }} <?php if($user->role == 2) echo "🥇"; else if($user->role == 1) echo "🥈"; else echo "🥉"; ?></td>
-                <td>le {{ $user->created_at->format("d/m/Y") }} à {{ $user->created_at->format("H:m:s") }}</td>
-                <td>le {{ $user->updated_at->format("d/m/Y") }} à {{ $user->updated_at->format("H:m:s") }}</td>
+                <td>le {{ $user->created_at->format("d/m/Y") }} à {{ $user->created_at->format("H:i:s") }}</td>
+                <td>le {{ $user->updated_at->format("d/m/Y") }} à {{ $user->updated_at->format("H:i:s") }}</td>
                 <td>
                     <?php if(Auth::user()->role == 2 || $user->id == Auth::user()->id) { ?>
                         <a class="button is-link <?php if($user->id == Auth::user()->id) echo "is-inverted"; ?>"  href="{{ route('edit', ['id' => $user->id]) }}"><i class="fa-solid fa-pencil"></i></a>
