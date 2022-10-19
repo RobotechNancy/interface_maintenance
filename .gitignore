@@ -20,4 +20,8 @@ storage/*.key
 Homestead.yaml
 Homestead.json
 /.vagrant
+<<<<<<< HEAD
 .phpunit.result.cache
+=======
+.phpunit.result.cache
+>>>>>>> 6256183d1b5e425f2f2e4de00c55a2ecc6f2e879
