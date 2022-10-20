@@ -142,7 +142,7 @@ class RegisteredUserController extends Controller
 
     public function destroy(User $user)
     {
-        $user->delete();
+        $user->deleteOrFail();
 
         if($user->id == Auth::user()->id){
             return redirect('logout')->with('message', "Votre compte a été correctement supprimé.");

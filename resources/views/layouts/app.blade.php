@@ -21,16 +21,7 @@
 
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/font-awesome.min.js') }}"></script>
-        <script>
-            $(window).ready(function()
-            {
-                $(".delete").click(function() {
-                    $(".my-alert").fadeOut(250);
-                });
-
-                setTimeout(function(){ $(".my-alert").fadeOut(250); }, 3500);
-            });
-        </script>
+        <script src="{{ asset('js/manage-notifications.js') }}"></script>
     </head>
     <body>
         @include('layouts.navbar')

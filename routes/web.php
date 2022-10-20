@@ -20,12 +20,16 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $logs = Log::orderBy('id', 'desc')->get();
+    $logs = Log::orderBy('id', 'desc')->limit(30)->get();
     return view('dashboard', compact('logs'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::post('log', [LogController::class, 'create'])
 ->middleware(['auth'])
 ->name('log');
+
+Route::post('clearlogs', [LogController::class, 'clear'])
+->middleware(['auth'])
+->name('clearlogs');
 
 require __DIR__.'/auth.php';

@@ -40,10 +40,9 @@ class LogController extends Controller
         $task->title = $title;
         $task->detail = $detail;
         $task->state = 1;
-        $task->save();
+        $task->saveOrFail();
 
-        $logs = Log::all();
-        return back()->with('message', "La tâche a bien été créée !");
+        return response()->json(array('title' => $title, 'detail' => $detail), 200);
     }
 
     /**
@@ -52,9 +51,10 @@ class LogController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function clear()
     {
-        //
+        Log::truncate();
+        return response()->json(200);
     }
 
     /**
