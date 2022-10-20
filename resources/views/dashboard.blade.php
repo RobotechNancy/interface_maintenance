@@ -14,6 +14,15 @@
                         </span>
                     </button>
                 </form>
+                <form method="POST" id="form_move" class="ml-5">
+                    @csrf
+                    <button class="button is-link" type="submit" id="btn_move">
+                        <span>Avancer le robot</span>
+                        <span class="icon">
+                            <i class="fa-solid fa-tower-cell"></i>
+                        </span>
+                    </button>
+                </form>
             </div>
           </div>
           <div class="tile is-child box notification is-light">
@@ -76,6 +85,21 @@
                     console.log(data);
                 }
                 });
+        });
+
+        $("#form_move").submit(function(e){
+
+            e.preventDefault();
+
+            $.ajax({
+                type:'POST',
+                url:'{{ route('log') }}',
+                data:{id:1},
+                success:function(data) {
+                    $("#logs_console").load(" #logs_console");
+                    console.log(data);
+                }
+            });
         });
 
 
