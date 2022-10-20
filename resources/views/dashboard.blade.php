@@ -5,7 +5,7 @@
           <div class="tile is-child box notification is-light">
             <p class="title is-5">Commandes de contrôle</p>
             <div class="buttons">
-                <a class="button is-fullwidth is-link is-outlined" href="{{ route('data.create', ['id' => 1]) }}">
+                <a class="button is-fullwidth is-link is-outlined" href="{{ route('create', ['id' => 0]) }}">
                     <span>Vérification de la connectivité</span>
                     <span class="icon">
                         <i class="fa-solid fa-tower-cell"></i>
