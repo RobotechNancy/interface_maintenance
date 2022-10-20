@@ -20,7 +20,7 @@
         <div class="tile is-parent">
           <div class="tile is-child box notification is-light">
             <p class="title is-5">Console</p>
-            <pre class="has-background-black has-text-primary logs" id="logs" style="height:440px; overflow: scroll;">Logs</pre>
+            <pre class="has-background-black has-text-primary logs" id="logs" style="height:440px; overflow: scroll;">@foreach($logs as $log){{ $log->title }}<br>@endforeach</pre>
           </div>
         </div>
       </div>

@@ -41,7 +41,9 @@ class LogController extends Controller
         $task->detail = $detail;
         $task->state = 1;
         $task->save();
-        return back()->with('message', "La tâche a bien été créée !");
+
+        $logs = Log::all();
+        return view('dashboard', compact('logs'))->with('message', "La tâche a bien été créée !");
     }
 
     /**
