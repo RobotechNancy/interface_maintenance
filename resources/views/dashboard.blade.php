@@ -5,12 +5,15 @@
           <div class="tile is-child box notification is-light">
             <p class="title is-5">Commandes de contrôle</p>
             <div class="buttons">
-                <a class="button is-fullwidth is-link is-outlined" href="{{ route('create', ['id' => 0]) }}">
-                    <span>Vérification de la connectivité</span>
-                    <span class="icon">
-                        <i class="fa-solid fa-tower-cell"></i>
-                    </span>
-                </a>
+                <form method="POST" action="{{ route('log', ['id' => 0]) }}">
+                    @csrf
+                    <a class="button is-fullwidth is-link is-outlined" onclick="event.preventDefault(); this.closest('form').submit();">
+                        <span>Vérification de la connectivité</span>
+                        <span class="icon">
+                            <i class="fa-solid fa-tower-cell"></i>
+                        </span>
+                    </a>
+                </form>
             </div>
           </div>
           <div class="tile is-child box notification is-light">

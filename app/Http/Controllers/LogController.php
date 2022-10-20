@@ -22,10 +22,10 @@ class LogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create(Request $request)
     {
         $title = $detail = "";
-        switch ($id) {
+        switch ($request->id) {
             case 0:
                 $title = "hey";
                 $detail = "contenu";
@@ -43,7 +43,7 @@ class LogController extends Controller
         $task->save();
 
         $logs = Log::all();
-        return view('dashboard', compact('logs'))->with('message', "La tâche a bien été créée !");
+        return back()->with('message', "La tâche a bien été créée !");
     }
 
     /**

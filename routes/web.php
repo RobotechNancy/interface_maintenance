@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LogController;
+use App\Models\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +20,12 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $logs = Log::orderBy('id', 'desc')->get();
+    return view('dashboard', compact('logs'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('create/{id}', [LogController::class, 'create'])
+Route::post('log', [LogController::class, 'create'])
 ->middleware(['auth'])
-->name('create');
+->name('log');
 
 require __DIR__.'/auth.php';
