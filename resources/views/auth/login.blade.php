@@ -27,7 +27,7 @@
         <div class="field">
             <p class="control">
                 <div class="b-checkbox is-default is-circular">
-                    <input id="checkbox" class="styled" name="remember" checked type="checkbox">
+                    <input id="checkbox" class="switch is-rounded is-link" name="remember" checked type="checkbox">
                     <label for="checkbox">
                         {{  __('Remember me') }}
                     </label>

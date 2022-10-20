@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +20,5 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('data/{id}', [DataController::class, 'create'])
-    ->name('data.create');
 
 require __DIR__.'/auth.php';

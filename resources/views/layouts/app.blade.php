@@ -17,7 +17,7 @@
         @endif
 
         <link href="{{ asset('css/bulma.min.css') }}" type="text/css" rel="stylesheet">
-        <link href="{{ asset('css/bulma-checkboxes.min.css') }}" type="text/css" rel="stylesheet">
+        <link href="{{ asset('css/bulma-switch.min.css') }}" type="text/css" rel="stylesheet">
 
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/font-awesome.min.js') }}"></script>
