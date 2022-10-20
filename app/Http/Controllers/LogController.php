@@ -24,25 +24,36 @@ class LogController extends Controller
      */
     public function create(Request $request)
     {
-        $title = $detail = "";
+        $command_name = $response = "";
+        $output = $retval = null;
+
         switch ($request->id) {
-            case 0:
-                $title = "hey";
-                $detail = "contenu";
+            case 1:
+                $command_name = "Test connectivité";
+                break;
+
+            case 2:
+                $command_name = "Avancer robot";
+                break;
+
+            case 3:
+                $command_name = "Position robot";
                 break;
 
             default:
-                $title = "hey2";
-                $detail = "contenu2";
+                $command_name = "Commande invalide";
                 break;
         }
+
+        exec("C:\laragon\www\interface_maintenance\public\output.exe ".$request->id, $output, $retval);
+
         $task = new Log;
-        $task->title = $title;
-        $task->detail = $detail;
-        $task->state = 1;
+        $task->command_name = $command_name;
+        $task->response = $output[0];
+        $task->state = $retval;
         $task->saveOrFail();
 
-        return response()->json(array('title' => $title, 'detail' => $detail), 200);
+        return response()->json(array('command_name' => $command_name, 'response' => $response), 200);
     }
 
     /**

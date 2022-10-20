@@ -5,21 +5,30 @@
           <div class="tile is-child box notification is-light">
             <p class="title is-5">Commandes de contrôle</p>
             <div class="buttons">
-                <form method="POST" id="form_check_connect">
+                <form method="POST" id="form_1">
                     @csrf
-                    <button class="button is-link" type="submit" id="btn_check_connect">
+                    <button class="button is-link" type="submit">
                         <span>Vérification de la connectivité</span>
                         <span class="icon">
                             <i class="fa-solid fa-tower-cell"></i>
                         </span>
                     </button>
                 </form>
-                <form method="POST" id="form_move" class="ml-5">
+                <form method="POST" id="form_2" class="ml-5">
                     @csrf
-                    <button class="button is-link" type="submit" id="btn_move">
+                    <button class="button is-link" type="submit">
                         <span>Avancer le robot</span>
                         <span class="icon">
-                            <i class="fa-solid fa-tower-cell"></i>
+                            <i class="fa-solid fa-gamepad"></i>
+                        </span>
+                    </button>
+                </form>
+                <form method="POST" id="form_3">
+                    @csrf
+                    <button class="button is-link" type="submit">
+                        <span>Récupérer position robot</span>
+                        <span class="icon">
+                            <i class="fa-solid fa-crosshairs"></i>
                         </span>
                     </button>
                 </form>
@@ -34,9 +43,9 @@
             <span class="title is-5">
                 Console
             </span>
-            <form id="form_clearlogs" method="POST">
+            <form id="form_0" method="POST" action="">
                 @csrf
-                <button class="button is-danger ml-5 mb-5" type="submit" id="btn_clearlogs">
+                <button class="button is-danger ml-5 mb-5" type="submit">
                     <span>Supprimer les logs</span>
                     <span class="icon">
                         <i class="fa-solid fa-eraser"></i>
@@ -44,65 +53,25 @@
                 </button>
             </form>
             <div id="logs_console">
-            <pre class="has-background-black logs" style="height:440px; overflow: scroll;"><?php if(count($logs) > 0) { ?>@foreach($logs as $log)<span class="has-text-info">[{{ $log->created_at->format("d/m/Y") }} à {{ $log->created_at->format("H:i:s") }}] :</span> <span class="has-text-white">{{ $log->title }}, {{ $log->detail }}</span> <span class="has-text-primary">({{ $log->state }})</span><br>@endforeach<?php } else { ?><span class="has-text-info">Aucun log pour le moment, veuillez sélectionner une action pour commencer</span><?php } ?></pre>
+            <pre class="has-background-black logs" style="height:440px; overflow: scroll;"><?php if(count($logs) > 0) { ?>@foreach($logs as $log)<span class="has-text-info">[{{ $log->created_at->format("d/m/Y") }} à {{ $log->created_at->format("H:i:s") }}] :</span> <span class="has-text-white">{{ $log->command_name }} -> {{ $log->response }}</span> <span class="<?php if($log->state == 0) echo "has-text-success"; else echo "has-text-danger"; ?>">({{ $log->state }})</span><br>@endforeach<?php } else { ?><span class="has-text-info">Aucun log pour le moment, veuillez sélectionner une action pour commencer</span><?php } ?></pre>
             </div>
         </div>
         </div>
       </div>
     <script>
     $(document).ready(function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+        logUrl = "{{ route('log') }}";
+        deleteUrl = "{{ route('clearlogs') }}";
 
-        $("#form_clearlogs").submit(function(e){
+        deleteId = "0";
+        connectivityId = "1";
+        moveId = "2";
+        positionId = "3";
 
-            e.preventDefault();
-
-            $.ajax({
-                type:'POST',
-                url:'{{ route('clearlogs') }}',
-                data:'',
-                success:function(data) {
-                    $("#logs_console").load(" #logs_console");
-                    console.log(data)
-                }
-                });
-        });
-
-        $("#form_check_connect").submit(function(e){
-
-            e.preventDefault();
-
-            $.ajax({
-                type:'POST',
-                url:'{{ route('log') }}',
-                data:{id:0},
-                success:function(data) {
-                    $("#logs_console").load(" #logs_console");
-                    console.log(data);
-                }
-                });
-        });
-
-        $("#form_move").submit(function(e){
-
-            e.preventDefault();
-
-            $.ajax({
-                type:'POST',
-                url:'{{ route('log') }}',
-                data:{id:1},
-                success:function(data) {
-                    $("#logs_console").load(" #logs_console");
-                    console.log(data);
-                }
-            });
-        });
-
-
+        sendData(deleteUrl, deleteId);
+        sendData(logUrl, connectivityId);
+        sendData(logUrl, moveId);
+        sendData(logUrl, positionId);
     });
     </script>
 </x-app-layout>

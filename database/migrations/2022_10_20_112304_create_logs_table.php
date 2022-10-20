@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('title');
-            $table->text('detail');
-            $table->boolean('state')->default(false);
+            $table->string('command_name');
+            $table->text('response');
+            $table->boolean('state')->default(1);
         });
     }
 

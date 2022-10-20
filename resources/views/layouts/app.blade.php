@@ -22,6 +22,7 @@
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/font-awesome.min.js') }}"></script>
         <script src="{{ asset('js/manage-notifications.js') }}"></script>
+        <script src="{{ asset('js/send-data.js') }}"></script>
     </head>
     <body>
         @include('layouts.navbar')
