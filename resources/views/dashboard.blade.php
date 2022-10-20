@@ -20,7 +20,7 @@
         <div class="tile is-parent">
           <div class="tile is-child box notification is-light">
             <p class="title is-5">Console</p>
-            <pre class="has-background-black has-text-primary logs" id="logs" style="height:440px; overflow: scroll;">@foreach($logs as $log){{ $log->title }}<br>@endforeach</pre>
+            <pre class="has-background-black has-text-primary logs" id="logs" style="height:440px; overflow: scroll;"><?php if(isset($logs)) { ?>@foreach($logs as $log)[{{ $log->created_at->format("d/m/Y") }} à {{ $log->created_at->format("H:i:s") }}] : {{ $log->title }}, {{ $log->detail }} | {{ $log->state }}<br>@endforeach<?php } else { ?>Aucun log pour le moment, veuillez sélectionner une action pour commencer<?php } ?></pre>
           </div>
         </div>
       </div>
