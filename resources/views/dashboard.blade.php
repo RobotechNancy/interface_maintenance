@@ -7,7 +7,7 @@
             <div class="buttons">
                 <form method="POST" id="form_1">
                     @csrf
-                    <button class="button is-link" type="submit">
+                    <button class="button is-link btn_form" id="btn_1" type="submit">
                         <span>Vérification de la connectivité</span>
                         <span class="icon">
                             <i class="fa-solid fa-tower-cell"></i>
@@ -16,7 +16,7 @@
                 </form>
                 <form method="POST" id="form_2" class="ml-5">
                     @csrf
-                    <button class="button is-link" type="submit">
+                    <button class="button is-link btn_form" id="btn_2" type="submit">
                         <span>Avancer le robot</span>
                         <span class="icon">
                             <i class="fa-solid fa-gamepad"></i>
@@ -25,7 +25,7 @@
                 </form>
                 <form method="POST" id="form_3">
                     @csrf
-                    <button class="button is-link" type="submit">
+                    <button class="button is-link btn_form" id="btn_3" type="submit">
                         <span>Récupérer position robot</span>
                         <span class="icon">
                             <i class="fa-solid fa-crosshairs"></i>
@@ -45,7 +45,7 @@
             </span>
             <form id="form_0" method="POST" action="">
                 @csrf
-                <button class="button is-danger ml-5 mb-5" type="submit">
+                <button class="button is-danger mb-5 btn_form mt-5" id="btn_0" type="submit">
                     <span>Supprimer les logs</span>
                     <span class="icon">
                         <i class="fa-solid fa-eraser"></i>
@@ -53,7 +53,12 @@
                 </button>
             </form>
             <div id="logs_console">
-            <pre class="has-background-black logs" style="height:440px; overflow: scroll;"><?php if(count($logs) > 0) { ?>@foreach($logs as $log)<span class="has-text-info">[{{ $log->created_at->format("d/m/Y") }} à {{ $log->created_at->format("H:i:s") }}] :</span> <span class="has-text-white">{{ $log->command_name }} -> {{ $log->response }}</span> <span class="<?php if($log->state == 0) echo "has-text-success"; else echo "has-text-danger"; ?>">({{ $log->state }})</span><br>@endforeach<?php } else { ?><span class="has-text-info">Aucun log pour le moment, veuillez sélectionner une action pour commencer</span><?php } ?></pre>
+                <pre class="has-background-black logs" style="height:400px; width:780px !important; overflow: scroll;"><?php if(count($logs) > 0) { ?>@foreach($logs as $log)<?php $log->response = str_replace("\\r", "\r", $log->response); ?>
+<span class="icon is-small"><i class="fa-solid fa-caret-right" id="log_icon_<?= $log->id ?>" onclick="showCompleteLog('{{ $log->id }}');"></i></span> <span class="has-text-info">[{{ $log->created_at->format("d/m/Y") }} à {{ $log->created_at->format("H:i:s") }}]</span> <span class="has-text-warning">{{ $log->command_name }} <span class="<?php if($log->state == 0) echo "has-text-success"; else echo "has-text-danger"; ?>">({{ $log->state }})</span></span>
+<span class="has-text-white log_response" style="display: none" id="log_reponse_<?= $log->id ?>"><span class="has-text-primary"><br>Format de la réponse : N° | Data | Status</span><br>{{ $log->response }}</span>
+                    <br>@endforeach
+                    <?php } else { ?><span class="has-text-info">Aucun log pour le moment, veuillez sélectionner une action pour commencer</span><?php } ?>
+                </pre>
             </div>
         </div>
         </div>

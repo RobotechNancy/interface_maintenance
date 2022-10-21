@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $logs = Log::orderBy('id', 'desc')->limit(30)->get();
+    $logs = Log::orderBy('id', 'desc')->limit(100)->get();
     return view('dashboard', compact('logs'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
