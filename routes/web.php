@@ -32,4 +32,8 @@ Route::post('clearlogs', [LogController::class, 'clear'])
 ->middleware(['auth'])
 ->name('clearlogs');
 
+Route::post('exportlogs', [LogController::class, 'export'])
+->middleware(['auth'])
+->name('exportlogs');
+
 require __DIR__.'/auth.php';

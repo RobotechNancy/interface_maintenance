@@ -52,16 +52,23 @@ class LogController extends Controller
                 $custom_i = "0".strval($i);
             else
                 $custom_i = strval($i);
-            exec("C:\laragon\www\interface_maintenance\public\output.exe ".$request->id, $output, $retval);
-            $response[$i] = ["id" => $custom_i, "data" => $output[0], "status" => $retval];
+
+            $execfile = env('CUSTOM_EXECFILE');
+            exec($execfile." ".$request->id, $output, $retval);
+            if(!empty($output))
+                $response[$i] = ["id" => $custom_i, "data" => $output[0], "status" => $retval];
+
             if($retval != 0)
                 $log->state = $retval;
         }
         $log->response = json_encode($response);
 
+        if($log->state == 1)
+            return response()->json(["file" => $execfile, "exception" => "Fichier non trouvé", "message" => "Le fichier exécutable n'a pas été trouvé", "line" => 57], 404);
+
         $log->saveOrFail();
 
-        return response()->json(200);
+            return response()->json(200);
     }
 
     /**
@@ -74,6 +81,17 @@ class LogController extends Controller
     {
         Log::truncate();
         return response()->json(200);
+    }
+
+    public function export()
+    {
+        $logfile = env('CUSTOM_LOGFILE');
+        $logs = Log::orderBy('id', 'desc')->get();
+
+        foreach ($logs as $log) {
+            file_put_contents($logfile, $log);
+        }
+        return response()->json(["file" => $logfile], 200);
     }
 
 }
