@@ -4,18 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Log;
+use Illuminate\Support\Arr;
 
 class LogController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -24,7 +16,8 @@ class LogController extends Controller
      */
     public function create(Request $request)
     {
-        $command_name = $custom_i = $response = "";
+        $command_name = $custom_i = "";
+        $response = [];
         $output = $retval = null;
         $count = 0;
 
@@ -60,36 +53,16 @@ class LogController extends Controller
             else
                 $custom_i = strval($i);
             exec("C:\laragon\www\interface_maintenance\public\output.exe ".$request->id, $output, $retval);
-            $log->response = $log->response . "                     [".$custom_i."] | " . $output[0] . " | " . $retval . '\r';
-            //$log->response[$i] = "[".$custom_i."] | " . $output[0] . " | " . $retval;
+            $response[$i] = ["id" => $custom_i, "data" => $output[0], "status" => $retval];
             if($retval != 0)
                 $log->state = $retval;
         }
+        $log->response = json_encode($response);
 
         $log->saveOrFail();
 
         return response()->json(200);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function process(int $id, int $count, Log $log)
-    {
-        for($i = 0; $i < $count; $i++){
-            exec("C:\laragon\www\interface_maintenance\public\output.exe ".$id, $output, $retval);
-            $log->response = $output[0];
-            $log->state = $retval;
-            $log->saveOrFail();
-        }
-
-        return response()->json(200);
-    }
-
 
     /**
      * Store a newly created resource in storage.
@@ -103,36 +76,4 @@ class LogController extends Controller
         return response()->json(200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -9,6 +9,8 @@ function sendData(request_url, request_id){
         $("#form_"+request_id).submit(function(e){
             e.preventDefault();
             $("#btn_"+request_id).addClass("is-loading");
+            if(request_id == 3)
+            $(".pageloader").addClass("is-active");
             $(".btn_form").attr("disabled",true);
             $.ajax({
                 type:'POST',
@@ -18,6 +20,8 @@ function sendData(request_url, request_id){
                     $("#logs_console").load(" #logs_console");
                     console.log(data);
                     $("#btn_"+request_id).removeClass("is-loading");
+                    if(request_id == 3)
+                    $(".pageloader").removeClass("is-active");
                     $(".btn_form").attr("disabled",false);
                 }
             });
