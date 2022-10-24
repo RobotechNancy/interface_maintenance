@@ -32,7 +32,66 @@
                         </span>
                     </button>
                 </form>
+
             </div>
+            <div class="buttons">
+                <div class="buttons">
+                    <form method="POST" id="form_4">
+                        @csrf
+                        <button class="button is-link btn_form" id="btn_3" type="submit">
+                            <span class="icon">
+                                <i class="fa-solid fa-arrow-right fa-rotate-by" style="--fa-rotate-angle: 210deg;"></i>
+                                </span>
+                        </button>
+                    </form>
+                    <form method="POST" id="form_5">
+                        @csrf
+                        <button class="button is-link btn_form" id="btn_3" type="submit">
+                            <span class="icon">
+                                <i class="fa-solid fa-arrow-right fa-rotate-by" style="--fa-rotate-angle: 270deg;"></i>
+                                </span>
+                        </button>
+                    </form>
+                    <form method="POST" id="form_6">
+                        @csrf
+                        <button class="button is-link btn_form" id="btn_3" type="submit">
+                            <span class="icon">
+                                <i class="fa-solid fa-arrow-right fa-rotate-by" style="--fa-rotate-angle: 330deg;"></i>
+                                </span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <form method="POST" id="form_7">
+                    @csrf
+                    <button class="button is-link btn_form" id="btn_3" type="submit">
+                        <span class="icon">
+                            <i class="fa-solid fa-arrow-right fa-rotate-by" style="--fa-rotate-angle: 150deg;"></i>
+                            </span>
+                    </button>
+                </form>
+                <form method="POST" id="form_8">
+                    @csrf
+                    <button class="button is-link btn_form" id="btn_3" type="submit">
+                        <span class="icon">
+                            <i class="fa-solid fa-arrow-right fa-rotate-by" style="--fa-rotate-angle: 90deg;"></i>
+                            </span>
+                    </button>
+                </form>
+                <form method="POST" id="form_9">
+                    @csrf
+                    <button class="button is-link btn_form" id="btn_3" type="submit">
+                        <span class="icon">
+                            <i class="fa-solid fa-arrow-right fa-rotate-by" style="--fa-rotate-angle: 30deg;"></i>
+                            </span>
+                    </button>
+                </form>
+            </div>
+
+
+            
           </div>
           <div class="tile is-child box notification is-light">
             <p class="title is-5">Commandes de diagnostic</p>
