@@ -1,3 +1,36 @@
+## Trucs à mettre sur l'interface
+
+# Info du robot :
+Etat du bouton d'arrêt d'urgence & activation actionneurs
+Nom du robot
+Mode maintenance ou compet
+Commande CAN custom
+Accès console 
+
+# Test:
+Comm Bus CAN 
+Comm Xbee
+Comm Ecran
+Script de déplacement
+Script actionneur
+
+# Odométrie :
+Position du robot
+Sortie de chaque capteur
+
+# Base roulante :
+Boutons Déplacement/Rotation
+Déplacement vers une position
+Test moteur individuellement (EN/STEP/DIR)
+
+# Actionneurs :
+Utiliser chaque actionneur
+
+# Base de donnée :
+Logs du robot 
+Script de compèt en drag and drop
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
