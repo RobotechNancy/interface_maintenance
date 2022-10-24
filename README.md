@@ -1,3 +1,36 @@
+# Trucs à mettre sur l'interface
+
+## Info du robot :
+Etat du bouton d'arrêt d'urgence & activation actionneurs
+Nom du robot
+Mode maintenance ou compet
+Commande CAN custom
+Accès console 
+
+## Test:
+Comm Bus CAN 
+Comm Xbee
+Comm Ecran
+Script de déplacement
+Script actionneur
+
+## Odométrie :
+Position du robot
+Sortie de chaque capteur
+
+## Base roulante :
+Boutons Déplacement/Rotation
+Déplacement vers une position
+Test moteur individuellement (EN/STEP/DIR)
+
+## Actionneurs :
+Utiliser chaque actionneur
+
+## Base de donnée :
+Logs du robot 
+Script de compèt en drag and drop
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -7,7 +40,7 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
