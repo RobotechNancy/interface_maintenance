@@ -1,32 +1,32 @@
-## Trucs à mettre sur l'interface
+# Trucs à mettre sur l'interface
 
-# Info du robot :
+## Info du robot :
 Etat du bouton d'arrêt d'urgence & activation actionneurs
 Nom du robot
 Mode maintenance ou compet
 Commande CAN custom
 Accès console 
 
-# Test:
+## Test:
 Comm Bus CAN 
 Comm Xbee
 Comm Ecran
 Script de déplacement
 Script actionneur
 
-# Odométrie :
+## Odométrie :
 Position du robot
 Sortie de chaque capteur
 
-# Base roulante :
+## Base roulante :
 Boutons Déplacement/Rotation
 Déplacement vers une position
 Test moteur individuellement (EN/STEP/DIR)
 
-# Actionneurs :
+## Actionneurs :
 Utiliser chaque actionneur
 
-# Base de donnée :
+## Base de donnée :
 Logs du robot 
 Script de compèt en drag and drop
 
@@ -40,7 +40,7 @@ Script de compèt en drag and drop
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
