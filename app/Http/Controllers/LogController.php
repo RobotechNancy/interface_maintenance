@@ -87,9 +87,24 @@ class LogController extends Controller
     {
         $logfile = env('CUSTOM_LOGFILE');
         $logs = Log::orderBy('id', 'desc')->get();
+        $current_content = "";
+        file_put_contents($logfile, "");
 
         foreach ($logs as $log) {
-            file_put_contents($logfile, $log);
+            $custom_log = "[Le ".$log->created_at->format("d/m/Y")." à ".$log->created_at->format("H:i:s")."]\r\r\t-> Commande : ".$log->command_name."\r\t-> Retour : ".$log->state;
+            $custom_log .= "\r\t-> Réponse : \r";
+
+            $datas = json_decode($log->response);
+
+            foreach ($datas as $data) {
+
+                $custom_log .= "\r\t\t-> ID : ".$data->{"id"};
+                $custom_log .= "\r\t\t-> Data : ".$data->{"data"};
+                $custom_log .= "\r\t\t-> Retour : ".$data->{"status"}."\r";
+            }
+
+            $current_content = file_get_contents($logfile);
+            file_put_contents($logfile, $current_content.$custom_log."\r\r");
         }
         return response()->json(["file" => $logfile], 200);
     }

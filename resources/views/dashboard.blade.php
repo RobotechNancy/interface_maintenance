@@ -3,7 +3,7 @@
     <div class="tile is-ancestor">
         <div class="tile is-5 is-vertical is-parent">
           <div class="tile is-child box notification is-light">
-            <p class="title is-5">Commandes de contrôle</p>
+            <p class="title is-5">Commandes de diagnostic</p>
             <div class="buttons">
                 <form method="POST" id="form_1">
                     @csrf
@@ -35,7 +35,7 @@
             </div>
           </div>
           <div class="tile is-child box notification is-light">
-            <p class="title is-5">Commandes de diagnostic</p>
+            <p class="title is-5">Commandes de contôle</p>
           </div>
         </div>
         <div class="tile is-parent">
@@ -68,6 +68,14 @@
                         </span>
                     </button>
                 </form>
+                <a href='{{ asset('logs.txt') }}' target="_blank">
+                    <button class="button is-info ml-2">
+                        <span>Consulter le fichier de logs</span>
+                        <span class="icon">
+                            <i class="fa-solid fa-eye"></i>
+                        </span>
+                    </button>
+                </a>
             </div>
           </div>
         </div>

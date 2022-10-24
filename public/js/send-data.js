@@ -18,7 +18,7 @@ function sendData(request_url, request_id){
                 data:{id:request_id},
                 success:function(data) {
                     if(request_id == 4)
-                        $(".logs").html("<span class='tag is-success mb-3'>Les logs ont été exportés vers le fichier " + data["file"] + "</span><br>" + $(".logs").html());
+                        $(".logs").html("<span class='tag is-success mb-3'>Les logs ont été exportés vers le fichier :&nbsp;<a href='logs.txt' target='_blank'>" + data["file"] + "</a>.</span><br>" + $(".logs").html());
                     else
                         $("#logs_console").load(" #logs_console");
                     $("#btn_"+request_id).removeClass("is-loading");
