@@ -27,8 +27,14 @@
     </head>
     <body>
         @include('layouts.navbar')
-        <div class="container mt-6">
-            {{ $slot }}
-        </div>
+        @if (isset($addons))           
+            <div>
+                {{ $slot }}
+            </div>
+        @else             
+            <div class="container mt-6">
+                {{ $slot }}
+            </div>
+        @endif
     </body>
 </html>

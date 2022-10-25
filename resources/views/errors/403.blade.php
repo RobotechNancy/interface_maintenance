@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-container-layout>
     <x-slot name="title"> @lang('Erreur 403') </x-slot>
     <section class="section is-small">
         <h1 class="title mb-6">Erreur 403 : accès non autorisé</h1>
@@ -10,4 +10,4 @@
           @endauth
         </h2>
     </section>
-</x-app-layout>
+</x-container-layout>

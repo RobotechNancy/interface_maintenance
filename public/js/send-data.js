@@ -17,7 +17,7 @@ function sendData(request_url, request_id){
                 url:request_url,
                 data:{id:request_id},
                 success:function(data) {
-                    if(request_id == 4)
+                    if(request_id == 0)
                         $(".logs").html("<span class='tag is-success mb-3'>Les logs ont été exportés vers le fichier :&nbsp;<a href='logs.txt' target='_blank'>" + data["file"] + "</a>.</span><br>" + $(".logs").html());
                     else
                         $("#logs_console").load(" #logs_console");
