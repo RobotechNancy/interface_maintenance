@@ -1,14 +1,12 @@
 #include <iostream>
 
-/* 
-    A ajouter
 #include "logLib.h"
 #include "defineCan.h"
 #include "canClass.h"
 #include "convertionTrame.h"
 
 Can g_can;
-*/
+
 using namespace std;
 
 int main(int argc, char** argv)
@@ -40,36 +38,36 @@ int main(int argc, char** argv)
             cout << "25,6N 43,2E";
             break;
         case "4":
-            cout << "Tourne à droite7";
-            //cout << move(7);
+            //cout << "Tourne à droite7";
+            cout << move(7);
             break;
         case "5":
-            cout << "Avance à gauche6";
-            //cout << move(6);
+            //cout << "Avance à gauche6";
+            cout << move(6);
             break;
         case "6":
-            cout << "Recule à gauche5";
-            //cout << move(5);
+            //cout << "Recule à gauche5";
+            cout << move(5);
             break;
         case "7":
-            cout << "Avance 1";
-            //cout << move(1);
+            //cout << "Avance 1";
+            cout << move(1);
             break;
         case "8":
-            cout << "Recule4";
-            //cout << move(4;
+            //cout << "Recule4";
+            cout << move(4;
             break;
         case "9":
-            cout << "Avance à droite 2";
-            //cout << move(2);
+            //cout << "Avance à droite 2";
+            cout << move(2);
             break;
         case "10":
-            cout << "Recule à droite3";
-            //cout << move(3);
+            //cout << "Recule à droite3";
+            cout << move(3);
             break; 
         case "11":
-            cout << "Tourne à gauche8";
-            //cout << move(8);
+            //cout << "Tourne à gauche8";
+            cout << move(8);
             break;          
         default:
             cout << "Commande " << id << " invalide";
