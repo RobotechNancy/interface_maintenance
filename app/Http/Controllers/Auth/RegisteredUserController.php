@@ -111,6 +111,11 @@ class RegisteredUserController extends Controller
             'role' => ['integer', 'in:0,1,2']
         ]);
 
+
+        if(empty($request->password) && $request->email == $user->email && $request->name == $user->name && $request->role == $user->role)
+            return back()->with('warning', "Veuillez modifier un attribut pour pouvoir mettre à jour le profil de ". $user->name ." !");
+        
+
         if($request->name != $user->name){
             $request->validate([
                 'name' => ['required', 'string', 'alpha_num', 'max:50']
@@ -137,7 +142,7 @@ class RegisteredUserController extends Controller
 
         $user->role = $request->role;
         $user->save();
-        return back()->with('message', "Le compte utilisateur ". $user->name ." a été modifié avec succès !");
+        return back()->with('succes', "Le compte utilisateur ". $user->name ." a été modifié avec succès !");
     }
 
     public function destroy(User $user)

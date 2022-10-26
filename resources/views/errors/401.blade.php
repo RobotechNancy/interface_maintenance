@@ -1,7 +1,7 @@
 @extends('errors::minimal')
 
 @section('title', __('Accès non autorisé'))
-@section('code', '403')
+@section('code', '401')
 
 @auth
   @section('message', __("Le compte {{ Auth::user()->name }} n'est pas autorisé à accéder à cette page."))
