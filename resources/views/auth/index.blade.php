@@ -44,7 +44,7 @@
                         <form id="delete{{ $user->id }}" action="{{ route('delete', ['user' => $user]) }}" method="POST" style="display: none;">
                             @csrf
                         </form>
-                        <a class="button is-danger <?php if($user->id == Auth::user()->id) echo "is-inverted"; ?>"" onclick="event.preventDefault(); document.getElementById('delete{{ $user->id }}').submit();"><i class="fa-regular fa-trash-can"></i></a>
+                        <a class="button is-danger <?php if($user->id == Auth::user()->id) echo "is-inverted"; ?>"" onclick="event.preventDefault(); document.getElementById('delete{{ $user->id }}').submit();"><i class="fa-solid fa-trash"></i></a>
                     <?php } ?>
                 </td>
             </tr>
