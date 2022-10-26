@@ -32,7 +32,7 @@
                 {{ $slot }}
             </div>
         @else             
-            <div class="container mt-6">
+            <div class="mt-6 ml-6 mr-6">
                 {{ $slot }}
             </div>
         @endif
