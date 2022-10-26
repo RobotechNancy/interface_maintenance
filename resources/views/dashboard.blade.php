@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="addons">True</x-slot>
+    <x-slot name="addons"></x-slot>
     <x-slot name="title"> @lang('Dashboard') </x-slot>
     <div class="tile is-ancestor">
         <div class="tile is-4">
@@ -169,17 +169,33 @@
         deleteUrl = "{{ route('clearlogs') }}";
         exportUrl = "{{ route('exportlogs') }}";
 
-        deleteId = "20";
+        exportId = "0";
         connectivityId = "1";
         moveId = "2";
         positionId = "3";
-        exportId = "0";
+        rotateLeftId = "4";
+        goLeftTopId = "5";
+        goLeftBottomId = "6";
+        goTopId = "7";
+        goBottomId = "8";
+        goRightTopId = "9";
+        goRightBottomId = "10";
+        rotateRightId = "11";
+        deleteId = "20";
 
         sendData(deleteUrl, deleteId);
         sendData(exportUrl, exportId);
         sendData(logUrl, connectivityId);
         sendData(logUrl, moveId);
         sendData(logUrl, positionId);
+        sendData(logUrl, rotateLeftId);
+        sendData(logUrl, goLeftTopId);
+        sendData(logUrl, goLeftBottomId);
+        sendData(logUrl, goTopId);
+        sendData(logUrl, goBottomId);
+        sendData(logUrl, goRightTopId);
+        sendData(logUrl, goRightBottomId);
+        sendData(logUrl, rotateRightId);
     });
     </script>
 </x-app-layout>

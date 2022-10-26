@@ -19,9 +19,9 @@
         <link href="{{ asset('css/bulma.min.css') }}" type="text/css" rel="stylesheet">
         <link href="{{ asset('css/bulma-switch.min.css') }}" type="text/css" rel="stylesheet">
         <link href="{{ asset('css/bulma-pageloader.min.css') }}" type="text/css" rel="stylesheet">
+        <link href="{{ asset('fontawesome/css/all.css') }}" type="text/css" rel="stylesheet">
 
         <script src="{{ asset('js/jquery.min.js') }}"></script>
-        <script src="{{ asset('js/font-awesome.min.js') }}"></script>
         <script src="{{ asset('js/manage-notifications.js') }}"></script>
         <script src="{{ asset('js/send-data.js') }}"></script>
     </head>
@@ -32,7 +32,7 @@
                 {{ $slot }}
             </div>
         @else             
-            <div class="container mt-6">
+            <div class="mt-6 ml-6 mr-6">
                 {{ $slot }}
             </div>
         @endif

@@ -85,6 +85,9 @@
         <p class="help is-danger">Attention : il n'est pas possible de modifier le rôle de votre compte car vous disposez déjà d'un compte administrateur.</p>
       <?php } ?>
 </x-app-layout>
-@if (session()->has('message'))
-<x-notification title="Modification de profil">{{ session('message') }}</x-notification>
+@if (session()->has('success'))
+<x-notification title="Modification du profil" color="is-success">{{ session('success') }}</x-notification>
+@endif
+@if (session()->has('warning'))
+<x-notification title="Modification du profil" color="is-warning">{{ session('warning') }}</x-notification>
 @endif

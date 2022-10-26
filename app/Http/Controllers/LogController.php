@@ -79,8 +79,8 @@ class LogController extends Controller
                 
 
             default:
-                $command_name = "Commande invalide";
-                $count = 0;
+                $command_name = "Commande n°". $request->id ." invalide";
+                $count = 1;
                 break;
             
         }
