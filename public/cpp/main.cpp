@@ -84,5 +84,5 @@ string move(int direction){
     data.fields.direction = direction;
     data.fields.distance = 360;
     convertir(&data, &trameMoteur);
-    return can.send(CAN_ADDR_BASE_ROULANTE, AVANCE, moteur.raw_data, 8, false, 1,0);
+    return can.send(CAN_ADDR_BASE_ROULANTE, AVANCE, trameMoteur.raw_data, 8, false, 1,0);
 }
