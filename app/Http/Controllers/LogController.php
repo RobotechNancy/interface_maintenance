@@ -101,7 +101,7 @@ class LogController extends Controller
                 $response[$i] = ["id" => $custom_i, "data" => $output[0], "status" => $retval];
 
             if($retval != 0)
-                $log->state = $retval;
+                $log->state = 0; // À peut-être modifier à un moment 
         }
         $log->response = json_encode($response);
 
