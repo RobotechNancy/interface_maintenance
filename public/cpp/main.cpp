@@ -55,7 +55,7 @@ int main(int argc, char** argv)
             break;
         case "8":
             //cout << "Recule4";
-            cout << move(4;
+            cout << move(4);
             break;
         case "9":
             //cout << "Avance à droite 2";
