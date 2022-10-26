@@ -37,10 +37,52 @@ class LogController extends Controller
                 $count = 100;
                 break;
 
+            case 4:
+                $command_name ="Tourne à droite";
+                $count = 1;
+                break;
+
+            case 5:
+                $command_name ="Avance à gauche";
+                $count = 1;
+                break;
+
+            case 6:
+                $command_name ="Recule à gauche";
+                $count = 1;
+                break;
+
+            case 7:
+                $command_name ="Avance";
+                $count = 1;
+                break;
+
+            case 8:
+                $command_name ="Recule";
+                $count = 1;
+                break;
+
+            case 9:
+                $command_name ="Avance à droite";
+                $count = 1;
+                break;
+
+            case 10:
+                $command_name ="Recule à droite";
+                $count = 1;
+                break; 
+
+            case 11:
+                $command_name ="Tourne à gauche";
+                $count = 1;
+                break;
+                
+
             default:
                 $command_name = "Commande n°". $request->id ." invalide";
                 $count = 1;
                 break;
+            
         }
 
         $log = new Log;
