@@ -1,44 +1,30 @@
 #include <stdio.h>
-#include <stdlib.h>
+//#include <stdlib.h>
 
-#include <unistd.h>
+//#include <unistd.h>
 #include <iostream>
 
-#include <unistd.h>
 
 
 #include "canClass.h"
 #include "convertionTramePR.h"
 
 
-#include <thread>
-#include <string.h>
+//#include <string.h>
 
-#include <ctime>
-#include <sstream>  
+//#include <ctime>
+//#include <sstream>  
 
-#include <iostream>
-#include <fstream>
+//#include <fstream>
 
 
 #include "logLib.h"
 #include "defineCan.h"
 
 Can can;
-
-
 using namespace std;
 
   
-
-void wait(int miliseconde){
-    usleep(miliseconde*1000);
-    return;
-}
-
-
-
-
 
 
 int move(int direction, Can &can){
@@ -122,7 +108,7 @@ int main(int argc, char **argv)
     return 0;
 }
 
-string move(int direction){
+int move(int direction){
     Trame_BR_dpt data;
     Trame_Moteur_t trameMoteur;
     data.fields.vitesse = 100;
