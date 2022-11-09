@@ -3,8 +3,14 @@
         <a class="navbar-logo" href="/">
             <x-application-logo />
         </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navBarMenu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
     </div>
-    <div class="navbar-menu">
+    <div id="navBarMenu" class="navbar-menu">
         <div class="navbar-start">
             <div class="navbar-item">
                 <div class="buttons ml-2">
