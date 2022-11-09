@@ -10,7 +10,7 @@
             <span aria-hidden="true"></span>
         </a>
     </div>
-    <div id="navBarMenu" class="navbar-menu">
+    <div id="navBarMenu" class="navbar-menu has-background-link">
         <div class="navbar-start">
             <div class="navbar-item">
                 <div class="buttons ml-2">
