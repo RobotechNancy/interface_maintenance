@@ -65,7 +65,7 @@
         <nav class="level">
             <div class="level-item has-text-right mt-6">
                 <div>
-                    <a class="button is-link mr-5" href="{{ route('edit', ['id' => Auth::user()->id]) }}">
+                    <a class="button is-link" href="{{ route('edit', ['id' => Auth::user()->id]) }}">
                         <span>@lang('Edit my profile')</span>
                         <span class="icon">
                             <i class="fa-solid fa-pencil"></i>

@@ -1,4 +1,4 @@
-<nav class="navbar is-link is-light is-spaced has-shadow" role="navigation" aria-label="main navigation">
+<nav class="navbar is-link is-spaced has-shadow" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-logo" href="/">
             <x-application-logo />
@@ -10,10 +10,10 @@
             <span aria-hidden="true"></span>
         </a>
     </div>
-    <div id="navBarMenu" class="navbar-menu">
+    <div id="navBarMenu" class="navbar-menu has-background-link">
         <div class="navbar-start">
             <div class="navbar-item">
-                <div class="buttons ml-2">
+                <div class="buttons">
                     <a class="button is-link" href="/">
                         <span class="icon">
                             <i class="fa-solid fa-house-chimney"></i>
