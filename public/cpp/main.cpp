@@ -10,7 +10,7 @@
 #include "canClass.h"
 #include "convertionTramePR.h"
 
-<<<<<<< HEAD
+
 #include <thread>
 #include <string.h>
 
@@ -23,9 +23,9 @@
 
 #include "logLib.h"
 #include "defineCan.h"
-=======
+
 Can can;
->>>>>>> 4af8e2891e7ac3be7fdeb428b3134f2c637f6e90
+
 
 using namespace std;
 
@@ -38,10 +38,7 @@ void wait(int miliseconde){
 
 
 
-//int move(int direction,Can &can){
-//    uint8_t data[8] = {0x01,0x02,0xFF,0x34,0x45};
-//    return can.send(CAN_ADDR_BASE_ROULANTE, DEPLACEMENT_COURROIE, data, 8, true, 5,1) ;
-//}
+
 
 
 int move(int direction, Can &can){
@@ -57,7 +54,7 @@ int move(int direction, Can &can){
 
 int main(int argc, char **argv)
 {
-<<<<<<< HEAD
+
     Log sysLog("systeme");
 
     sysLog << mendl << mendl << "Début du programme" << mendl;
@@ -67,44 +64,13 @@ int main(int argc, char **argv)
     if(err <0){
         can.logC << "erreur dans l'init du bus can. err n°" << dec << err << "\t\t c.f. #define" << mendl;
         return err;
-=======
-    id = str2int(argv[argc - 1]);
-
-    /*
-    if(id == "1"){
-        cout << "La connectivité est correcte";
-    }else if(id == "2"){
-        cout << "Le robot avance";
-    }else if(id == "3"){
-        cout << "25,6N 43,2E";
-    }else{
-        cout << "Commande " << id << " invalide";
-        return 2;
->>>>>>> 4af8e2891e7ac3be7fdeb428b3134f2c637f6e90
     }
-    
+
     
 
-    uint8_t data[8] = {0x01,0x02,0xFF,0x34,0x45};
+    //uint8_t data[8] = {0x01,0x02,0xFF,0x34,0x45};
 
-    /*err = can.send(CAN_ADDR_BASE_ROULANTE, DEPLACEMENT_COURROIE, data, 8, true, 5,1) ;
-    if(err < 0){
-        can.logC << "erreur dans l'envoie d'une trame. err n°" << dec << err << "\t\t c.f. #define" << mendl;
-    }*/
 
-/*
-    int i = 4;
-    switch (i)
-    {
-    case 4:
-        cout << move(7,can)<<endl;
-        break;
-    
-    default:
-        break;
-    }
-*/
-	//int id = str2int(argv[argc - 1]);
 	int id = atoi(argv[argc-1]);
     switch(id){
         case 1:
@@ -117,35 +83,35 @@ int main(int argc, char **argv)
             cout << "25,6N 43,2E";
             break;
         case 4:
-            //cout << "Tourne à droite7";
+            //cout << "Tourne à droite";
             cout << move(7,can);
             break;
         case 5:
-            //cout << "Avance à gauche6";
+            //cout << "Avance à gauche";
             cout << move(2,can);
             break;
         case 6:
-            //cout << "Recule à gauche5";
+            //cout << "Recule à gauche";
             cout << move(3,can);
             break;
         case 7:
-            //cout << "Avance 1";
+            //cout << "Avance ";
             cout << move(1,can);
             break;
         case 8:
-            //cout << "Recule4";
+            //cout << "Recule";
             cout << move(4,can);
             break;
         case 9:
-            //cout << "Avance à droite 2";
+            //cout << "Avance à droite";
             cout << move(6,can);
             break;
         case 10:
-            //cout << "Recule à droite3";
+            //cout << "Recule à droite";
             cout << move(5,can);
             break; 
         case 11:
-            //cout << "Tourne à gauche8";
+            //cout << "Tourne à gauche";
             cout << move(8,can);
             break;          
         default:
@@ -156,22 +122,6 @@ int main(int argc, char **argv)
     return 0;
 }
 
-<<<<<<< HEAD
-/*
-    can.start_listen();
-    while(true){
-        //debug_BR(can);
-        if(can.messages.find(1) != can.messages.end()){
-            cout << can.messages[1].codeFct << endl;
-            
-        }
-        wait(1000);
-
-	}
- }
-*/
-
-=======
 string move(int direction){
     Trame_BR_dpt data;
     Trame_Moteur_t trameMoteur;
@@ -181,4 +131,4 @@ string move(int direction){
     convertir(&data, &trameMoteur);
     return can.send(CAN_ADDR_BASE_ROULANTE, AVANCE, trameMoteur.raw_data, 8, false, 1,0);
 }
->>>>>>> 4af8e2891e7ac3be7fdeb428b3134f2c637f6e90
+
