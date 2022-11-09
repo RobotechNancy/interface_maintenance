@@ -1,1 +1,0 @@
-[Le 26/10/2022 à 11:27:40]	-> Commande : Commande n°10 invalide	-> Retour : 2	-> Réponse : 		-> ID : 00		-> Data : Commande 10 invalide		-> Retour : 2[Le 26/10/2022 à 11:27:39]	-> Commande : Commande n°11 invalide	-> Retour : 2	-> Réponse : 		-> ID : 00		-> Data : Commande 11 invalide		-> Retour : 2

@@ -7,7 +7,7 @@
         <meta name="author" content="Robotech Nancy">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="color-scheme" content="dark">
-        <link rel="icon" href="{{ asset('img/favicon.ico') }}">
+        <link rel Console ="icon" href="{{ asset('img/favicon.ico') }}">
         <meta name="csrf-token" content="{{ csrf_token() }}" />
 
         @if (isset($title))
@@ -28,14 +28,8 @@
     </head>
     <body>
         @include('layouts.navbar')
-        @if (isset($addons))           
-            <div>
-                {{ $slot }}
-            </div>
-        @else             
-            <div class="mt-6 ml-6 mr-6">
-                {{ $slot }}
-            </div>
-        @endif
+        <div class="box">
+            {{ $slot }}
+        </div>
     </body>
 </html>

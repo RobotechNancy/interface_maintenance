@@ -1,21 +1,27 @@
 <x-app-layout>
     <x-slot name="addons"></x-slot>
     <x-slot name="title"> @lang('Dashboard') </x-slot>
+
+
+    <div class="columns">
+        <div class="column is-full">
+            <div class="box" id="logs_console">
+                <pre class="has-background-black logs" style="overflow: scroll;"><?php if(count($logs) > 0) { ?>@foreach($logs as $log)<?php $log->response = str_replace("\\r", "\r", $log->response); ?><div class="tags has-addons"><span class="tag icon is-black"><i class="fa-solid fa-caret-right" id="log_icon_<?= $log->id ?>" onclick="showCompleteLog('{{ $log->id }}');"></i></span> <span class="tag is-dark">[{{ $log->created_at->format("d/m/Y") }} à {{ $log->created_at->format("H:i:s") }}]</span><span class="tag is-info"><strong>{{ $log->command_name }}</strong></span><span class="tag <?php if($log->state == 0) echo "is-success"; else echo "is-danger"; ?>"><strong>{{ $log->state }}</strong></span></div><table class="table is-narrow has-text-centered is-fullwidth is-bordered has-background-grey-darker has-text-light" id="log_reponse_<?= $log->id ?>" style="display: none"><tbody><tr class="has-background-link-dark"><td>ID</td><td>Data</td><td>Status</td></tr><?php $datas = json_decode($log->response);?>@foreach($datas as $data)<tr><td class="has-background-grey-dark">{{ $data->{"id"} }}</td><td>{{ $data->{"data"} }}</td><td class="<?php if($log->state == 0) echo "has-background-success"; else echo "has-background-danger"; ?>"><strong>{{ $data->{"status"} }}</strong></td></tr>@endforeach</tbody></table>@endforeach
+                    <?php } else { ?><span class="tag is-dark">Aucun log pour le moment, veuillez sélectionner une action pour commencer</span><?php } ?>
+                </pre>
+            </div>
+        </div>
+    </div>
+
     <div class="tile is-ancestor">
         <div class="tile is-4">
             <div class="tile is-parent is-vertical">
                 <div class="tile is-child box notification is-light">
                     <p class="title is-5">Commandes de diagnostic</p>
                     <div class="buttons">
-                        <form method="POST" id="form_1">
-                            @csrf
-                            <button class="button is-link btn_form" id="btn_1" type="submit">
-                                <span>Vérification de la connectivité</span>
-                                <span class="icon">
-                                    <i class="fa-solid fa-tower-cell"></i>
-                                </span>
-                            </button>
-                        </form>
+
+                        <x-button title="Vérification de la connectivité" id="1" icon="fa-solid fa-tower-cell" url="{{ route('log') }}"/>
+
                         <form method="POST" id="form_2" class="ml-2">
                             @csrf
                             <button class="button is-link btn_form" id="btn_2" type="submit">
@@ -134,7 +140,7 @@
                                 </button>
                             </form>
                         </div>
-                    
+
                         <div class="column">
                             <form method="POST" id="form_13">
                                 @csrf
@@ -213,7 +219,7 @@
 
         sendData(deleteUrl, deleteId);
         sendData(exportUrl, exportId);
-        sendData(logUrl, connectivityId);
+        //sendData(logUrl, connectivityId);
         sendData(logUrl, moveId);
         sendData(logUrl, positionId);
         sendData(logUrl, rotateLeftId);
