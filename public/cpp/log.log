@@ -1,0 +1,124 @@
+[14:32:23 - can] bus can initialiser
+[14:32:30 - can] bus can initialiser
+[14:33:46 - can] bus can initialiser
+[14:49:59 - can] bus can initialiser
+[15:8:12 - can] bus can initialiser
+[15:8:12 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x62000   id msg : 0x1   isRep : 0x1   RepId : 0x5       Data : [0x5] 0x1 0x2 0xff 0x34 0x45 
+[15:51:39 - systeme] 
+[15:51:39 - systeme] 
+[15:51:39 - systeme] Début du programme
+[15:51:39 - can] bus can initialiser
+[15:51:39 - can] lancement de l'ecoute du bus can
+[15:51:49 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x7f   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x4c 0x28 0x4e 0x5d 0 0 0x7f 0x7 
+[15:51:50 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x3e8   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x9c 0x79 0x4e 0x5d 0x7f 0x50 0xe8 0x2 
+[15:51:51 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x3e8   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x9c 0x79 0x4e 0x5d 0x7f 0x50 0xe8 0x2 
+[15:51:52 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x3e8   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x9c 0x79 0x4e 0x5d 0x7f 0x50 0xe8 0x2 
+[15:51:53 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x3e8   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x9c 0x79 0x4e 0x5d 0x7f 0x50 0xe8 0x2 
+[15:51:54 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x3e8   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x9c 0x79 0x4e 0x5d 0x7f 0x50 0xe8 0x2 
+[15:51:55 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x3e8   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x9c 0x79 0x4e 0x5d 0x7f 0x50 0xe8 0x2 
+[15:51:56 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x3e8   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x9c 0x79 0x4e 0x5d 0x7f 0x50 0xe8 0x2 
+[15:51:57 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x3e8   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x9c 0x79 0x4e 0x5d 0x7f 0x50 0xe8 0x2 
+[15:51:58 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x3e8   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x9c 0x79 0x4e 0x5d 0x7f 0x50 0xe8 0x2 
+[15:51:59 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x3e8   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x9c 0x79 0x4e 0x5d 0x7f 0x50 0xe8 0x2 
+[15:52:0 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x3e8   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x9c 0x79 0x4e 0x5d 0x7f 0x50 0xe8 0x2 
+[15:52:1 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x3e8   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x9c 0x79 0x4e 0x5d 0x7f 0x50 0xe8 0x2 
+[15:54:49 - systeme] 
+[15:54:49 - systeme] 
+[15:54:49 - systeme] Début du programme
+[15:54:49 - can] bus can initialiser
+[15:54:49 - can] lancement de l'ecoute du bus can
+[15:55:3 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x7f   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x4c 0x28 0xfa 0x8e 0 0 0x7f 0x7 
+[15:55:4 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x3e8   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x9c 0x79 0xfa 0x8e 0x7f 0x70 0x51 0x2 
+[15:55:5 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x3e8   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x9c 0x79 0xfa 0x8e 0x7f 0x70 0x51 0x2 
+[15:55:6 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x3e8   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x9c 0x79 0xfa 0x8e 0x7f 0x70 0x51 0x2 
+[16:2:44 - systeme] 
+[16:2:44 - systeme] 
+[16:2:44 - systeme] Début du programme
+[16:2:44 - can] bus can initialiser
+[16:2:44 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x62000   id msg : 0x1   isRep : 0x1   RepId : 0x5       Data : [0x8] 0x1 0x2 0xff 0x34 0x45 0 0 0 
+[16:2:44 - can] lancement de l'ecoute du bus can
+[16:9:29 - systeme] 
+[16:9:29 - systeme] 
+[16:9:29 - systeme] Début du programme
+[16:9:29 - can] bus can initialiser
+[16:9:29 - can] lancement de l'ecoute du bus can
+[16:9:54 - systeme] 
+[16:9:54 - systeme] 
+[16:9:54 - systeme] Début du programme
+[16:9:54 - can] bus can initialiser
+[16:9:54 - can] lancement de l'ecoute du bus can
+[16:11:36 - systeme] 
+[16:11:36 - systeme] 
+[16:11:36 - systeme] Début du programme
+[16:11:36 - can] bus can initialiser
+[16:11:36 - can] lancement de l'ecoute du bus can
+[16:13:53 - systeme] 
+[16:13:53 - systeme] 
+[16:13:53 - systeme] Début du programme
+[16:13:53 - can] bus can initialiser
+[16:13:53 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x1000   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x52 0xf 0x1 0 0x2f 0x2f 0x2f 0x7 
+[16:13:53 - can] lancement de l'ecoute du bus can
+[16:14:0 - can] get : addr : 0x1000000   emetteur : 0x200000   codeFct : 0x81000   isRep : 0x1   RepId : 0x1       Data : [0x1] 0x1 
+[16:14:44 - systeme] 
+[16:14:44 - systeme] 
+[16:14:44 - systeme] Début du programme
+[16:14:44 - can] bus can initialiser
+[16:14:44 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x1000   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x52 0xf 0x1 0 0x2f 0x2f 0x2f 0x7 
+[16:14:44 - can] lancement de l'ecoute du bus can
+[16:14:51 - can] get : addr : 0x1000000   emetteur : 0x200000   codeFct : 0x81000   isRep : 0x1   RepId : 0x1       Data : [0x1] 0x1 
+[9:20:3 - systeme] 
+[9:20:3 - systeme] 
+[9:20:3 - systeme] Début du programme
+[9:20:3 - can] bus can initialiser
+[9:20:3 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x1000   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x52 0xf 0x1 0 0x2f 0x2f 0x2f 0x7 
+[9:20:3 - can] lancement de l'ecoute du bus can
+[9:28:33 - systeme] 
+[9:28:33 - systeme] 
+[9:28:33 - systeme] Début du programme
+[9:28:33 - can] bus can initialiser
+[9:28:33 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x1000   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x52 0xf 0x1 0 0x2f 0x2f 0x2f 0x7 
+[9:28:33 - can] lancement de l'ecoute du bus can
+[9:35:12 - systeme] 
+[9:35:13 - systeme] 
+[9:35:13 - systeme] Début du programme
+[9:35:13 - can] bus can initialiser
+[9:35:13 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x1000   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x52 0xf 0x1 0 0x2f 0x2f 0x2f 0x7 
+[9:35:13 - can] lancement de l'ecoute du bus can
+[9:49:3 - systeme] 
+[9:49:3 - systeme] 
+[9:49:3 - systeme] Début du programme
+[9:49:3 - can] bus can initialiser
+[9:49:3 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x1000   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x52 0xf 0x1 0 0x2f 0x2f 0x2f 0x7 
+[9:49:3 - can] lancement de l'ecoute du bus can
+[9:52:6 - can] erreur dans le décodage d'une trame. err n°-502		 c.f. #define
+[9:55:14 - systeme] 
+[9:55:14 - systeme] 
+[9:55:14 - systeme] Début du programme
+[9:55:14 - can] bus can initialiser
+[9:55:14 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x1000   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x52 0xf 0x1 0 0x2f 0x2f 0x2f 0x7 
+[9:55:14 - can] lancement de l'ecoute du bus can
+[10:1:4 - systeme] 
+[10:1:4 - systeme] 
+[10:1:4 - systeme] Début du programme
+[10:1:5 - can] bus can initialiser
+[10:1:5 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x1000   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x52 0xf 0x1 0 0x2f 0x2f 0x2f 0x7 
+[10:1:5 - can] lancement de l'ecoute du bus can
+[10:2:9 - systeme] 
+[10:2:9 - systeme] 
+[10:2:9 - systeme] Début du programme
+[10:2:9 - can] bus can initialiser
+[10:2:9 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x1000   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x52 0xf 0x1 0 0x2f 0x2f 0x2f 0x7 
+[10:2:9 - can] lancement de l'ecoute du bus can
+[10:5:49 - can] erreur dans le décodage d'une trame. err n°-502		 c.f. #define
+[10:6:36 - systeme] 
+[10:6:36 - systeme] 
+[10:6:36 - systeme] Début du programme
+[10:6:36 - can] bus can initialiser
+[10:6:36 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x1000   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x52 0xf 0x1 0 0x2f 0x2f 0x2f 0x7 
+[10:6:36 - can] lancement de l'ecoute du bus can
+[11:6:8 - systeme] 
+[11:6:8 - systeme] 
+[11:6:8 - systeme] Début du programme
+[11:6:8 - can] bus can initialiser
+[11:6:8 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x1000   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x52 0xf 0x1 0 0x2f 0x2f 0x2f 0x7 
+[11:6:8 - can] lancement de l'ecoute du bus can

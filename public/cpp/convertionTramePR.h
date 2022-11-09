@@ -26,7 +26,7 @@ typedef union {
 } Trame_Moteur_t;
 
 typedef union {
-   uint8_t[2] raw;
+   uint8_t raw[2];
    uint16_t unified;
 } Angle_Lidar_t;
 
