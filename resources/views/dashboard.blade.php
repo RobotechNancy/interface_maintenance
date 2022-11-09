@@ -34,7 +34,6 @@
                                 </span>
                             </button>
                         </form>
-
                     </div>
                 </div>
                 <div class="tile is-child box notification is-light">
@@ -119,6 +118,33 @@
                 <div class="tile is-child box notification is-light">
                     <p class="title is-5">Commandes des actionneurs</p>
                 </div>
+                <div class="tile is-child box notification is-light">
+                    <p class="title is-5">Alimentation générale</p>
+                    <div class="columns is-vcentered">
+                        <div class="column">
+                            <span class="icon is-large fa-3x has-text-success">
+                                <i class="fas fa-check-square"></i>
+                            </span>
+                        </div>
+                        <div class="column">
+                            <form method="POST" id="form_12">
+                                @csrf
+                                <button class="button is-link btn_form is-fullwidth is-success" id="btn_12" type="submit">
+                                    <span>On</span>
+                                </button>
+                            </form>
+                        </div>
+                    
+                        <div class="column">
+                            <form method="POST" id="form_13">
+                                @csrf
+                                <button class="button is-link btn_form is-fullwidth is-danger" id="btn_13" type="submit">
+                                    <span>Off</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="tile is-parent is-8">
@@ -181,6 +207,8 @@
         goRightTopId = "9";
         goRightBottomId = "10";
         rotateRightId = "11";
+        relayOn = "12";
+        relayOff = "13";
         deleteId = "20";
 
         sendData(deleteUrl, deleteId);
@@ -196,6 +224,8 @@
         sendData(logUrl, goRightTopId);
         sendData(logUrl, goRightBottomId);
         sendData(logUrl, rotateRightId);
+        sendData(logUrl, relayOn);
+        sendData(logUrl, relayOff);
     });
     </script>
 </x-app-layout>

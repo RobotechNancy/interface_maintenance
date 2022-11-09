@@ -76,7 +76,14 @@ class LogController extends Controller
                 $command_name ="Tourne à gauche";
                 $count = 1;
                 break;
-                
+            case 12:
+                $command_name ="Allumage général";
+                $count = 1;
+                break;                
+            case 13:
+                $command_name ="Coupure générale";
+                $count = 1;
+                break;
 
             default:
                 $command_name = "Commande n°". $request->id ." invalide";

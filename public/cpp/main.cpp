@@ -10,6 +10,7 @@
 #include "canClass.h"
 #include "convertionTramePR.h"
 
+<<<<<<< HEAD
 #include <thread>
 #include <string.h>
 
@@ -22,6 +23,9 @@
 
 #include "logLib.h"
 #include "defineCan.h"
+=======
+Can can;
+>>>>>>> 4af8e2891e7ac3be7fdeb428b3134f2c637f6e90
 
 using namespace std;
 
@@ -53,6 +57,7 @@ int move(int direction, Can &can){
 
 int main(int argc, char **argv)
 {
+<<<<<<< HEAD
     Log sysLog("systeme");
 
     sysLog << mendl << mendl << "Début du programme" << mendl;
@@ -62,6 +67,20 @@ int main(int argc, char **argv)
     if(err <0){
         can.logC << "erreur dans l'init du bus can. err n°" << dec << err << "\t\t c.f. #define" << mendl;
         return err;
+=======
+    id = str2int(argv[argc - 1]);
+
+    /*
+    if(id == "1"){
+        cout << "La connectivité est correcte";
+    }else if(id == "2"){
+        cout << "Le robot avance";
+    }else if(id == "3"){
+        cout << "25,6N 43,2E";
+    }else{
+        cout << "Commande " << id << " invalide";
+        return 2;
+>>>>>>> 4af8e2891e7ac3be7fdeb428b3134f2c637f6e90
     }
     
     
@@ -137,6 +156,7 @@ int main(int argc, char **argv)
     return 0;
 }
 
+<<<<<<< HEAD
 /*
     can.start_listen();
     while(true){
@@ -151,3 +171,14 @@ int main(int argc, char **argv)
  }
 */
 
+=======
+string move(int direction){
+    Trame_BR_dpt data;
+    Trame_Moteur_t trameMoteur;
+    data.fields.vitesse = 100;
+    data.fields.direction = direction;
+    data.fields.distance = 360;
+    convertir(&data, &trameMoteur);
+    return can.send(CAN_ADDR_BASE_ROULANTE, AVANCE, trameMoteur.raw_data, 8, false, 1,0);
+}
+>>>>>>> 4af8e2891e7ac3be7fdeb428b3134f2c637f6e90
