@@ -1,0 +1,1 @@
+[Le 10/11/2022 à 08:23:30]	-> Commande : Test connectivité	-> Retour : 0	-> Réponse : 		-> ID : 00		-> Data : La connectivité est correcte		-> Retour : 0
