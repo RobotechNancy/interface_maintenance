@@ -24,103 +24,33 @@
                     <div class="buttons">
 
                         <x-button title="Vérification de la connectivité" id="1" icon="fa-solid fa-tower-cell" url="{{ route('log') }}"/>
+                        <x-button title = "Avancer le robot" id ="2" icon ="fa-solid fa-gamepad" url="{{ route('log') }}"/>
+                        <x-button id="3" icon="fa-solid fa-crosshairs" url="{{ route('log') }}"/>                        
 
-                        <form method="POST" id="form_2" class="ml-2">
-                            @csrf
-                            <button class="button is-link btn_form" id="btn_2" type="submit">
-                                <span>Avancer le robot</span>
-                                <span class="icon">
-                                    <i class="fa-solid fa-gamepad"></i>
-                                </span>
-                            </button>
-                        </form>
-                        <form method="POST" id="form_3">
-                            @csrf
-                            <button class="button is-link btn_form" id="btn_3" type="submit">
-                                <span>Récupérer position robot</span>
-                                <span class="icon">
-                                    <i class="fa-solid fa-crosshairs"></i>
-                                </span>
-                            </button>
-                        </form>
                     </div>
                 </div>
+
                 <div class="tile is-child box notification is-light">
                     <p class="title is-5">Commandes de la base roulante</p>
                     <div class="columns is-vcentered is-gapless">
                         <div class="column">
-                            <form method="POST" id="form_4">
-                                @csrf
-                                <button class="button is-link btn_form is-medium" id="btn_4" type="submit">
-                                    <span class="icon">
-                                        <i class="fa-solid fa-arrow-rotate-right"></i>
-                                    </span>
-                                </button>
-                            </form>
+                            <x-button  id="4" icon="fa-solid fa-arrow-rotate-right" url="{{ route('log') }}"/>
                         </div>
                         <div class="column">
-                            <form method="POST" id="form_5">
-                                @csrf
-                                <button class="button is-link btn_form is-medium" id="btn_5" type="submit">
-                                    <span class="icon">
-                                        <i class="fa-solid fa-arrow-right fa-rotate-by" style="--fa-rotate-angle: 210deg;"></i>
-                                        </span>
-                                </button>
-                            </form>
-                            <form method="POST" id="form_6">
-                                @csrf
-                                <button class="button is-link btn_form is-medium" id="btn_6" type="submit">
-                                    <span class="icon">
-                                        <i class="fa-solid fa-arrow-right fa-rotate-by" style="--fa-rotate-angle: 150deg;"></i>
-                                        </span>
-                                </button>
-                            </form>
+                            <x-button  id="5" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}" style = "--fa-rotate-angle: 210deg;"/>
+                            <x-button  id="6" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}" style = "--fa-rotate-angle: 150deg;"/>
                         </div>
                         <div class="column">
-                            <form method="POST" id="form_7">
-                                @csrf
-                                <button class="button is-link btn_form is-medium" id="btn_7" type="submit">
-                                    <span class="icon">
-                                        <i class="fa-solid fa-arrow-right fa-rotate-by" style="--fa-rotate-angle: 270deg;"></i>
-                                        </span>
-                                </button>
-                            </form>
-                            <form method="POST" id="form_8">
-                                @csrf
-                                <button class="button is-link btn_form is-medium" id="btn_8" type="submit">
-                                    <span class="icon">
-                                        <i class="fa-solid fa-arrow-right fa-rotate-by" style="--fa-rotate-angle: 90deg;"></i>
-                                        </span>
-                                </button>
-                            </form>
+                            <x-button  id="7" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}" style = "--fa-rotate-angle: 270deg;"/>
+                            <x-button  id="8" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}" style = "--fa-rotate-angle: 90deg;"/>
                         </div>
                         <div class="column">
-                            <form method="POST" id="form_9">
-                                @csrf
-                                <button class="button is-link btn_form is-medium" id="btn_9" type="submit">
-                                    <span class="icon">
-                                        <i class="fa-solid fa-arrow-right fa-rotate-by" style="--fa-rotate-angle: 330deg;"></i>
-                                        </span>
-                                </button>
-                            </form>
-                            <form method="POST" id="form_10">
-                                @csrf
-                                <button class="button is-link btn_form is-medium" id="btn_10" type="submit">
-                                    <span class="icon">
-                                        <i class="fa-solid fa-arrow-right fa-rotate-by" style="--fa-rotate-angle: 30deg;"></i>
-                                        </span>
-                                </button>
-                            </form>
+                            <x-button  id="9" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}" style = "--fa-rotate-angle: 330deg;"/>
+                            <x-button  id="10" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}" style = "--fa-rotate-angle: 30deg;"/>
                         </div>
+
                         <div class="column">
-                            <form method="POST" id="form_11">
-                                @csrf
-                                <button class="button is-link btn_form is-medium" id="btn_11" type="submit">
-                                    <span class="icon">
-                                        <i class="fa-solid fa-arrow-rotate-left"></i>
-                                    </span>
-                                </button>
-                            </form>
+                            <x-button  id="11" icon="fa-solid fa-arrow-rotate-left" url="{{ route('log') }}"/>
                         </div>
                     </div>
                 </div>
@@ -136,21 +66,11 @@
                             </span>
                         </div>
                         <div class="column">
-                            <form method="POST" id="form_12">
-                                @csrf
-                                <button class="button is-link btn_form is-fullwidth is-success" id="btn_12" type="submit">
-                                    <span>On</span>
-                                </button>
-                            </form>
+                            <x-button title="On" id="12" url="{{ route('log') }}"/>
                         </div>
 
                         <div class="column">
-                            <form method="POST" id="form_13">
-                                @csrf
-                                <button class="button is-link btn_form is-fullwidth is-danger" id="btn_13" type="submit">
-                                    <span>Off</span>
-                                </button>
-                            </form>
+                            <x-button title="Off" id="13" url="{{ route('log') }}"/>
                         </div>
                     </div>
                 </div>
