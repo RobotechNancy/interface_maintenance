@@ -3,8 +3,8 @@
     <x-slot name="title"> @lang('Dashboard') </x-slot>
 
 
-    <div class="columns">
-        <div class="column is-full">
+    <div class="columns has-background-white">
+        <div class="column is-10">
             <div id="logs_console">
                 <span class="title is-5">
                     Console
