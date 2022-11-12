@@ -28,7 +28,7 @@
             </div>
             <div class="buttons are-small mt-3">
                 <x-button title="Supprimer les logs" id="20" icon="fa-solid fa-eraser"
-                    url="{{ route('clearlogs') }}" addons="is-danger" />
+                    url="{{ route('clearlogs') }}" color="is-danger" />
                 <x-button title="Exporter les logs" id="0" icon="fa-solid fa-file-export"
                     url="{{ route('exportlogs') }}" addons="ml-2" />
 
@@ -45,50 +45,58 @@
     </div>
 
     <div class="columns mt-4">
-        <div class="column is-one-third box">
+        <div class="column box">
             <p class="title is-5">Commandes de diagnostic</p>
-            <div class="buttons">
-                <x-button title="Vérification de la connectivité" id="1" icon="fa-solid fa-tower-cell"
-                    url="{{ route('log') }}" />
-                <x-button title="Avancer le robot" id="2" icon="fa-solid fa-gamepad"
+            <div class="columns">
+                <div class="column">
+                <x-button title="Test connectivité" id="1" icon="fa-solid fa-tower-cell"
                     url="{{ route('log') }}" />
                 <x-button title="Position du robot" id="3" icon="fa-solid fa-crosshairs"
-                    url="{{ route('log') }}" />
+                    url="{{ route('log') }}" addons="mt-2"/>
+                </div>
             </div>
         </div>
-        <div class="column is-one-third box">
+        <div class="column is-two-fifths box">
             <p class="title is-5">Commandes de la base roulante</p>
-            <div class="columns is-vcentered is-gapless">
+            <div class="columns is-mobile is-centered is-gapless">
                 <div class="column">
-                    <x-button id="4" icon="fa-solid fa-arrow-rotate-right" url="{{ route('log') }}" />
+                    <x-button id="4" icon="fa-solid fa-arrow-rotate-right" url="{{ route('log') }}" color="is-white" addons="is-rounded box is-medium is-fullwidth"/>
                 </div>
                 <div class="column">
                     <x-button id="5" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}"
-                        icon_style="--fa-rotate-angle: 210deg;" />
+                        iconstyle="--fa-rotate-angle: 210deg;" color="is-white" addons="is-rounded box is-medium is-fullwidth" />
                     <x-button id="6" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}"
-                        icon_style="--fa-rotate-angle: 150deg;" />
+                        iconstyle="--fa-rotate-angle: 150deg;" color="is-white" addons="is-rounded box is-medium is-fullwidth" />
                 </div>
                 <div class="column">
-                    <x-button id="7" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}"
-                        icon_style="--fa-rotate-angle: 270deg;" />
-                    <x-button id="8" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}"
-                        icon_style="--fa-rotate-angle: 90deg;" />
+                    <x-button id="7" icon="fa-solid fa-arrow-up fa-rotate-by" url="{{ route('log') }}"
+                        color="is-white" addons="is-rounded box is-medium is-fullwidth" />
+                    <x-button id="8" icon="fa-solid fa-arrow-down fa-rotate-by" url="{{ route('log') }}"
+                        color="is-white" addons="is-rounded box is-medium is-fullwidth" />
                 </div>
                 <div class="column">
                     <x-button id="9" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}"
-                        icon_style="--fa-rotate-angle: 330deg;" />
+                        iconstyle="--fa-rotate-angle: 330deg;" color="is-white" addons="is-rounded box is-medium is-fullwidth" />
                     <x-button id="10" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}"
-                        icon_style="--fa-rotate-angle: 30deg;" />
+                        iconstyle="--fa-rotate-angle: 30deg;" color="is-white" addons="is-rounded box is-medium is-fullwidth" />
                 </div>
 
                 <div class="column">
-                    <x-button id="11" icon="fa-solid fa-arrow-rotate-left" url="{{ route('log') }}" />
+                    <x-button id="11" icon="fa-solid fa-arrow-rotate-left" url="{{ route('log') }}" color="is-white" addons="is-rounded box is-medium is-fullwidth" />
                 </div>
             </div>
         </div>
-        <div class="column is-one-third box">
-            <p class="title is-5">Alimentation générale</p>
-            <div class="columns is-vcentered">
+        <div class="column box">
+            <p class="title is-5">Autres commandes</p>
+            <p class="control">
+                <div class="b-checkbox is-default is-circular">
+                    <input id="checkbox" class="switch is-medium is-success" name="remember" checked type="checkbox">
+                    <label for="checkbox">
+                        {{  __('Alimentation générale') }}
+                    </label>
+                </div>
+            </p>
+            <!--div class="columns is-vcentered">
                 <div class="column">
                     <span class="icon is-large fa-3x has-text-success">
                         <i class="fas fa-check-square"></i>
@@ -101,7 +109,7 @@
                 <div class="column">
                     <x-button title="Off" id="13" url="{{ route('log') }}" />
                 </div>
-            </div>
+            </div-->
         </div>
     </div>
     <div class="pageloader is-link"><span class="title">L'action est en cours de traitement, veuillez
