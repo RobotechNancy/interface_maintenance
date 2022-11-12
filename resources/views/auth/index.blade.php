@@ -15,45 +15,61 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($users as $user)
-                <?php
-                    $role = "";
+                @foreach ($users as $user)
+                    <?php
+                    $role = '';
                     switch ($user->role) {
                         case 1:
-                            $role = "Editeur";
+                            $role = 'Editeur';
                             break;
 
                         case 2:
-                            $role = "Administrateur";
+                            $role = 'Administrateur';
                             break;
 
                         default:
-                            $role = "Lecteur";
+                            $role = 'Lecteur';
                             break;
                     }
-                ?>
-                <tr <?php if($user->id == Auth::user()->id) echo "class=\"has-background-link has-text-white\""; ?>>
-                    <td><b>{{ $user->id }}</b></td>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>{{ $role }} <?php if($user->role == 2) echo "🥇"; else if($user->role == 1) echo "🥈"; else echo "🥉"; ?></td>
-                    <td>le {{ $user->created_at->format("d/m/Y") }} à {{ $user->created_at->format("H:i:s") }}</td>
-                    <td>le {{ $user->updated_at->format("d/m/Y") }} à {{ $user->updated_at->format("H:i:s") }}</td>
-                    <td>
-                        <?php if(Auth::user()->role == 2 || $user->id == Auth::user()->id) { ?>
-                            <a class="button is-link <?php if($user->id == Auth::user()->id) echo "is-inverted"; ?>"  href="{{ route('edit', ['id' => $user->id]) }}"><i class="fa-solid fa-pencil"></i></a>
-                            <form id="delete{{ $user->id }}" action="{{ route('delete', ['user' => $user]) }}" method="POST" style="display: none;">
+                    ?>
+                    <tr <?php if ($user->id == Auth::user()->id) {
+                        echo "class=\"has-background-link has-text-white\"";
+                    } ?>>
+                        <td><b>{{ $user->id }}</b></td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $role }} <?php if ($user->role == 2) {
+                            echo '🥇';
+                        } elseif ($user->role == 1) {
+                            echo '🥈';
+                        } else {
+                            echo '🥉';
+                        } ?></td>
+                        <td>le {{ $user->created_at->format('d/m/Y') }} à {{ $user->created_at->format('H:i:s') }}</td>
+                        <td>le {{ $user->updated_at->format('d/m/Y') }} à {{ $user->updated_at->format('H:i:s') }}</td>
+                        <td>
+                            <?php if(Auth::user()->role == 2 || $user->id == Auth::user()->id) { ?>
+                            <a class="button is-link <?php if ($user->id == Auth::user()->id) {
+                                echo 'is-inverted';
+                            } ?>"
+                                href="{{ route('edit', ['id' => $user->id]) }}"><i class="fa-solid fa-pencil"></i></a>
+                            <form id="delete{{ $user->id }}" action="{{ route('delete', ['user' => $user]) }}"
+                                method="POST" style="display: none;">
                                 @csrf
                             </form>
-                            <a class="button is-danger <?php if($user->id == Auth::user()->id) echo "is-inverted"; ?>"" onclick="event.preventDefault(); document.getElementById('delete{{ $user->id }}').submit();"><i class="fa-solid fa-trash"></i></a>
-                        <?php } ?>
-                    </td>
-                </tr>
+                            <a class="button is-danger <?php if ($user->id == Auth::user()->id) {
+                                echo 'is-inverted';
+                            } ?>""
+                                onclick="event.preventDefault(); document.getElementById('delete{{ $user->id }}').submit();"><i
+                                    class="fa-solid fa-trash"></i></a>
+                            <?php } ?>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
 </x-app-layout>
 @if (session()->has('message'))
-<x-notification title="Suppression de profil" color="is-danger">{{ session('message') }}</x-notification>
+    <x-notification title="Suppression de profil" color="is-danger">{{ session('message') }}</x-notification>
 @endif

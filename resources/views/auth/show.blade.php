@@ -1,19 +1,19 @@
 <x-app-layout>
     <?php
-        $role = "";
-        switch ($user->role) {
-            case 1:
-                $role = "Editeur";
-                break;
+    $role = '';
+    switch ($user->role) {
+        case 1:
+            $role = 'Editeur';
+            break;
 
-            case 2:
-                $role = "Administrateur";
-                break;
+        case 2:
+            $role = 'Administrateur';
+            break;
 
-            default:
-                $role = "Lecteur";
-                break;
-        }
+        default:
+            $role = 'Lecteur';
+            break;
+    }
     ?>
     <x-slot name="title"> @lang('My profile') </x-slot>
     <div class="box content">
@@ -25,41 +25,49 @@
         <hr>
         <nav class="level mb-6">
             <div class="level-item has-text-centered">
-              <div>
-                <p class="heading">ID</p>
-                <p class="title is-5">{{ $user->id }}</p>
-              </div>
-            </div>
-            <div class="level-item has-text-centered">
-              <div>
-                <p class="heading">@lang('Name')</p>
-                <p class="title is-5">{{ $user->name }}</p>
-              </div>
-            </div>
-            <div class="level-item has-text-centered">
-              <div>
-                <p class="heading">@lang('Email')</p>
-                <p class="title is-5">{{ $user->email }}</p>
-              </div>
-            </div>
-            <div class="level-item has-text-centered">
-              <div>
-                <p class="heading">Création du compte</p>
-                <p class="title is-5">le {{ $user->created_at->format("d/m/Y") }} à {{ $user->created_at->format("H:i:s") }}</p>
-              </div>
+                <div>
+                    <p class="heading">ID</p>
+                    <p class="title is-5">{{ $user->id }}</p>
+                </div>
             </div>
             <div class="level-item has-text-centered">
                 <div>
-                  <p class="heading">Dernière modification du compte</p>
-                  <p class="title is-5">le {{ $user->updated_at->format("d/m/Y") }} à {{ $user->updated_at->format("H:i:s") }}</p>
+                    <p class="heading">@lang('Name')</p>
+                    <p class="title is-5">{{ $user->name }}</p>
                 </div>
-              </div>
-              <div class="level-item has-text-centered">
+            </div>
+            <div class="level-item has-text-centered">
                 <div>
-                  <p class="heading">Rôle</p>
-                  <p class="title is-5">{{ $role }} <?php if($user->role == 2) echo "🥇"; else if($user->role == 1) echo "🥈"; else echo "🥉"; ?></p>
+                    <p class="heading">@lang('Email')</p>
+                    <p class="title is-5">{{ $user->email }}</p>
                 </div>
-              </div>
+            </div>
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">Création du compte</p>
+                    <p class="title is-5">le {{ $user->created_at->format('d/m/Y') }} à
+                        {{ $user->created_at->format('H:i:s') }}</p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">Dernière modification du compte</p>
+                    <p class="title is-5">le {{ $user->updated_at->format('d/m/Y') }} à
+                        {{ $user->updated_at->format('H:i:s') }}</p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">Rôle</p>
+                    <p class="title is-5">{{ $role }} <?php if ($user->role == 2) {
+                        echo '🥇';
+                    } elseif ($user->role == 1) {
+                        echo '🥈';
+                    } else {
+                        echo '🥉';
+                    } ?></p>
+                </div>
+            </div>
         </nav>
         <hr>
         <nav class="level">
@@ -71,10 +79,12 @@
                             <i class="fa-solid fa-pencil"></i>
                         </span>
                     </a>
-                    <form id="delete{{ Auth::user()->id }}" action="{{ route('delete', ['user' => Auth::user()]) }}" method="POST" style="display: none;">
+                    <form id="delete{{ Auth::user()->id }}" action="{{ route('delete', ['user' => Auth::user()]) }}"
+                        method="POST" style="display: none;">
                         @csrf
                     </form>
-                    <a class="button is-danger ml-5" onclick="event.preventDefault(); document.getElementById('delete{{ Auth::user()->id }}').submit();">
+                    <a class="button is-danger ml-5"
+                        onclick="event.preventDefault(); document.getElementById('delete{{ Auth::user()->id }}').submit();">
                         <span>@lang('Delete my profile')</span>
                         <span class="icon">
                             <i class="fa-regular fa-trash-can"></i>
