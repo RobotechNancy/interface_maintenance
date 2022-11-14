@@ -10,7 +10,7 @@
         <div class="collapse navbar-collapse" id="navBarMain">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/">
+                    <a class="btn btn-light" aria-current="page" href="/">
                         <span class="icon">
                             <i class="fa-solid fa-house-chimney"></i>
                         </span>
@@ -19,9 +19,10 @@
                 </li>
             </ul>
             <ul class="navbar-nav mb-2 mb-lg-0">
-                @auth
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    @auth
                     <li class="nav-item dropdown dropstart">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        <a class="btn btn-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             <?php if (Auth::user()->role == 2) {
                                 echo '🥇';
@@ -45,7 +46,7 @@
                             <hr class="dropdown-divider">
                             <form method="POST" action="{{ route('delete', ['user' => Auth::user()]) }}">
                                 @csrf
-                                <a href="" class="dropdown-item"
+                                <a href="" class="dropdown-item text-danger"
                                     onclick="event.preventDefault(); this.closest('form').submit();">
                                     @lang('Delete my profile')
                                 </a>
@@ -64,7 +65,7 @@
                     </li>
 
                     <li class="nav-item active">
-                        <a class="nav-link" href="{{ url('/dashboard') }}">
+                        <a class="btn btn-primary" href="{{ url('/dashboard') }}">
                             <span class="icon">
                                 <i class="fa-solid fa-terminal"></i>
                             </span>
@@ -74,7 +75,7 @@
 
                     @if (Route::has('users'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('users') }}">
+                            <a class="btn btn-light" href="{{ route('users') }}">
                                 <span class="icon">
                                     <i class="fa-solid fa-users-gear"></i>
                                 </span>
@@ -82,10 +83,11 @@
                             </a>
                         </li>
                     @endif
+
                 @else
                     @if (Route::has('login'))
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{ route('login') }}">
+                            <a class="btn btn-primary" href="{{ route('login') }}">
                                 <span class="icon">
                                     <i class="fa-solid fa-right-to-bracket"></i>
                                 </span>
@@ -98,7 +100,7 @@
 
                     @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">
+                            <a class="btn btn-light" href="{{ route('register') }}">
                                 <span class="icon">
                                     <i class="fa-solid fa-user-plus"></i>
                                 </span>
@@ -108,7 +110,8 @@
                             </a>
                         </li>
                     @endif
-                </ul>
+                </div>
+            </ul>
             @endauth
         </div>
     </div>
