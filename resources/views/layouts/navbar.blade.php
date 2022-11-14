@@ -10,7 +10,7 @@
         <div class="collapse navbar-collapse" id="navBarMain">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">
+                    <a class="nav-link" aria-current="page" href="/">
                         <span class="icon">
                             <i class="fa-solid fa-house-chimney"></i>
                         </span>
