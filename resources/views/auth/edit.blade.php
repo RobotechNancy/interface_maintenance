@@ -58,39 +58,40 @@
             <div class="form-floating">
                 <select class="form-select bg-dark text-white <?php if (!empty($errors->get('role'))) {
                     echo 'is-invalid';
-                } ?>" id="role" name="role"
-                    required <?php if (Auth::user()->role == 2 && $user->role != 2) {
-                        echo 'disabled=false';
-                    } else {
-                        echo 'disabled=true';
-                    } ?>>
-                    <option value=0 <?php if ($user->role == 0) {
-                        echo 'selected';
-                    } ?>>Lecteur</option>
-                    <option value=1 <?php if ($user->role == 1) {
-                        echo 'selected';
-                    } ?>>Editeur</option>
-                    <option value=2 <?php if ($user->role == 2) {
-                        echo 'selected';
-                    } ?>>Administrateur</option>
+                } ?>" id="role" name="role" required
+
+                    @if (Auth::user()->role == 2 && $user->role != 2) disabled=false
+                    @else disabled=true @endif>
+
+                    <option value=0 @if ($user->role == 0) selected @endif>Lecteur</option>
+                    <option value=1 @if ($user->role == 1) selected @endif>Editeur</option>
+                    <option value=2 @if ($user->role == 2) selected @endif>Administrateur</option>
                 </select>
 
                 <label for="role" class="label">{{ __('Rôle') }}</label>
             </div>
             <x-input-error :messages="$errors->get('role')" />
-            <?php if(Auth::user()->role != 2 && Auth::user()->id != $user->id) { ?>
+
+            @if (Auth::user()->role != 2 && Auth::user()->id != $user->id)
+
             <p class="mt-2 text-warning"><small>Il n'est pas possible de modifier le rôle de l'utilisateur car
                     vous n'êtes pas administrateur.</small></p>
-            <?php } else if(Auth::user()->role != 2 && Auth::user()->id == $user->id) { ?>
+
+            @elseif (Auth::user()->role != 2 && Auth::user()->id == $user->id)
+
             <p class="mt-2 text-warning"><small>Il n'est pas possible de modifier le rôle de votre compte car vous
                     n'êtes pas administrateur.</small></p>
-            <?php } else if($user->role == 2 && Auth::user()->id != $user->id) { ?>
+
+            @elseif ($user->role == 2 && Auth::user()->id != $user->id)
+
             <p class="mt-2 text-warning"><small>Il n'est pas possible de modifier le rôle de l'utilisateur car il
                     s'agit d'un compte administrateur.</small></p>
-            <?php } else if($user->role == 2 && Auth::user()->id == $user->id) { ?>
+
+            @elseif ($user->role == 2 && Auth::user()->id == $user->id)
+
             <p class="mt-2 text-warning"><small>Il n'est pas possible de modifier le rôle de votre compte car vous
                     disposez déjà d'un compte administrateur.</small></p>
-            <?php } ?>
+            @endif
         </div>
 
         <div class="row">
