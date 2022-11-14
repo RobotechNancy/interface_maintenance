@@ -53,8 +53,7 @@
 
         <hr>
     </dl>
-
-    <div class="btn-group mt-3" role="group">
+    <div class="d-grid gap-2 d-md-block mt-3" role="group">
         <a class="btn btn-primary" href="{{ route('edit', ['id' => Auth::user()->id]) }}">
             <span>@lang('Edit my profile')</span>
             <span class="icon">

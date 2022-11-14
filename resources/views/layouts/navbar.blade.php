@@ -10,7 +10,7 @@
         <div class="collapse navbar-collapse" id="navBarMain">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="btn btn-light" aria-current="page" href="/">
+                    <a class="btn btn-dark" aria-current="page" href="/">
                         <span class="icon">
                             <i class="fa-solid fa-house-chimney"></i>
                         </span>
@@ -21,7 +21,7 @@
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     @auth
-                    <li class="nav-item dropdown dropstart">
+                    <li class="nav-item dropdown">
                         <a class="btn btn-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             <?php if (Auth::user()->role == 2) {

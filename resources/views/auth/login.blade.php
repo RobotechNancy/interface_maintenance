@@ -12,7 +12,7 @@
             <div class="form-floating <?php if (!empty($errors->get('email'))) {
                 echo 'is-invalid';
             } ?>">
-                <input class="form-control bg-dark text-white-50 <?php if(!empty($errors->get('email'))) echo "is-invalid" ?>" type="email" id="email" name="email" value="{{ old('email') }}" placeholder="alex@example.com" aria-describedby="envelope" required autofocus>
+                <input class="form-control bg-dark text-white <?php if(!empty($errors->get('email'))) echo "is-invalid" ?>" type="email" id="email" name="email" value="{{ old('email') }}" placeholder="alex@example.com" aria-describedby="envelope" required autofocus>
 
                 <label for="email" class="form-label">{{  __('Email') }}</label>
             </div>
@@ -26,7 +26,7 @@
             <div class="form-floating <?php if (!empty($errors->get('email'))) {
                 echo 'is-invalid';
             } ?>">
-                <input class="form-control bg-dark text-white-50 <?php if(!empty($errors->get('password'))) echo "is-invalid" ?>" type="password" id="password" name="password" autocomplete="current-password" placeholder="*********" aria-describedby="lock" required>
+                <input class="form-control bg-dark text-white <?php if(!empty($errors->get('password'))) echo "is-invalid" ?>" type="password" id="password" name="password" autocomplete="current-password" placeholder="*********" aria-describedby="lock" required>
 
                 <label for="password" class="form-label">{{  __('Password') }}</label>
             </div>

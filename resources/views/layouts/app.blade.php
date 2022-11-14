@@ -27,7 +27,7 @@
     <script src="{{ asset('fontawesome/js/all.js') }}"></script>
 </head>
 
-<body class="bg-dark text-white-50">
+<body class="bg-dark text-white">
     @include('layouts.navbar')
     <div class="container-sm mt-5">
         {{ $slot }}

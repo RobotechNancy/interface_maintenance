@@ -2,7 +2,7 @@
     <x-slot name="title">Erreur @yield("code")</x-slot>
     <section class="section is-small">
         <h3>Erreur @yield("code") : @yield("title")</h3>
-        <h5>
+        <h5 class="mt-5">
 
           @yield("message")<br>
 

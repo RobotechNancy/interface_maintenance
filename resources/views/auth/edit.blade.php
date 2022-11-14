@@ -16,7 +16,7 @@
                         echo 'is-invalid';
                     } ?>">
 
-                        <input class="form-control bg-dark text-white-50 <?php if (!empty($errors->get('name'))) {
+                        <input class="form-control bg-dark text-white <?php if (!empty($errors->get('name'))) {
                             echo 'is-invalid';
                         } ?>" type="name" id="name"
                             name="name" value="{{ Auth::user()->name }}" placeholder="Alex" aria-describedby="user"
@@ -40,7 +40,7 @@
                     <div class="form-floating <?php if (!empty($errors->get('email'))) {
                         echo 'is-invalid';
                     } ?>">
-                        <input class="form-control bg-dark text-white-50 <?php if (!empty($errors->get('email'))) {
+                        <input class="form-control bg-dark text-white <?php if (!empty($errors->get('email'))) {
                             echo 'is-invalid';
                         } ?>" type="email" id="email"
                             name="email" value="{{ Auth::user()->email }}" placeholder="alex@example.com"
@@ -56,7 +56,7 @@
 
         <div class="mb-4">
             <div class="form-floating">
-                <select class="form-select bg-dark text-white-50 <?php if (!empty($errors->get('role'))) {
+                <select class="form-select bg-dark text-white <?php if (!empty($errors->get('role'))) {
                     echo 'is-invalid';
                 } ?>" id="role" name="role" required
                     <?php if (Auth::user()->role == 2 && $user->role != 2) {
@@ -102,7 +102,7 @@
                     <div class="form-floating <?php if (!empty($errors->get('password'))) {
                         echo 'is-invalid';
                     } ?>">
-                        <input class="form-control bg-dark text-white-50 <?php if (!empty($errors->get('password'))) {
+                        <input class="form-control bg-dark text-white <?php if (!empty($errors->get('password'))) {
                             echo 'is-invalid';
                         } ?>" type="password"
                             id="password" name="password" autocomplete="new-password" placeholder="*********"
@@ -126,7 +126,7 @@
                     <div class="form-floating <?php if (!empty($errors->get('password_confirmation'))) {
                         echo 'is-invalid';
                     } ?>">
-                        <input class="form-control bg-dark text-white-50 <?php if (!empty($errors->get('password_confirmation'))) {
+                        <input class="form-control bg-dark text-white <?php if (!empty($errors->get('password_confirmation'))) {
                             echo 'is-invalid';
                         } ?>" type="password"
                             id="password_confirmation" name="password_confirmation" autocomplete="new-password"
