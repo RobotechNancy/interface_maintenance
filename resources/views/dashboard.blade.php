@@ -5,7 +5,24 @@
     <div class="container">
         <div class="row">
           <div class="col">
-            <h5 class="mb-4">Console</h5>
+            <h5 class="mb-4">Console
+
+                <x-button id="20" icon="fa-solid fa-eraser"
+                    url="{{ route('clearlogs') }}" color="btn-danger" addons="btn-sm"/>
+
+                <x-button id="0" icon="fa-solid fa-file-export"
+                    url="{{ route('exportlogs') }}" addons="btn-sm" />
+
+                <a href="{{ asset('logs.txt') }}" target="_blank">
+                    <button class="button is-info ml-2">
+                        <span>Consulter le fichier de logs</span>
+                        <span class="icon">
+                            <i class="fa-solid fa-eye"></i>
+                        </span>
+                    </button>
+                </a>
+
+            </h5>
             <div id="logs_console" style="height: 100%; overflow: scroll;" style="font-family: monospace !important">
                 @if (count($logs) > 0)
                     @foreach ($logs as $log)
@@ -13,7 +30,7 @@
                         <?php $log->response = str_replace("\\r", "\r", $log->response); ?>
 
                         <i class="fa-solid fa-caret-right" id="log_icon_<?= $log->id ?>" onclick="showCompleteLog('{{ $log->id }}');"></i>
-                        <span>[Le {{ $log->created_at->format('d/m/Y') }} à {{ $log->created_at->format('H:i:s') }}]</span><br>
+                        <span>[Le {{ $log->created_at->format('d/m/Y') }} à {{ $log->created_at->format('H:i:s') }}]</span><br class="d-sm-none">
                         <span>{{ $log->command_name }}</span><br>
 
                         <?php $datas = json_decode($log->response); ?>
