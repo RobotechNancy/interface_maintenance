@@ -51,8 +51,6 @@
                 <div class="column">
                 <x-button title="Test connectivité" id="1" icon="fa-solid fa-tower-cell"
                     url="{{ route('log') }}" />
-                <x-button title="Avancer le robot" id="2" icon="fa-solid fa-gamepad"
-                    url="{{ route('log') }}" />
                 <x-button title="Position du robot" id="3" icon="fa-solid fa-crosshairs"
                     url="{{ route('log') }}" addons="mt-2"/>
                 </div>
@@ -62,29 +60,29 @@
             <p class="title is-5">Commandes de la base roulante</p>
             <div class="columns is-mobile is-centered is-gapless">
                 <div class="column">
-                    <x-button id="4" icon="fa-solid fa-arrow-rotate-right" url="{{ route('log') }}" color="is-white" addons="is-rounded box is-medium is-fullwidth"/>
+                    <x-button id="4" icon="fa-solid fa-arrow-rotate-right" url="{{ route('log') }}" color="is-white" addons="is-rounded is-medium is-fullwidth"/>
                 </div>
                 <div class="column">
                     <x-button id="5" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}"
-                        iconstyle="--fa-rotate-angle: 210deg;" color="is-white" addons="is-rounded box is-medium is-fullwidth" />
+                        iconstyle="--fa-rotate-angle: 210deg;" color="is-white" addons="is-rounded is-medium is-fullwidth" />
                     <x-button id="6" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}"
-                        iconstyle="--fa-rotate-angle: 150deg;" color="is-white" addons="is-rounded box is-medium is-fullwidth" />
+                        iconstyle="--fa-rotate-angle: 150deg;" color="is-white" addons="is-rounded is-medium is-fullwidth" />
                 </div>
                 <div class="column">
                     <x-button id="7" icon="fa-solid fa-arrow-up fa-rotate-by" url="{{ route('log') }}"
-                        color="is-white" addons="is-rounded box is-medium is-fullwidth" />
+                        color="is-white" addons="is-rounded is-medium is-fullwidth" />
                     <x-button id="8" icon="fa-solid fa-arrow-down fa-rotate-by" url="{{ route('log') }}"
-                        color="is-white" addons="is-rounded box is-medium is-fullwidth" />
+                        color="is-white" addons="is-rounded is-medium is-fullwidth" />
                 </div>
                 <div class="column">
                     <x-button id="9" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}"
-                        iconstyle="--fa-rotate-angle: 330deg;" color="is-white" addons="is-rounded box is-medium is-fullwidth" />
+                        iconstyle="--fa-rotate-angle: 330deg;" color="is-white" addons="is-rounded is-medium is-fullwidth" />
                     <x-button id="10" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}"
-                        iconstyle="--fa-rotate-angle: 30deg;" color="is-white" addons="is-rounded box is-medium is-fullwidth" />
+                        iconstyle="--fa-rotate-angle: 30deg;" color="is-white" addons="is-rounded is-medium is-fullwidth" />
                 </div>
 
                 <div class="column">
-                    <x-button id="11" icon="fa-solid fa-arrow-rotate-left" url="{{ route('log') }}" color="is-white" addons="is-rounded box is-medium is-fullwidth" />
+                    <x-button id="11" icon="fa-solid fa-arrow-rotate-left" url="{{ route('log') }}" color="is-white" addons="is-rounded is-medium is-fullwidth" />
                 </div>
             </div>
         </div>
