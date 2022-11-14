@@ -17,20 +17,19 @@
         <title>Robotech Nancy | Interface de maintenance</title>
     @endif
 
-    <link href="{{ asset('css/bulma.min.css') }}" type="text/css" rel="stylesheet">
-    <link href="{{ asset('css/bulma-switch.min.css') }}" type="text/css" rel="stylesheet">
-    <link href="{{ asset('css/bulma-pageloader.min.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.min.css') }}" type="text/css" rel="stylesheet">
     <link href="{{ asset('fontawesome/css/all.css') }}" type="text/css" rel="stylesheet">
 
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/manage-notifications.js') }}"></script>
     <script src="{{ asset('js/send-data.js') }}"></script>
     <script src="{{ asset('fontawesome/js/all.js') }}"></script>
 </head>
 
-<body>
+<body class="bg-dark text-white-50">
     @include('layouts.navbar')
-    <div class="box">
+    <div class="container-sm mt-5">
         {{ $slot }}
     </div>
 </body>

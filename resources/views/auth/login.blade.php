@@ -1,47 +1,40 @@
 <x-app-layout>
     <x-slot name="title"> @lang('Log in') </x-slot>
-    <form class="box" method="POST" action="{{ route('login') }}">
+
+    <h4 class="mb-5">Formulaire de connexion</h4>
+
+    <form method="POST" action="{{ route('login') }}">
         @csrf
-        <div class="field">
-          <label class="label">{{  __('Email') }}</label>
-          <div class="control has-icons-left">
-            <input class="input <?php if(!empty($errors->get('email'))) echo "is-danger" ?>" type="email" id="email" name="email" value="{{ old('email') }}" placeholder="alex@example.com" required autofocus>
-            <span class="icon is-small is-left">
-                <i class="fas fa-envelope"></i>
-            </span>
-          </div>
-          <x-input-error :messages="$errors->get('email')" />
+        <label for="email" class="form-label">{{  __('Email') }}</label>
+
+        <div class="input-group mb-4">
+            <span class="input-group-text" id="envelope"><i class="fas fa-envelope"></i></span>
+            <input class="form-control bg-dark text-white-50 <?php if(!empty($errors->get('email'))) echo "is-invalid" ?>" type="email" id="email" name="email" value="{{ old('email') }}" placeholder="alex@example.com" aria-describedby="envelope" required autofocus>
+
+            <x-input-error :messages="$errors->get('email')" />
+
         </div>
 
-        <div class="field">
-          <label class="label">{{  __('Password') }}</label>
-          <div class="control has-icons-left">
-            <input class="input <?php if(!empty($errors->get('password'))) echo "is-danger" ?>" id="password" type="password" name="password" autocomplete="current-password" placeholder="********" required>
-            <span class="icon is-small is-left">
-                <i class="fas fa-lock"></i>
-            </span>
-          </div>
-          <x-input-error :messages="$errors->get('password')" />
+        <label for="password" class="form-label">{{  __('Password') }}</label>
+
+        <div class="input-group mb-4">
+            <span class="input-group-text" id="lock"><i class="fas fa-lock"></i></span>
+            <input class="form-control bg-dark text-white-50 <?php if(!empty($errors->get('password'))) echo "is-invalid" ?>" type="password" id="password" name="password" autocomplete="current-password" placeholder="*********" aria-describedby="lock" required>
+
+            <x-input-error :messages="$errors->get('password')" />
+
         </div>
 
-        <div class="field">
-            <p class="control">
-                <div class="b-checkbox is-default is-circular">
-                    <input id="checkbox" class="switch is-rounded is-link" name="remember" checked type="checkbox">
-                    <label for="checkbox">
-                        {{  __('Remember me') }}
-                    </label>
-                </div>
-            </p>
+        <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" name="remember" id="checkbox" checked>
+            <label class="form-check-label" for="checkbox">
+                {{  __('Remember me') }}
+            </label>
         </div>
 
-        <div class="field is-grouped mt-5">
-            <div class="control">
-                <button class="button is-link">{{  __('Log in') }}</button>
-            </div>
-            <div class="control">
-                <a class="button is-link is-outlined" href="{{ route('register') }}">{{ __('Not already registered?') }}</a>
-            </div>
+        <div class="btn-group" role="group">
+            <button type="submit" class="btn btn-primary">{{  __('Log in') }}</button>
+            <a class="btn btn-light" href="{{ route('register') }}">{{ __('Not already registered?') }}</a>
         </div>
-      </form>
+    </form>
 </x-app-layout>

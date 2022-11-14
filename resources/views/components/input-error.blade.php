@@ -1,9 +1,9 @@
 @props(['messages'])
 
 @if ($messages)
-    <div class="block">
+    <div class="invalid-feedback">
         @foreach ((array) $messages as $message)
-            <p class="help is-danger">{{ $message }}</p>
+            {{ $message }}<br>
         @endforeach
     </div>
 @endif
