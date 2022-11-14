@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="title"> @lang('Profile edition') </x-slot>
 
-    <h4 class="mb-5">Formulaire de modification de compte</h4>
+    <h4 class="mb-5">Formulaire de modification du compte "{{ $user->name }}"</h4>
 
     <form method="POST" action="{{ route('update', ['user' => $user]) }}">
         @csrf
@@ -19,7 +19,7 @@
                         <input class="form-control bg-dark text-white <?php if (!empty($errors->get('name'))) {
                             echo 'is-invalid';
                         } ?>" type="name" id="name"
-                            name="name" value="{{ Auth::user()->name }}" placeholder="Alex" aria-describedby="user"
+                            name="name" value="{{ $user->name }}" placeholder="Alex" aria-describedby="user"
                             required autofocus>
 
                         <label for="name" class="form-label">{{ __('Name') }}</label>
@@ -43,7 +43,7 @@
                         <input class="form-control bg-dark text-white <?php if (!empty($errors->get('email'))) {
                             echo 'is-invalid';
                         } ?>" type="email" id="email"
-                            name="email" value="{{ Auth::user()->email }}" placeholder="alex@example.com"
+                            name="email" value="{{ $user->email }}" placeholder="alex@example.com"
                             aria-describedby="envelope" required>
 
                         <label for="email" class="form-label">{{ __('Email') }}</label>
