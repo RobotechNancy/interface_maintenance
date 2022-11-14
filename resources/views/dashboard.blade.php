@@ -49,7 +49,7 @@
             <p class="title is-5">Commandes de diagnostic</p>
             <div class="buttons">
                 <x-button title="Vérification de la connectivité" id="1" icon="fa-solid fa-tower-cell"
-                    url="{{ route('log') }}" />
+                    url="{{ route('log') }}" addons="box" />
                 <x-button title="Avancer le robot" id="2" icon="fa-solid fa-gamepad"
                     url="{{ route('log') }}" />
                 <x-button title="Position du robot" id="3" icon="fa-solid fa-crosshairs"
