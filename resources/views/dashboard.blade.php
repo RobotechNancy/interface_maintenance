@@ -49,10 +49,10 @@
             <p class="title is-5">Commandes de diagnostic</p>
             <div class="columns">
                 <div class="column">
-                <x-button title="Test connectivité" id="1" icon="fa-solid fa-tower-cell"
-                    url="{{ route('log') }}" />
-                <x-button title="Position du robot" id="3" icon="fa-solid fa-crosshairs"
-                    url="{{ route('log') }}" addons="mt-2"/>
+                    <x-button title="Test connectivité" id="1" icon="fa-solid fa-tower-cell"
+                        url="{{ route('log') }}" />
+                    <x-button title="Position du robot" id="3" icon="fa-solid fa-crosshairs"
+                        url="{{ route('log') }}" addons="mt-2" />
                 </div>
             </div>
         </div>
@@ -60,13 +60,16 @@
             <p class="title is-5">Commandes de la base roulante</p>
             <div class="columns is-mobile is-centered is-gapless">
                 <div class="column">
-                    <x-button id="4" icon="fa-solid fa-arrow-rotate-right" url="{{ route('log') }}" color="is-white" addons="is-rounded is-medium is-fullwidth"/>
+                    <x-button id="4" icon="fa-solid fa-arrow-rotate-right" url="{{ route('log') }}"
+                        color="is-white" addons="is-rounded is-medium is-fullwidth" />
                 </div>
                 <div class="column">
                     <x-button id="5" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}"
-                        iconstyle="--fa-rotate-angle: 210deg;" color="is-white" addons="is-rounded is-medium is-fullwidth" />
+                        iconstyle="--fa-rotate-angle: 210deg;" color="is-white"
+                        addons="is-rounded is-medium is-fullwidth" />
                     <x-button id="6" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}"
-                        iconstyle="--fa-rotate-angle: 150deg;" color="is-white" addons="is-rounded is-medium is-fullwidth" />
+                        iconstyle="--fa-rotate-angle: 150deg;" color="is-white"
+                        addons="is-rounded is-medium is-fullwidth" />
                 </div>
                 <div class="column">
                     <x-button id="7" icon="fa-solid fa-arrow-up fa-rotate-by" url="{{ route('log') }}"
@@ -76,25 +79,28 @@
                 </div>
                 <div class="column">
                     <x-button id="9" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}"
-                        iconstyle="--fa-rotate-angle: 330deg;" color="is-white" addons="is-rounded is-medium is-fullwidth" />
+                        iconstyle="--fa-rotate-angle: 330deg;" color="is-white"
+                        addons="is-rounded is-medium is-fullwidth" />
                     <x-button id="10" icon="fa-solid fa-arrow-right fa-rotate-by" url="{{ route('log') }}"
-                        iconstyle="--fa-rotate-angle: 30deg;" color="is-white" addons="is-rounded is-medium is-fullwidth" />
+                        iconstyle="--fa-rotate-angle: 30deg;" color="is-white"
+                        addons="is-rounded is-medium is-fullwidth" />
                 </div>
 
                 <div class="column">
-                    <x-button id="11" icon="fa-solid fa-arrow-rotate-left" url="{{ route('log') }}" color="is-white" addons="is-rounded is-medium is-fullwidth" />
+                    <x-button id="11" icon="fa-solid fa-arrow-rotate-left" url="{{ route('log') }}"
+                        color="is-white" addons="is-rounded is-medium is-fullwidth" />
                 </div>
             </div>
         </div>
         <div class="column box">
             <p class="title is-5">Autres commandes</p>
             <p class="control">
-                <div class="b-checkbox is-default is-circular">
-                    <input id="checkbox" class="switch is-medium is-success" name="remember" checked type="checkbox">
-                    <label for="checkbox">
-                        {{  __('Alimentation générale') }}
-                    </label>
-                </div>
+            <div class="b-checkbox is-default is-circular">
+                <input id="checkbox" class="switch is-medium is-success" name="remember" checked type="checkbox">
+                <label for="checkbox">
+                    {{ __('Alimentation générale') }}
+                </label>
+            </div>
             </p>
             <!--div class="columns is-vcentered">
                 <div class="column">
@@ -114,13 +120,14 @@
     </div>
     <div class="pageloader is-link"><span class="title">L'action est en cours de traitement, veuillez
             patienter...</span></div>
+    @if (session()->has('message'))
+        <x-notification title="Gestion du profil">{{ session('message') }}</x-notification>
+    @endif
+    @if (session()->has('warning'))
+        <x-notification title="Erreur de compte" color="bg-warning">{{ session('warning') }}</x-notification>
+    @endif
+    @if (session()->has('actions'))
+        <x-notification title="Compte rendu d'action">{{ session('actions') }}</x-notification>
+    @endif
+
 </x-app-layout>
-@if (session()->has('message'))
-    <x-notification title="Gestion du profil">{{ session('message') }}</x-notification>
-@endif
-@if (session()->has('warning'))
-    <x-notification title="Erreur de compte" color="is-warning">{{ session('warning') }}</x-notification>
-@endif
-@if (session()->has('actions'))
-    <x-notification title="Compte rendu d'action" color="is-info">{{ session('actions') }}</x-notification>
-@endif

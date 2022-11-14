@@ -58,8 +58,8 @@
             <div class="form-floating">
                 <select class="form-select bg-dark text-white <?php if (!empty($errors->get('role'))) {
                     echo 'is-invalid';
-                } ?>" id="role" name="role" required
-                    <?php if (Auth::user()->role == 2 && $user->role != 2) {
+                } ?>" id="role" name="role"
+                    required <?php if (Auth::user()->role == 2 && $user->role != 2) {
                         echo 'disabled=false';
                     } else {
                         echo 'disabled=true';
@@ -80,16 +80,16 @@
             <x-input-error :messages="$errors->get('role')" />
             <?php if(Auth::user()->role != 2 && Auth::user()->id != $user->id) { ?>
             <p class="mt-2 text-warning"><small>Il n'est pas possible de modifier le rôle de l'utilisateur car
-                vous n'êtes pas administrateur.</small></p>
+                    vous n'êtes pas administrateur.</small></p>
             <?php } else if(Auth::user()->role != 2 && Auth::user()->id == $user->id) { ?>
             <p class="mt-2 text-warning"><small>Il n'est pas possible de modifier le rôle de votre compte car vous
-                n'êtes pas administrateur.</small></p>
+                    n'êtes pas administrateur.</small></p>
             <?php } else if($user->role == 2 && Auth::user()->id != $user->id) { ?>
             <p class="mt-2 text-warning"><small>Il n'est pas possible de modifier le rôle de l'utilisateur car il
-                s'agit d'un compte administrateur.</small></p>
+                    s'agit d'un compte administrateur.</small></p>
             <?php } else if($user->role == 2 && Auth::user()->id == $user->id) { ?>
             <p class="mt-2 text-warning"><small>Il n'est pas possible de modifier le rôle de votre compte car vous
-                disposez déjà d'un compte administrateur.</small></p>
+                    disposez déjà d'un compte administrateur.</small></p>
             <?php } ?>
         </div>
 
@@ -148,12 +148,12 @@
     </form>
 
     <p class="mt-5"><small>Dernière modification de ce profil le {{ $user->updated_at->format('d/m/Y') }} à
-        {{ $user->updated_at->format('H:i:s') }}.</small></p>
+            {{ $user->updated_at->format('H:i:s') }}.</small></p>
 
+    @if (session()->has('success'))
+        <x-notification title="Modification du profil" color="bg-success">{{ session('success') }}</x-notification>
+    @endif
+    @if (session()->has('warning'))
+        <x-notification title="Modification du profil" color="bg-warning">{{ session('warning') }}</x-notification>
+    @endif
 </x-app-layout>
-@if (session()->has('success'))
-    <x-notification title="Modification du profil" color="is-success">{{ session('success') }}</x-notification>
-@endif
-@if (session()->has('warning'))
-    <x-notification title="Modification du profil" color="is-warning">{{ session('warning') }}</x-notification>
-@endif
