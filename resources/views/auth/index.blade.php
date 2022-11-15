@@ -68,5 +68,5 @@
     </div>
 </x-app-layout>
 @if (session()->has('message'))
-    <x-notification title="Suppression de profil" color="is-danger">{{ session('message') }}</x-notification>
+    <x-notification title="Suppression de profil" color="bg-danger">{{ session('message') }}</x-notification>
 @endif
