@@ -1,4 +1,4 @@
-@extends('errors::minimal')
+@extends('errors.minimal')
 
 @section('title', __('La ressource demandée est expirée'))
 @section('code', '419')

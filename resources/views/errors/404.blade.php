@@ -1,4 +1,4 @@
-@extends('errors::minimal')
+@extends('errors.minimal')
 
 @section('title', __('Contenu introuvable'))
 @section('code', '404')

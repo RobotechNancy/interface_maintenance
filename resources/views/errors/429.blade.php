@@ -1,4 +1,4 @@
-@extends('errors::minimal')
+@extends('errors.minimal')
 
 @section('title', __('Trop de requêtes transmises'))
 @section('code', '429')
