@@ -7,14 +7,16 @@ function sendData(request_url, request_id) {
         });
 
         $("#form_" + request_id).submit(function (e) {
+
             e.preventDefault();
-            $("#btn_" + request_id).addClass("is-loading");
-            if (request_id == 3) $(".pageloader").addClass("is-active");
             $(".btn_form").attr("disabled", true);
+
             $.ajax({
+
                 type: "POST",
                 url: request_url,
                 data: { id: request_id },
+
                 success: function (data) {
                     if (request_id == 0)
                         $(".logs").html(
@@ -23,12 +25,11 @@ function sendData(request_url, request_id) {
                             "</a>.</span><br>" +
                             $(".logs").html()
                         );
+
                     else $("#logs_console").load(" #logs_console");
-                    $("#btn_" + request_id).removeClass("is-loading");
-                    if (request_id == 3)
-                        $(".pageloader").removeClass("is-active");
                     $(".btn_form").attr("disabled", false);
                 },
+
                 error: function (data) {
                     $(".logs").html(
                         "<span class='tag is-danger'>Error " +
@@ -43,10 +44,6 @@ function sendData(request_url, request_id) {
                         $(".logs").html()
                     );
 
-                    $("#btn_" + request_id).removeClass("is-loading");
-                    console.log(data);
-                    if (request_id == 3)
-                        $(".pageloader").removeClass("is-active");
                     $(".btn_form").attr("disabled", false);
                 },
             });
@@ -61,10 +58,3 @@ function showCompleteLog(log_id) {
         $("#log_reponse_" + log_id).fadeToggle();
     });
 }
-
-$(document).ready(function () {
-    $(".navbar-burger").click(function () {
-        $(".navbar-burger").toggleClass("is-active");
-        $(".navbar-menu").toggleClass("is-active");
-    });
-});
