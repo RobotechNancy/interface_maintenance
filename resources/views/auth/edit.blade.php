@@ -60,8 +60,7 @@
                     echo 'is-invalid';
                 } ?>" id="role" name="role"
 
-                    @if (Auth::user()->role == 2 && $user->role != 2) disabled=false
-                    @else disabled=true @endif>
+                    @if (!(Auth::user()->role == 2 && $user->role != 2)) disabled=true @endif>
 
                     <option value=0 @if ($user->role == 0) selected @endif>Lecteur</option>
                     <option value=1 @if ($user->role == 1) selected @endif>Editeur</option>
