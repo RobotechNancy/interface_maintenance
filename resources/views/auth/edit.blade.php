@@ -20,7 +20,7 @@
                             echo 'is-invalid';
                         } ?>" type="name" id="name"
                             name="name" value="{{ $user->name }}" placeholder="Alex" aria-describedby="user"
-                            required autofocus>
+                         autofocus>
 
                         <label for="name" class="form-label">{{ __('Name') }}</label>
 
@@ -44,7 +44,7 @@
                             echo 'is-invalid';
                         } ?>" type="email" id="email"
                             name="email" value="{{ $user->email }}" placeholder="alex@example.com"
-                            aria-describedby="envelope" required>
+                            aria-describedby="envelope">
 
                         <label for="email" class="form-label">{{ __('Email') }}</label>
                     </div>
@@ -58,7 +58,7 @@
             <div class="form-floating">
                 <select class="form-select bg-dark text-white <?php if (!empty($errors->get('role'))) {
                     echo 'is-invalid';
-                } ?>" id="role" name="role" required
+                } ?>" id="role" name="role"
 
                     @if (Auth::user()->role == 2 && $user->role != 2) disabled=false
                     @else disabled=true @endif>
@@ -107,7 +107,7 @@
                             echo 'is-invalid';
                         } ?>" type="password"
                             id="password" name="password" autocomplete="new-password" placeholder="*********"
-                            aria-describedby="lock" required>
+                            aria-describedby="lock">
 
                         <label for="password" class="form-label">{{ __('Password') }}</label>
 
@@ -131,7 +131,7 @@
                             echo 'is-invalid';
                         } ?>" type="password"
                             id="password_confirmation" name="password_confirmation" autocomplete="new-password"
-                            placeholder="*********" aria-describedby="lock" required>
+                            placeholder="*********" aria-describedby="lock">
 
                         <label for="password_confirmation" class="form-label">{{ __('Confirm Password') }}</label>
 
