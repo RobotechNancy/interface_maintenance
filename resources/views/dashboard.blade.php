@@ -4,7 +4,7 @@
 
     <div class="container">
         <div class="row g-2">
-            <div class="col">
+            <div class="col pr-4">
                 <h5 class="mb-4">
                     <div class="hstack gap-2">
                         Console
@@ -46,7 +46,7 @@
                                         <li class="text-info">&nbsp;&nbsp;&nbsp;ID : <b>{{ $data->{"id"} }}</b></li>
                                         <li class="text-warning">&nbsp;&nbsp;&nbsp;Data : {{ $data->{"data"} }}</li>
                                         <li class="@if ($data->{'status'} == 0) text-success @else text-danger @endif">&nbsp;&nbsp;&nbsp;Status : <b>{{ $data->{"status"} }}</b></li>
-                                    }
+                                    },
                                 </ul>
                                 @endforeach
                             </div>
@@ -60,7 +60,7 @@
 
             <div class="w-100 d-sm-none"></div>
 
-            <div class="col d-block">
+            <div class="col d-grid m-3">
                 <div class="row row-cols-1 row-cols-md-2 g-3">
                     <div class="col">
                         <h5 class="mb-3">Commandes de diagnostic</h5>
@@ -73,7 +73,7 @@
                     <div class="w-100 d-sm-none"></div>
 
                     <div class="col">
-                        <h5 class="mb-3">Commandes de la base roulante</h5>
+                        <h5 class="mb-3">Base roulante</h5>
 
                         <div class="vstack gap-2">
                             <div class="hstack gap-2">
