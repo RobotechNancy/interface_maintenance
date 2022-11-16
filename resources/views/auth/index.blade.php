@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="title"> @lang('Users list') </x-slot>
-    <h4 class="mb-5">Liste des utilisateurs du site</h4>
+    <h4 class="mb-5"><x-button-back />Liste des utilisateurs du site</h4>
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
 
@@ -23,7 +23,7 @@
             ?>
 
             <div class="col">
-                <div class="card text-bg-dark h-100">
+                <div class="card text-bg-dark border border-light h-100" style="--bs-border-opacity: .5;">
                     <div class="card-body">
                         <h5 class="card-title">{{ $user->name }}
                             @if (Auth::user()->role == 2 || $user->id == Auth::user()->id)

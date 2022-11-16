@@ -70,7 +70,7 @@ class LogController extends Controller
             case 10:
                 $command_name ="Recule à droite";
                 $count = 1;
-                break; 
+                break;
 
             case 11:
                 $command_name ="Tourne à gauche";
@@ -79,7 +79,7 @@ class LogController extends Controller
             case 12:
                 $command_name ="Allumage général";
                 $count = 1;
-                break;                
+                break;
             case 13:
                 $command_name ="Coupure générale";
                 $count = 1;
@@ -89,7 +89,7 @@ class LogController extends Controller
                 $command_name = "Commande n°". $request->id ." invalide";
                 $count = 1;
                 break;
-            
+
         }
 
         $log = new Log;
@@ -108,7 +108,7 @@ class LogController extends Controller
                 $response[$i] = ["id" => $custom_i, "data" => $output[0], "status" => $retval];
 
             if($retval != 0)
-                $log->state = 0; // À peut-être modifier à un moment 
+                $log->state = $retval; // À peut-être modifier à un moment
         }
         $log->response = json_encode($response);
 
@@ -140,16 +140,21 @@ class LogController extends Controller
         file_put_contents($logfile, "");
 
         foreach ($logs as $log) {
-            $custom_log = "[Le ".$log->created_at->format("d/m/Y")." à ".$log->created_at->format("H:i:s")."]\r\r\t-> Commande : ".$log->command_name."\r\t-> Retour : ".$log->state;
-            $custom_log .= "\r\t-> Réponse : \r";
+
+            $icon_state_log = $log->state != 0 ? "🔴" : "🟢";
+
+            $custom_log = "[Le ".$log->created_at->format("d/m/Y")." à ".$log->created_at->format("H:i:s")."]\r\r\t🔵 Commande : ".$log->command_name."\r\t".$icon_state_log." Retour : ".$log->state;
+            $custom_log .= "\r\t🔵 Réponse : \r";
 
             $datas = json_decode($log->response);
 
             foreach ($datas as $data) {
 
-                $custom_log .= "\r\t\t-> ID : ".$data->{"id"};
-                $custom_log .= "\r\t\t-> Data : ".$data->{"data"};
-                $custom_log .= "\r\t\t-> Retour : ".$data->{"status"}."\r";
+                $icon_state_data = $data->{"status"} != 0 ? "🟥" : "🟩";
+
+                $custom_log .= "\r\t\t🔷 ID : ".$data->{"id"};
+                $custom_log .= "\r\t\t💠 Data : ".$data->{"data"};
+                $custom_log .= "\r\t\t".$icon_state_data." Retour : ".$data->{"status"}."\r";
             }
 
             $current_content = file_get_contents($logfile);

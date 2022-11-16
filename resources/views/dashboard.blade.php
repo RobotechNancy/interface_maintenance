@@ -28,19 +28,26 @@
                         @foreach ($logs as $log)
                             <?php $log->response = str_replace("\\r", "\r", $log->response); ?>
 
-                            <i class="fa-solid fa-caret-right" id="log_icon_<?= $log->id ?>"
-                                onclick="showCompleteLog('{{ $log->id }}');"></i>
-                            <span>[Le {{ $log->created_at->format('d/m/Y') }} à
-                                {{ $log->created_at->format('H:i:s') }}]</span><br class="d-sm-none">
-                            <span>{{ $log->command_name }}</span><br>
+                            <i class="fa-solid fa-caret-right mt-2" id="log_icon_<?= $log->id ?>"
+                                onclick="showCompleteLog('{{ $log->id }}');"></i>&nbsp;
+                            <span class="text-dark bg-white">
+                                &nbsp;Le <b>{{ $log->created_at->format('d/m') }}</b> à
+                                <b>{{ $log->created_at->format('H:i:s') }}</b>&nbsp;
+                            </span>
+                            <br class="d-sm-none">
+                            <span class="text-warning">&nbsp;&nbsp;<b>{{ $log->command_name }}</b></span><span class="@if ($log->state == 0) text-success @else text-danger @endif">&nbsp;&nbsp;(<b>{{ $log->state }}</b>)</span><br>
 
                             <?php $datas = json_decode($log->response); ?>
 
                             <div id="log_reponse_<?= $log->id ?>" style="display: none">
                                 @foreach ($datas as $data)
-                                    <span>{{ $data->{"id"} }}</span>
-                                    <span>{{ $data->{"data"} }}</span>
-                                    <span>{{ $data->{"status"} }}</span>
+                                <ul class="mt-3 list-group">
+                                    {
+                                        <li class="text-info">&nbsp;&nbsp;&nbsp;ID : <b>{{ $data->{"id"} }}</b></li>
+                                        <li class="text-warning">&nbsp;&nbsp;&nbsp;Data : {{ $data->{"data"} }}</li>
+                                        <li class="@if ($data->{'status'} == 0) text-success @else text-danger @endif">&nbsp;&nbsp;&nbsp;Status : <b>{{ $data->{"status"} }}</b></li>
+                                    }
+                                </ul>
                                 @endforeach
                             </div>
                             <br>

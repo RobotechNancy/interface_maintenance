@@ -18,7 +18,7 @@
     <x-slot name="title"> @lang('My profile') </x-slot>
 
 
-    <h4 class="mb-5">Affichage de mon profil <i class="fa-regular fa-address-card"></i></h4>
+    <h4 class="mb-5"><x-button-back />Affichage de mon profil <i class="fa-regular fa-address-card"></i></h4>
 
     <dl class="row">
         <dt class="col-sm-3">ID</dt>

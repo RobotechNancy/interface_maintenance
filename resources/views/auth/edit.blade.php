@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="title"> @lang('Profile edition') </x-slot>
 
-    <h4 class="mb-5">Formulaire de modification du compte "{{ $user->name }}"</h4>
+    <h4 class="mb-5"><x-button-back />Formulaire de modification du compte "{{ $user->name }}"</h4>
 
     <form method="POST" action="{{ route('update', ['user' => $user]) }}">
         @csrf

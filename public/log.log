@@ -4729,3 +4729,39 @@
 [14:15:20 - systeme] Début du programme
 [14:15:20 - can] bus can initialiser
 [14:15:20 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x1000   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x5d 0x4b 0 0 0x2f 0x2f 0x2f 0 
+[14:41:42 - systeme] 
+[14:41:42 - systeme] 
+[14:41:42 - systeme] Début du programme
+[14:41:42 - can] erreur dans l'init du bus can. err n°-504		 c.f. #define
+[14:41:59 - systeme] 
+[14:41:59 - systeme] 
+[14:41:59 - systeme] Début du programme
+[14:41:59 - can] erreur dans l'init du bus can. err n°-504		 c.f. #define
+[14:41:59 - systeme] 
+[14:41:59 - systeme] 
+[14:41:59 - systeme] Début du programme
+[14:41:59 - can] erreur dans l'init du bus can. err n°-504		 c.f. #define
+[14:44:38 - systeme] 
+[14:44:38 - systeme] 
+[14:44:38 - systeme] Début du programme
+[14:44:38 - can] erreur dans l'init du bus can. err n°-504		 c.f. #define
+[14:44:38 - systeme] 
+[14:44:38 - systeme] 
+[14:44:38 - systeme] Début du programme
+[14:44:38 - can] erreur dans l'init du bus can. err n°-504		 c.f. #define
+[14:44:39 - systeme] 
+[14:44:39 - systeme] 
+[14:44:39 - systeme] Début du programme
+[14:44:39 - can] erreur dans l'init du bus can. err n°-504		 c.f. #define
+[14:44:39 - systeme] 
+[14:44:39 - systeme] 
+[14:44:39 - systeme] Début du programme
+[14:44:39 - can] erreur dans l'init du bus can. err n°-504		 c.f. #define
+[14:44:41 - systeme] 
+[14:44:41 - systeme] 
+[14:44:41 - systeme] Début du programme
+[14:44:41 - can] erreur dans l'init du bus can. err n°-504		 c.f. #define
+[14:57:52 - systeme] 
+[14:57:52 - systeme] 
+[14:57:52 - systeme] Début du programme
+[14:57:52 - can] erreur dans l'init du bus can. err n°-504		 c.f. #define
