@@ -30,12 +30,11 @@
 
                             <i class="fa-solid fa-caret-right mt-2" id="log_icon_<?= $log->id ?>"
                                 onclick="showCompleteLog('{{ $log->id }}');"></i>&nbsp;
-                            <span class="text-dark bg-white">
+                            <span class="text-break fst-italic text-dark bg-white">
                                 &nbsp;Le <b>{{ $log->created_at->format('d/m') }}</b> à
                                 <b>{{ $log->created_at->format('H:i:s') }}</b>&nbsp;
                             </span>
-                            <br class="d-sm-none">
-                            <span class="text-warning">&nbsp;&nbsp;<b>{{ $log->command_name }}</b></span><span class="@if ($log->state == 0) text-success @else text-danger @endif">&nbsp;&nbsp;(<b>{{ $log->state }}</b>)</span><br>
+                            <span class="text-break text-warning">&nbsp;&nbsp;<b>{{ $log->command_name }}</b></span><span class="@if ($log->state == 0) text-success @else text-danger @endif">&nbsp;&nbsp;(<b>{{ $log->state }}</b>)</span><br>
 
                             <?php $datas = json_decode($log->response); ?>
 
@@ -43,9 +42,9 @@
                                 @foreach ($datas as $data)
                                 <ul class="mt-3 list-group">
                                     {
-                                        <li class="text-info">&nbsp;&nbsp;&nbsp;ID : <b>{{ $data->{"id"} }}</b></li>
-                                        <li class="text-warning">&nbsp;&nbsp;&nbsp;Data : {{ $data->{"data"} }}</li>
-                                        <li class="@if ($data->{'status'} == 0) text-success @else text-danger @endif">&nbsp;&nbsp;&nbsp;Status : <b>{{ $data->{"status"} }}</b></li>
+                                        <li class="text-info fw-light fst-italic">&nbsp;&nbsp;&nbsp;ID : {{ $data->{"id"} }}</li>
+                                        <li class="text-warning text-break fw-semibold">&nbsp;&nbsp;&nbsp;Data : {{ $data->{"data"} }}</li>
+                                        <li class="@if ($data->{'status'} == 0) text-success @else text-danger @endif fw-bold">&nbsp;&nbsp;&nbsp;Status : {{ $data->{"status"} }}</li>
                                     },
                                 </ul>
                                 @endforeach
