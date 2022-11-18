@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="title"> @lang('Register') </x-slot>
 
-    <h4 class="mb-5">Formulaire de création de compte</h4>
+    <h4 class="mb-5 p-3">Formulaire de création de compte</h4>
 
     <form method="POST" action="{{ route('register') }}" class="p-3">
         @csrf

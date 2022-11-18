@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="title"> @lang('Log in') </x-slot>
 
-    <h4 class="mb-5">Formulaire de connexion</h4>
+    <h4 class="mb-5 p-3">Formulaire de connexion</h4>
 
     <form method="POST" action="{{ route('login') }}" class="p-3">
         @csrf
