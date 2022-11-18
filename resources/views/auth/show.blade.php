@@ -20,7 +20,7 @@
 
     <h4 class="mb-5"><x-button-back />Affichage de mon profil <i class="fa-regular fa-address-card"></i></h4>
 
-    <dl class="row">
+    <dl class="row p-3">
         <dt class="col-sm-3">ID</dt>
         <dd class="col-sm-9">{{ $user->id }}</dd>
 
@@ -53,7 +53,7 @@
 
         <hr>
     </dl>
-    <div class="d-grid d-md-block mt-3" role="group">
+    <div class="d-grid d-md-block mt-3 m-3" role="group">
         <a class="btn btn-primary" href="{{ route('edit', ['id' => Auth::user()->id]) }}">
             <span>@lang('Edit my profile')</span>
             <span class="icon">

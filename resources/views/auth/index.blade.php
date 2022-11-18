@@ -2,7 +2,7 @@
     <x-slot name="title"> @lang('Users list') </x-slot>
     <h4 class="mb-5"><x-button-back />Liste des utilisateurs du site</h4>
 
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="row row-cols-1 row-cols-md-3 g-4 p-3">
 
         @foreach ($users as $user)
             <?php

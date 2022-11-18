@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top border border-light border-opacity-25 rounded">
     <div class="container-fluid">
         <a class="navbar-brand mb-2" href="/">
-            <x-application-logo />
+            <img src="{{ asset('img/logo.png') }}" width="130">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navBarMain"
             aria-controls="navBarMain" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,12 +10,6 @@
         <div class="collapse navbar-collapse" id="navBarMain">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="btn btn-dark" aria-current="page" href="/">
-                        <span class="icon">
-                            <i class="fa-solid fa-house-chimney"></i>
-                        </span>
-                        <span>@lang('Home')</span>
-                    </a>
                 </li>
             </ul>
             <ul class="navbar-nav mb-2 mb-lg-0">

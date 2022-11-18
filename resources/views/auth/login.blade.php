@@ -3,7 +3,7 @@
 
     <h4 class="mb-5">Formulaire de connexion</h4>
 
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('login') }}" class="p-3">
         @csrf
 
         <div class="input-group mb-4">

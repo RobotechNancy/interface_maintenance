@@ -3,7 +3,7 @@
 
     <h4 class="mb-5"><x-button-back />Formulaire de modification du compte "{{ $user->name }}"</h4>
 
-    <form method="POST" action="{{ route('update', ['user' => $user]) }}">
+    <form method="POST" action="{{ route('update', ['user' => $user]) }}" class="p-3">
         @csrf
 
         <div class="row">
@@ -147,7 +147,7 @@
         </div>
     </form>
 
-    <p class="mt-5"><small>Dernière modification de ce profil le {{ $user->updated_at->format('d/m/Y') }} à
+    <p class="mt-5 p-3"><small>Dernière modification de ce profil le {{ $user->updated_at->format('d/m/Y') }} à
             {{ $user->updated_at->format('H:i:s') }}.</small></p>
 
     @if (session()->has('success'))
