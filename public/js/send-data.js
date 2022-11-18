@@ -58,3 +58,10 @@ function showCompleteLog(log_id) {
         $("#log_reponse_" + log_id).fadeToggle();
     });
 }
+
+$(document).ready(function() {
+    $(".btn_sidebar").click(function(){
+        $("#sidebar").toggleClass("d-none");
+        $("#sidebar").toggleClass("d-md-block");
+    });
+});

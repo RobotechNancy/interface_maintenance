@@ -7,6 +7,7 @@
             <div class="col pr-4">
                 <h5 class="mb-4">
                     <div class="hstack gap-2">
+                        @include("components.sidebarbtn")
                         Console
                         <x-button id="20" icon="fa-solid fa-eraser" url="{{ route('clearlogs') }}" color="btn-danger"
                             addons="btn-sm" />

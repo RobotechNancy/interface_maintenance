@@ -28,7 +28,7 @@
 </head>
 
 <body class="bg-dark text-white">
-    @include('layouts.navbar')
+    @include('components.sidebar')
     <div class="container-sm mt-5">
         {{ $slot }}
     </div>
