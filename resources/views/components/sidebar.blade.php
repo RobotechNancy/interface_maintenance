@@ -1,4 +1,4 @@
-<nav id="sidebar" class="nav flex-column position-fixed nav-pills bg-dark p-3 border border-light border-opacity-25 rounded d-none d-md-block vh-100" style="z-index:100;">
+<nav id="sidebar" class="nav flex-column position-fixed nav-pills bg-dark p-3 border border-light border-opacity-25 rounded d-none d-md-block vh-100" style="z-index:100; top:10%;">
 
     <button class="btn btn-light d-inline d-sm-none btn_sidebar mb-3"><i class="fa-solid fa-xmark"></i></button>
 
