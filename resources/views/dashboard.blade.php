@@ -4,10 +4,10 @@
 
     <div class="container">
         <div class="row g-2">
-            <div class="col pr-4">
+            <div class="col pr-4 p-3">
                 <h5 class="mb-4">
                     <div class="hstack gap-2">
-                        @include("components.sidebarbtn")
+                        @include('components.sidebarbtn')
                         Console
                         <x-button id="20" icon="fa-solid fa-eraser" url="{{ route('clearlogs') }}" color="btn-danger"
                             addons="btn-sm" />
@@ -26,92 +26,57 @@
                 </h5>
                 <div id="logs_console" style="height: 70vh; overflow: scroll;">
                     @if (count($logs) > 0)
+                    <div class="accordion accordion-flush mb-4" id="accordionConsole">
                         @foreach ($logs as $log)
                             <?php $log->response = str_replace("\\r", "\r", $log->response); ?>
 
-                            <i class="fa-solid fa-caret-right mt-2" id="log_icon_<?= $log->id ?>"
-                                onclick="showCompleteLog('{{ $log->id }}');"></i>&nbsp;
-                            <span class="text-break fst-italic text-dark bg-white">
-                                &nbsp;Le <b>{{ $log->created_at->format('d/m') }}</b> à
-                                <b>{{ $log->created_at->format('H:i:s') }}</b>&nbsp;
-                            </span>
-                            <span class="text-break text-warning">&nbsp;&nbsp;<b>{{ $log->command_name }}</b></span><span class="@if ($log->state == 0) text-success @else text-danger @endif">&nbsp;&nbsp;(<b>{{ $log->state }}</b>)</span><br>
+                            <div class="accordion-item bg-dark text-white-50">
+                                <h2 class="accordion-header" id="log_<?= $log->id ?>">
+                                    <button class="accordion-button btn-dark bg-dark text-white-50" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_log_<?= $log->id ?>" aria-expanded="false" aria-controls="log_<?= $log->id ?>">
+                                        <b>Log n°<?= $log->id ?></b>&nbsp;&nbsp;&nbsp;
+                                        <span class="text-break text-white">
+                                            [Le <b>{{ $log->created_at->format('d/m') }}</b> à
+                                            <b>{{ $log->created_at->format('H:i:s') }}</b>]&nbsp;
+                                        </span>
+                                        <span
+                                            class="text-break text-warning">&nbsp;&nbsp;<b>{{ $log->command_name }}</b></span><span
+                                            class="@if ($log->state == 0) text-success @else text-danger @endif">&nbsp;&nbsp;(<b>{{ $log->state }}</b>)</span><br>
+                                    </button>
+                                </h2>
 
-                            <?php $datas = json_decode($log->response); ?>
+                                <?php $datas = json_decode($log->response); ?>
 
-                            <div id="log_reponse_<?= $log->id ?>" style="display: none">
-                                @foreach ($datas as $data)
-                                <ul class="mt-3 list-group">
-                                    {
-                                        <li class="text-info fw-light fst-italic">&nbsp;&nbsp;&nbsp;ID : {{ $data->{"id"} }}</li>
-                                        <li class="text-warning text-break fw-semibold">&nbsp;&nbsp;&nbsp;Data : {{ $data->{"data"} }}</li>
-                                        <li class="@if ($data->{'status'} == 0) text-success @else text-danger @endif fw-bold">&nbsp;&nbsp;&nbsp;Status : {{ $data->{"status"} }}</li>
-                                    },
-                                </ul>
-                                @endforeach
-                            </div>
-                            <br>
-                        @endforeach
-                    @else
-                        <span>Aucun log pour le moment, veuillez sélectionner une action pour commencer.</span>
-                    @endif
-                </div>
-            </div>
-
-            <div class="w-100 d-sm-none"></div>
-
-            <div class="col d-grid m-3">
-                <div class="row row-cols-1 row-cols-md-2 g-3">
-                    <div class="col">
-                        <h5 class="mb-3">Base roulante</h5>
-
-                        <div class="vstack gap-2">
-                            <div class="hstack gap-2">
-
-                                <x-button id="4" icon="fa-solid fa-arrow-rotate-right"
-                                    url="{{ route('log') }}" color="btn-dark" addons="btn-lg" />
-
-                                <div class="vstack gap-2">
-
-                                    <div class="hstack gap-2">
-
-                                        <x-button id="5" icon="fa-solid fa-arrow-right fa-rotate-by"
-                                            url="{{ route('log') }}" iconstyle="--fa-rotate-angle: 210deg;"
-                                            color="btn-dark" addons="btn-lg" />
-
-                                        <x-button id="7" icon="fa-solid fa-arrow-up fa-rotate-by"
-                                            url="{{ route('log') }}" color="btn-dark" addons="btn-lg" />
-
-
-                                        <x-button id="9" icon="fa-solid fa-arrow-right fa-rotate-by"
-                                            url="{{ route('log') }}" iconstyle="--fa-rotate-angle: 330deg;"
-                                            color="btn-dark" addons="btn-lg" />
-
-                                    </div>
-
-                                    <div class="hstack gap-2">
-
-                                        <x-button id="6" icon="fa-solid fa-arrow-right fa-rotate-by"
-                                            url="{{ route('log') }}" iconstyle="--fa-rotate-angle: 150deg;"
-                                            color="btn-dark" addons="btn-lg" />
-                                        <x-button id="8" icon="fa-solid fa-arrow-down fa-rotate-by"
-                                            url="{{ route('log') }}" color="btn-dark" addons="btn-lg" />
-
-                                        <x-button id="10" icon="fa-solid fa-arrow-right fa-rotate-by"
-                                            url="{{ route('log') }}" iconstyle="--fa-rotate-angle: 30deg;"
-                                            color="btn-dark" addons="btn-lg" />
-
+                                <div id="collapse_log_<?= $log->id ?>" class="accordion-collapse collapse" aria-labelledby="log_<?= $log->id ?>" data-bs-parent="#accordionConsole">
+                                    <div class="accordion-body">
+                                        <div class="row row-cols-1 row-cols-md-3 g-4 p-3">
+                                        @foreach ($datas as $data)
+                                        <div class="col">
+                                            <div class="card text-bg-dark border border-light h-100 border-opacity-25">
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">ID
+                                                        <span class="badge bg-primary rounded-pill">{{ $data->{"id"} }}</span>
+                                                    </li>
+                                                    <li class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">Data
+                                                        <span class="badge bg-primary rounded-pill">'{{ $data->{"data"} }}'</span>
+                                                    </li>
+                                                    <li class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">Status
+                                                        <span class="badge @if ($data->{'status'} == 0) bg-success @else bg-danger @endif rounded-pill">{{ $data->{"status"} }}</span>
+                                                    </li>
+                                                  </ul>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                        </div>
                                     </div>
                                 </div>
-
-                                <x-button id="11" icon="fa-solid fa-arrow-rotate-left" url="{{ route('log') }}"
-                                color="btn-dark" addons="btn-lg" />
-
                             </div>
-
-                        </div>
-
+                        @endforeach
                     </div>
+                    @else
+                        <div class="alert alert-info" role="alert">
+                            Aucun log pour le moment, veuillez sélectionner une action pour commencer.
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

@@ -23,7 +23,7 @@
             ?>
 
             <div class="col">
-                <div class="card text-bg-dark border border-light h-100" style="--bs-border-opacity: .5;">
+                <div class="card text-bg-dark border border-light h-100 border-opacity-25">
                     <div class="card-body">
                         <h5 class="card-title">{{ $user->name }}
                             @if (Auth::user()->role == 2 || $user->id == Auth::user()->id)
