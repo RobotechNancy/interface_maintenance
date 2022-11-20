@@ -11,7 +11,7 @@ function sendData(request_url, request_id) {
                 "</div>",
             ].join("");
 
-            alertPlaceholder.append(wrapper);
+            alertPlaceholder.prepend(wrapper);
         };
 
         $.ajaxSetup({

@@ -48,7 +48,7 @@
 
                                 <div id="collapse_log_<?= $log->id ?>" class="accordion-collapse collapse" aria-labelledby="log_<?= $log->id ?>" data-bs-parent="#accordionConsole">
                                     <div class="accordion-body">
-                                        <div class="row row-cols-1 row-cols-md-3 g-4 p-3">
+                                        <div class="row row-cols-1 row-cols-md-4 g-4 p-3">
                                         @foreach ($datas as $data)
                                         <div class="col">
                                             <div class="card text-bg-dark border border-light h-100 border-opacity-25">
