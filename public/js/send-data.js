@@ -61,17 +61,12 @@ function sendData(request_url, request_id) {
     });
 }
 
-function showCompleteLog(log_id) {
-    $(document).ready(function () {
-        $("#log_icon_" + log_id).toggleClass("fa-caret-down");
-        $("#log_icon_" + log_id).toggleClass("fa-caret-right");
-        $("#log_reponse_" + log_id).fadeToggle();
-    });
-}
-
 $(document).ready(function () {
     $(".btn_sidebar").click(function () {
         $("#sidebar").toggleClass("d-none");
         $("#sidebar").toggleClass("d-md-block");
     });
+
+    $("#sidebar").css("top", $("#navbar").height() + 18);
+    $("#sidebar").css("height", document.documentElement.scrollHeight - 18 - $("#navbar").height());
 });

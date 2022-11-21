@@ -1,10 +1,8 @@
-<nav id="sidebar" class="nav flex-column position-fixed nav-pills bg-dark p-3 border border-light border-opacity-25 rounded d-none d-md-block" style="z-index:100; top:9%; height:91%; overflow: scroll;">
+<nav id="sidebar" class="nav flex-column position-fixed nav-pills bg-dark p-3 border border-light border-opacity-25 rounded d-none d-lg-block" style="z-index:100; overflow: scroll;">
+    <div class="d-grid gap-3 m-3">
 
-    <button class="btn btn-light d-sm-none btn_sidebar mb-3"><i class="fa-solid fa-xmark"></i></button>
-
-    <div class="d-grid gap-3">
-
-        <a class="nav-link bg-secondary text-white mt-3">Batterie <i class="fa-solid fa-car-battery"></i></a>
+        <a class="nav-link bg-secondary text-white">Batterie <i class="fa-solid fa-car-battery"></i></a>
+        <button class="btn btn-light btn-sm d-lg-none btn_sidebar mb-3 position-absolute end-0 top-0"><i class="fa-solid fa-xmark"></i></button>
 
         <div class="hstack gap-2" style="margin-left:10px;">
             <span class="badge text-dark bg-secondary">Cellule 1</span>

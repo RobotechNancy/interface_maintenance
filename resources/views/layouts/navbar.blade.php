@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top border border-light border-opacity-25 rounded">
+<nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top border border-light border-opacity-25 rounded">
     <div class="container-fluid">
         <a class="navbar-brand mb-2" href="/">
             <img src="{{ asset('img/logo.png') }}" width="130">

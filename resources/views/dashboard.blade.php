@@ -4,7 +4,7 @@
 
     <div class="container">
         <div class="row g-2">
-            <div class="col pr-4 p-3">
+            <div class="col ms-lg-5">
                 <h5 class="mb-4">
                     <div class="hstack gap-2">
                         @include('components.sidebarbtn')
@@ -33,14 +33,13 @@
                             <div class="accordion-item bg-dark text-white-50">
                                 <h2 class="accordion-header" id="log_<?= $log->id ?>">
                                     <button class="accordion-button btn-dark bg-dark text-white-50" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_log_<?= $log->id ?>" aria-expanded="false" aria-controls="log_<?= $log->id ?>">
-                                        <b>Log n°<?= $log->id ?></b>&nbsp;&nbsp;&nbsp;
-                                        <span class="text-break text-white">
-                                            [Le <b>{{ $log->created_at->format('d/m') }}</b> à
-                                            <b>{{ $log->created_at->format('H:i:s') }}</b>]&nbsp;
+                                        <span class="d-none d-md-block"><b>Log n°<?= $log->id ?></b>&nbsp;&nbsp;</span>
+                                        <span class="text-white">
+                                                <b>[<span class="d-none d-md-inline">Le {{ $log->created_at->format('d/m') }} à </span>{{ $log->created_at->format('H:i:s') }}]</b>
+                                            &nbsp;
                                         </span>
-                                        <span
-                                            class="text-break text-warning">&nbsp;&nbsp;<b>{{ $log->command_name }}</b></span><span
-                                            class="@if ($log->state == 0) text-success @else text-danger @endif">&nbsp;&nbsp;(<b>{{ $log->state }}</b>)</span><br>
+                                        <span class="text-warning"><b>{{ $log->command_name }}</b></span>&nbsp;<span
+                                            class="@if ($log->state == 0) text-success @else text-danger @endif">(<b>{{ $log->state }}</b>)</span><br>
                                     </button>
                                 </h2>
 
@@ -48,7 +47,7 @@
 
                                 <div id="collapse_log_<?= $log->id ?>" class="accordion-collapse collapse" aria-labelledby="log_<?= $log->id ?>" data-bs-parent="#accordionConsole">
                                     <div class="accordion-body">
-                                        <div class="row row-cols-1 row-cols-md-4 g-4 p-3">
+                                        <div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 g-4 p-3">
                                         @foreach ($datas as $data)
                                         <div class="col">
                                             <div class="card text-bg-dark border border-light h-100 border-opacity-25">
