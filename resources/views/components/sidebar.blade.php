@@ -42,10 +42,7 @@
 
         <a class="nav-link bg-secondary text-white mt-3">Alimentation <i class="fa-solid fa-plug-circle-bolt"></i></a>
 
-        <div class="hstack gap-3">
-            <x-button title="ON" id="12" url="{{ route('log') }}" icon="fa-solid fa-toggle-on" addons="btn-success"/>
-            <x-button title="OFF" id="13" url="{{ route('log') }}" icon="fa-solid fa-toggle-off" addons="btn-danger"/>
-        </div>
+        <x-button title="ON" id="12" url="{{ route('log') }}" icon="fa-solid fa-toggle-on" addons="btn-success btn_alimentation d-grid"/>
 
         <a class="nav-link bg-secondary text-white mt-3">Base roulante <i class="fa-solid fa-map-location-dot"></i></a>
 

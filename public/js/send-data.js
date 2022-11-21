@@ -3,12 +3,11 @@ function sendData(request_url, request_id) {
         const alertPlaceholder = $("#logs_console");
 
         const alert = (message, type) => {
-            const wrapper = document.createElement("div");
-            wrapper.innerHTML = [
-                `<div class="alert alert-${type} alert-dismissible" role="alert">`,
-                `   <div>${message}</div>`,
+            wrapper = [
+                '<div class="alert alert-'+type+' alert-dismissible" role="alert">',
+                '   <div>'+message+'</div>',
                 '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-                "</div>",
+                '</div>',
             ].join("");
 
             alertPlaceholder.prepend(wrapper);
@@ -24,10 +23,13 @@ function sendData(request_url, request_id) {
             e.preventDefault();
             $(".btn_form").attr("disabled", true);
 
+            if($("#btn_12").hasClass("btn-success")) final_id = 13;
+            else final_id = request_id;
+
             $.ajax({
                 type: "POST",
                 url: request_url,
-                data: { id: request_id },
+                data: { id: final_id },
 
                 success: function (data) {
                     if (request_id == 0)
@@ -37,6 +39,19 @@ function sendData(request_url, request_id) {
                                 "</a>",
                             "success"
                         );
+
+                    else if(request_id == 12){
+                        $("#btn_"+request_id).toggleClass("btn-danger");
+                        $("#btn_"+request_id).toggleClass("btn-success");
+
+                        if($("#btn_"+request_id).hasClass("btn-success"))
+                            $("#btn_"+request_id).html("ON <i class='fa-solid fa-toggle-on'></i>");
+                        else
+                            $("#btn_"+request_id).html("OFF <i class='fa-solid fa-toggle-off'></i>");
+
+                        $("#logs_console").load(" #logs_console");
+                    }
+
                     else $("#logs_console").load(" #logs_console");
 
                     $(".btn_form").attr("disabled", false);
@@ -69,4 +84,5 @@ $(document).ready(function () {
 
     $("#sidebar").css("top", $("#navbar").height() + 18);
     $("#sidebar").css("height", document.documentElement.scrollHeight - 18 - $("#navbar").height());
+
 });
