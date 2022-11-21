@@ -1,7 +1,8 @@
 <nav id="sidebar" class="nav flex-column position-fixed nav-pills bg-dark p-3 border border-light border-opacity-25 rounded d-none d-lg-block" style="z-index:100; overflow: scroll;">
     <div class="d-grid gap-3 m-3">
 
-        <a class="nav-link bg-secondary text-white">Batterie <i class="fa-solid fa-car-battery"></i></a>
+        <span class="nav-link bg-secondary text-white">Batterie <i class="fa-solid fa-car-battery"></i> <span class="badge text-bg-info">Beta</span></span>
+
         <button class="btn btn-light btn-sm d-lg-none btn_sidebar mb-3 position-absolute end-0 top-0"><i class="fa-solid fa-xmark"></i></button>
 
         <div class="hstack gap-2" style="margin-left:10px;">
@@ -42,7 +43,7 @@
 
         <a class="nav-link bg-secondary text-white mt-3">Alimentation <i class="fa-solid fa-plug-circle-bolt"></i></a>
 
-        <x-button title="ON" id="12" url="{{ route('log') }}" icon="fa-solid fa-toggle-on" addons="btn-success btn_alimentation d-grid"/>
+        <x-button title="OFF" id="12" url="{{ route('log') }}" icon="fa-solid fa-toggle-off" addons="btn-danger"/>
 
         <a class="nav-link bg-secondary text-white mt-3">Base roulante <i class="fa-solid fa-map-location-dot"></i></a>
 

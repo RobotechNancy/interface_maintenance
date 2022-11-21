@@ -76,6 +76,19 @@ function sendData(request_url, request_id) {
     });
 }
 
+function tabs_manager(tab_name){
+    $("#btn_"+tab_name).click(function(){
+        if(!($("#btn_"+tab_name).hasClass("active"))){
+            $(".tabs").addClass("d-none");
+            $("#"+tab_name).removeClass("d-none");
+            $(".btn_tabs").removeClass("active");
+            $(".btn_tabs").addClass("text-white");
+            $("#btn_"+tab_name).addClass("active");
+            $("#btn_"+tab_name).removeClass("text-white");
+        }
+    });
+}
+
 $(document).ready(function () {
     $(".btn_sidebar").click(function () {
         $("#sidebar").toggleClass("d-none");
@@ -85,4 +98,6 @@ $(document).ready(function () {
     $("#sidebar").css("top", $("#navbar").height() + 18);
     $("#sidebar").css("height", document.documentElement.scrollHeight - 18 - $("#navbar").height());
 
+    tabs_manager("tab_connectivite");
+    tabs_manager("tab_console_logs");
 });
