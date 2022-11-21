@@ -23,22 +23,25 @@
                 Connectivité (CAN, XBee)
             </div>
         </h5>
-        <div style="max-height: 65vh; overflow: scroll;">
+        <div style="max-height: 65vh;">
             <div class="hstack gap-2">
                 Bus CAN
             </div>
             <div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 g-4 p-3">
                 <div class="col">
                     <img src="{{ asset("img/carte_stm32.png") }}" height="70" width="230"/><br>
-                    <span>Base roulante</span>
+                    <span class="mt-3 mb-3 d-block">Base roulante</span>
+                    <button class="btn btn-primary disabled">Tester <span class="badge text-bg-light">A venir</span></button>
                 </div>
                 <div class="col">
                     <img src="{{ asset("img/carte_stm32.png") }}" height="70" width="230"/><br>
-                    <span>Odométrie</span>
+                    <span class="mt-3 mb-3 d-block">Odométrie</span>
+                    <button class="btn btn-primary disabled">Tester <span class="badge text-bg-light">A venir</span></button>
                 </div>
                 <div class="col">
                     <img src="{{ asset("img/carte_stm32.png") }}" height="70" width="230"/><br>
-                    <span>Actionneurs</span>
+                    <span class="mt-3 mb-3 d-block">Actionneurs</span>
+                    <button class="btn btn-primary disabled">Tester <span class="badge text-bg-light">A venir</span></button>
                 </div>
             </div>
         </div>
