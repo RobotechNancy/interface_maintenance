@@ -20,69 +20,83 @@ class LogController extends Controller
         $response = [];
         $output = $retval = null;
         $count = 0;
+        $trame = "";
 
         switch ($request->id) {
             case 1:
                 $command_name = "Test connectivité";
                 $count = 1;
+                $trame = "Test|1";
                 break;
 
             case 2:
                 $command_name = "Avancer robot";
                 $count = 1;
+                $trame = "Test|2";
                 break;
 
             case 3:
                 $command_name = "Position robot";
+                $trame = "Test|3";
                 $count = 100;
                 break;
 
             case 4:
                 $command_name ="Tourne à droite";
                 $count = 1;
+                $trame = "BR|1";
                 break;
 
             case 5:
                 $command_name ="Avance à gauche";
                 $count = 1;
+                $trame = "BR|2";
                 break;
 
             case 6:
                 $command_name ="Recule à gauche";
                 $count = 1;
+                $trame = "BR|3";
                 break;
 
             case 7:
                 $command_name ="Avance";
                 $count = 1;
+                $trame = "BR|4";
                 break;
 
             case 8:
                 $command_name ="Recule";
                 $count = 1;
+                $trame = "BR|5";
                 break;
 
             case 9:
                 $command_name ="Avance à droite";
                 $count = 1;
+                $trame = "BR|6";
                 break;
 
             case 10:
                 $command_name ="Recule à droite";
                 $count = 1;
+                $trame = "BR|7";
                 break;
 
             case 11:
                 $command_name ="Tourne à gauche";
                 $count = 1;
+                $trame = "BR|8";
                 break;
             case 12:
                 $command_name ="Allumage général";
                 $count = 1;
+                $trame = "Relay|ON";
                 break;
             case 13:
                 $command_name ="Coupure générale";
                 $count = 1;
+                $trame = "Relay|OFF";
                 break;
 
             default:
@@ -103,7 +117,8 @@ class LogController extends Controller
                 $custom_i = strval($i);
 
             $execfile = env('CUSTOM_EXECFILE');
-            exec($execfile." ".$request->id, $output, $retval);
+            //exec($execfile." ".$request->id, $output, $retval);
+            exec($execfile." ".$trame, $output, $retval); // For testing purpose
             if(!empty($output))
                 $response[$i] = ["id" => $custom_i, "data" => $output[0], "status" => $retval];
 
