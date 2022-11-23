@@ -4,15 +4,18 @@
 #include "convertionTramePR.h"
 #include "logLib.h"
 #include "defineCan.h"
-#include <wiringPi.h>
+//#include <wiringPi.h>
+#include <pigpio.h>
 
-#define relayPin 3
+#define relayPin 27
+#define retRelayPin 22
 
 Can can;
 using namespace std;
 
   
-void powerOn(){
+/* void powerOn(){
+    
     wiringPiSetup();
     pinMode(relayPin, OUTPUT);
     digitalWrite(relayPin, HIGH);
@@ -22,6 +25,24 @@ void powerOff(){
     wiringPiSetup();
     pinMode(relayPin, OUTPUT);
     digitalWrite(relayPin, LOW);
+} */
+
+void powerOn(){
+    if (gpioInitialise() <0 ) {
+             return -1;
+       }
+    gpioSetMode(relayPin , PI_OUTPUT);
+    gpioWrite(relayPin, 1);
+    gpioTerminate();
+}
+
+void powerOff(){
+    if (gpioInitialise() <0 ) {
+             return -1;
+       }
+    gpioSetMode(relayPin , PI_OUTPUT);
+    gpioWrite(relayPin, 0);
+    gpioTerminate();
 }
 
 int move(int direction, Can &can){

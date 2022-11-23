@@ -7,7 +7,8 @@
             <button class="nav-link active btn_tabs" id="btn_tab_console_logs">Console de logs</button>
         </li>
         <li class="nav-item">
-            <button class="nav-link text-white btn_tabs" id="btn_tab_connectivite">Connectivité (CAN, XBee) <span class="badge text-bg-info">Beta</span></button>
+            <button class="nav-link text-white btn_tabs" id="btn_tab_connectivite">Connectivité (CAN, XBee) <span
+                    class="badge text-bg-info">Beta</span></button>
         </li>
         <li class="nav-item">
             <button class="nav-link disabled">Actionneurs <span class="badge text-bg-light">A venir</span></button>
@@ -29,19 +30,22 @@
             </div>
             <div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 g-4 p-3">
                 <div class="col">
-                    <img src="{{ asset("img/carte_stm32.png") }}" height="70" width="230"/><br>
+                    <img src="{{ asset('img/carte_stm32.png') }}" height="70" width="230" /><br>
                     <span class="mt-3 mb-3 d-block">Base roulante</span>
-                    <button class="btn btn-primary disabled">Tester <span class="badge text-bg-light">A venir</span></button>
+                    <button class="btn btn-primary disabled">Tester <span class="badge text-bg-light">A
+                            venir</span></button>
                 </div>
                 <div class="col">
-                    <img src="{{ asset("img/carte_stm32.png") }}" height="70" width="230"/><br>
+                    <img src="{{ asset('img/carte_stm32.png') }}" height="70" width="230" /><br>
                     <span class="mt-3 mb-3 d-block">Odométrie</span>
-                    <button class="btn btn-primary disabled">Tester <span class="badge text-bg-light">A venir</span></button>
+                    <button class="btn btn-primary disabled">Tester <span class="badge text-bg-light">A
+                            venir</span></button>
                 </div>
                 <div class="col">
-                    <img src="{{ asset("img/carte_stm32.png") }}" height="70" width="230"/><br>
+                    <img src="{{ asset('img/carte_stm32.png') }}" height="70" width="230" /><br>
                     <span class="mt-3 mb-3 d-block">Actionneurs</span>
-                    <button class="btn btn-primary disabled">Tester <span class="badge text-bg-light">A venir</span></button>
+                    <button class="btn btn-primary disabled">Tester <span class="badge text-bg-light">A
+                            venir</span></button>
                 </div>
             </div>
         </div>
@@ -65,8 +69,15 @@
                         </span>
                     </button>
                 </a>
+
+                <button id="btn_reload_console" class="btn btn-info btn-sm">
+                    <span class="icon">
+                        <i class="fa-solid fa-rotate"></i>
+                    </span>
+                </button>
             </div>
         </h5>
+        <div class="title_console"></div>
         <div id="logs_console" style="max-height: 65vh; overflow: scroll;">
             @if (count($logs) > 0)
                 <div class="accordion accordion-flush mb-4" id="accordionConsole">
