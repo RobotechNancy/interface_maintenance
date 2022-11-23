@@ -5,7 +5,7 @@
 #include "logLib.h"
 #include "defineCan.h"
 //#include <wiringPi.h>
-#include <pigpio.h>
+//#include <pigpio.h>
 
 #define relayPin 27
 #define retRelayPin 22
@@ -27,35 +27,44 @@ void powerOff(){
     digitalWrite(relayPin, LOW);
 } */
 
-void powerOn(){
-    if (gpioInitialise() <0 ) {
-             return -1;
-       }
+/* void powerOn(){
+    gpioInitialise();
     gpioSetMode(relayPin , PI_OUTPUT);
     gpioWrite(relayPin, 1);
     gpioTerminate();
 }
 
 void powerOff(){
-    if (gpioInitialise() <0 ) {
-             return -1;
-       }
+    gpioInitialise();
     gpioSetMode(relayPin , PI_OUTPUT);
     gpioWrite(relayPin, 0);
     gpioTerminate();
+} */
+
+int powerOn(){
+    return system("gpio write 2 1");
+}
+
+int powerOff(){
+    return system("gpio write 2 0");
 }
 
 int move(int direction, Can &can){
-    Trame_BR_dpt data;
-    Trame_Moteur_t trameMoteur;
-    data.fields.vitesse = 100;
-    data.fields.direction = direction;
-    data.fields.distance = 100;
-    convertir(&data, &trameMoteur);
-    return can.send(CAN_ADDR_BASE_ROULANTE, AVANCE, trameMoteur.raw_data, 8, false, 1,0);
+
+    //if(system("gpio read 2")){
+        Trame_BR_dpt data;
+        Trame_Moteur_t trameMoteur;
+        data.fields.vitesse = 100;
+        data.fields.direction = direction;
+        data.fields.distance = 100;
+        convertir(&data, &trameMoteur);
+        return can.send(CAN_ADDR_BASE_ROULANTE, AVANCE, trameMoteur.raw_data, 8, false, 1,0);
+    //}
+    //else return -1;
+
 }
 
-string nextParameter(string *input){ // Retourne le prochain paramètre et le supprime de l'input
+/* string nextParameter(string *input){ // Retourne le prochain paramètre et le supprime de l'input
     //https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c
     if ((pos = input.find(delimiter)) != string::npos) {
         token = input.substr(0, pos);
@@ -63,7 +72,7 @@ string nextParameter(string *input){ // Retourne le prochain paramètre et le su
         return token;
     }
     else return "";
-}
+} */
 
 
 
@@ -197,18 +206,17 @@ int main(int argc, char **argv)
             //cout << "Tourne à gauche";
             cout << move(8,can);
             break;          
-            case 12:
-                powerOn();
-                cout << "Robot allumé";
+        case 12:                
+                cout << powerOn();
                 break; 
-            case 13:
-                cout << "Robot éteint";
-                powerOff();
+        case 13:
+                cout << powerOff();                
                 break;  
         default:
             cout << "Commande " << id << " invalide";
             return 2;
     return 0;
+    }
 }
 
     
