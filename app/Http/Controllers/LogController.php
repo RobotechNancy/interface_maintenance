@@ -117,8 +117,8 @@ class LogController extends Controller
                 $custom_i = strval($i);
 
             $execfile = env('CUSTOM_EXECFILE');
-            //exec($execfile." ".$request->id, $output, $retval);
-            exec($execfile." ".$trame, $output, $retval); // For testing purpose
+            exec($execfile." ".$request->id, $output, $retval);
+            //exec($execfile." ".$trame, $output, $retval); // For testing purpose
             if(!empty($output))
                 $response[$i] = ["id" => $custom_i, "data" => $output[0], "status" => $retval];
 
