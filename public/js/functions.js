@@ -13,6 +13,7 @@ function sendData(request_url, request_id) {
             alertPlaceholder.append(wrapper);
         };
 
+
         $.ajaxSetup({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -100,7 +101,7 @@ $(document).ready(function () {
 
     $("#btn_reload_console").click(function(){
         $("#logs_console").load(" #logs_console");
-    }); 
+    });
 
     tabs_manager("tab_connectivite");
     tabs_manager("tab_console_logs");
