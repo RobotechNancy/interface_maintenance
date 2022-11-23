@@ -62,79 +62,59 @@ int main(int argc, char **argv)
 
 
 
-    string input = argv[argc-1];
+    // string input = argv[argc-1];
 
-    if(nextParameter(&input) =="BR"){
-        int id = atoi(nextParameter(&input));
-        switch(id){
-        case 1:
-            //Tourne à droite
-            cout << move(7,can);
-            break;
-        case 2:
-            //Avance à gauche
-            cout << move(2,can);
-            break;
-        case 3:
-            //Recule à gauche
-            cout << move(3,can);
-            break;
-        case 4:
-            //Avance
-            cout << move(1,can);
-            break;
-        case 5:
-            //Recule
-            cout << move(4,can);
-            break;
-        case 6:
-            //Avance à droite
-            cout << move(6,can);
-            break;
-        case 7:
-            //Recule à droite
-            cout << move(5,can);
-            break; 
-        case 8:
-            //Tourne à gauche
-            cout << move(8,can);
-            break;     
-        default:
-            cout << "Commande " << id << " invalide";
-            return 2; 
-        }    
-    }
+    // if(nextParameter(&input) =="BR"){
+    //     int id = atoi(nextParameter(&input));
+    //     switch(id){
+    //     case 1:
+    //         //Tourne à droite
+    //         cout << move(7,can);
+    //         break;
+    //     case 2:
+    //         //Avance à gauche
+    //         cout << move(2,can);
+    //         break;
+    //     case 3:
+    //         //Recule à gauche
+    //         cout << move(3,can);
+    //         break;
+    //     case 4:
+    //         //Avance
+    //         cout << move(1,can);
+    //         break;
+    //     case 5:
+    //         //Recule
+    //         cout << move(4,can);
+    //         break;
+    //     case 6:
+    //         //Avance à droite
+    //         cout << move(6,can);
+    //         break;
+    //     case 7:
+    //         //Recule à droite
+    //         cout << move(5,can);
+    //         break; 
+    //     case 8:
+    //         //Tourne à gauche
+    //         cout << move(8,can);
+    //         break;     
+    //     default:
+    //         cout << "Commande " << id << " invalide";
+    //         return 2; 
+    //     }    
+    // }
     
-    else if(nextParameter(&input) =="Relay"){
-        string id = nextParameter(&input);
-        if(id = "ON") powerOn();
-        else if(id = "OFF") powerOff();
-        else cout << "Commande " << id << " invalide";
+    // else if(nextParameter(&input) =="Relay"){
+    //     string id = nextParameter(&input);
+    //     if(id = "ON") powerOn();
+    //     else if(id = "OFF") powerOff();
+    //     else cout << "Commande " << id << " invalide";
 
-    }
-    else if(nextParameter(&input) =="Test"){
-        id = nextParameter(&input);
-        switch(id){
-        case 1:
-            cout << "La connectivité est correcte";
-            break;
-        case 2:
-            cout << "Le robot avance";
-            break;
-        case 3:
-            cout << "25,6N 43,2E";
-            break;
-        default:
-            cout << "Commande " << id << " invalide";
-            return 2;
-        }
-        
-    }
-    else cout << "Erreur de syntaxe" << endl;
-
-
-	// int id = atoi(argv[argc-1]);
-    // switch(id){
+    // }
+    // else if(nextParameter(&input) =="Test"){
+    //     id = nextParameter(&input);
+    //     switch(id){
     //     case 1:
     //         cout << "La connectivité est correcte";
     //         break;
@@ -144,49 +124,69 @@ int main(int argc, char **argv)
     //     case 3:
     //         cout << "25,6N 43,2E";
     //         break;
-    //     case 4:
-    //         //cout << "Tourne à droite";
-    //         cout << move(7,can);
-    //         break;
-    //     case 5:
-    //         //cout << "Avance à gauche";
-    //         cout << move(2,can);
-    //         break;
-    //     case 6:
-    //         //cout << "Recule à gauche";
-    //         cout << move(3,can);
-    //         break;
-    //     case 7:
-    //         //cout << "Avance ";
-    //         cout << move(1,can);
-    //         break;
-    //     case 8:
-    //         //cout << "Recule";
-    //         cout << move(4,can);
-    //         break;
-    //     case 9:
-    //         //cout << "Avance à droite";
-    //         cout << move(6,can);
-    //         break;
-    //     case 10:
-    //         //cout << "Recule à droite";
-    //         cout << move(5,can);
-    //         break; 
-    //     case 11:
-    //         //cout << "Tourne à gauche";
-    //         cout << move(8,can);
-    //         break;          
-            // case 12:
-            //     powerOn();
-            //     cout << "Robot allumé";
-            //     break; 
-            // case 13:
-            //     cout << "Robot éteint";
-            //     powerOff();
-            //     break;  
     //     default:
     //         cout << "Commande " << id << " invalide";
     //         return 2;
+    //     }
+        
+    // }
+    // else cout << "Erreur de syntaxe" << endl;
+
+
+	int id = atoi(argv[argc-1]);
+    switch(id){
+        case 1:
+            cout << "La connectivité est correcte";
+            break;
+        case 2:
+            cout << "Le robot avance";
+            break;
+        case 3:
+            cout << "25,6N 43,2E";
+            break;
+        case 4:
+            //cout << "Tourne à droite";
+            cout << move(7,can);
+            break;
+        case 5:
+            //cout << "Avance à gauche";
+            cout << move(2,can);
+            break;
+        case 6:
+            //cout << "Recule à gauche";
+            cout << move(3,can);
+            break;
+        case 7:
+            //cout << "Avance ";
+            cout << move(1,can);
+            break;
+        case 8:
+            //cout << "Recule";
+            cout << move(4,can);
+            break;
+        case 9:
+            //cout << "Avance à droite";
+            cout << move(6,can);
+            break;
+        case 10:
+            //cout << "Recule à droite";
+            cout << move(5,can);
+            break; 
+        case 11:
+            //cout << "Tourne à gauche";
+            cout << move(8,can);
+            break;          
+            case 12:
+                powerOn();
+                cout << "Robot allumé";
+                break; 
+            case 13:
+                cout << "Robot éteint";
+                powerOff();
+                break;  
+        default:
+            cout << "Commande " << id << " invalide";
+            return 2;
     return 0;
 }
 
