@@ -67,6 +67,7 @@
                 </a>
             </div>
         </h5>
+        <div class="title_console"></div>
         <div id="logs_console" style="max-height: 65vh; overflow: scroll;">
             @if (count($logs) > 0)
                 <div class="accordion accordion-flush mb-4" id="accordionConsole">

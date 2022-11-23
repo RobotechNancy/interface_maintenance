@@ -1,6 +1,6 @@
 function sendData(request_url, request_id) {
     $(document).ready(function () {
-        const alertPlaceholder = $("#logs_console");
+        const alertPlaceholder = $(".title_console");
 
         const alert = (message, type) => {
             wrapper = [
@@ -10,7 +10,7 @@ function sendData(request_url, request_id) {
                 '</div>',
             ].join("");
 
-            alertPlaceholder.prepend(wrapper);
+            alertPlaceholder.append(wrapper);
         };
 
         $.ajaxSetup({
@@ -97,6 +97,10 @@ $(document).ready(function () {
 
     $("#sidebar").css("top", $("#navbar").height() + 18);
     $("#sidebar").css("height", document.documentElement.scrollHeight - 18 - $("#navbar").height());
+
+    $("#btn_reload_console").click(function(){
+        $("#logs_console").load(" #logs_console");
+    }); 
 
     tabs_manager("tab_connectivite");
     tabs_manager("tab_console_logs");
