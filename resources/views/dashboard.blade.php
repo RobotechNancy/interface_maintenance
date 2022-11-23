@@ -2,7 +2,7 @@
     <x-slot name="addons"></x-slot>
     <x-slot name="title"> @lang('Dashboard') </x-slot>
 
-    <ul class="nav nav-tabs nav-fill ms-lg-5 mb-4">
+    <ul class="nav nav-tabs nav-fill mb-4">
         <li class="nav-item">
             <button class="nav-link active btn_tabs" id="btn_tab_console_logs">Console de logs</button>
         </li>
@@ -47,7 +47,7 @@
         </div>
     </div>
 
-    <div class="container tabs ms-lg-5" id="tab_console_logs">
+    <div class="container tabs position-absolute" id="tab_console_logs">
         <h5 class="mb-4">
             <div class="hstack gap-2">
                 @include('components.sidebarbtn')
