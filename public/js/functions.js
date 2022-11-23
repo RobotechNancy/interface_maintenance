@@ -98,11 +98,10 @@ $(document).ready(function () {
 
     $("#sidebar").css("top", $("#navbar").height() + 18);
     $("#sidebar").css("height", document.documentElement.scrollHeight - 18 - $("#navbar").height());
+
     if($("#sidebar").hasClass("d-none")){
-        $("#tab_console_logs").css("left", $("#sidebar").width() + 35);
-        $("#tab_console_logs").css("width", $("#navbar").width() - $("#sidebar").width() - 35);
-        $(".nav-tabs").css("left", $("#sidebar").width() - 15);
-        $(".nav-tabs").css("margin-left", "50");
+        $("#container_dashboard").css("left", $("#sidebar").width() + 35);
+        $("#container_dashboard").css("width", $("#navbar").width() - $("#sidebar").width() - 35);
     }
 
     $("#btn_reload_console").click(function(){
