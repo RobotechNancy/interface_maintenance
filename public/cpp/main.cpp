@@ -7,8 +7,8 @@
 //#include <wiringPi.h>
 //#include <pigpio.h>
 
-#define relayPin 27
-#define retRelayPin 22
+//#define relayPin 22
+//#define retRelayPin 27
 
 Can can;
 using namespace std;
@@ -42,11 +42,11 @@ void powerOff(){
 } */
 
 int powerOn(){
-    return system("gpio write 2 1");
+    return system("gpio write 3 1");
 }
 
 int powerOff(){
-    return system("gpio write 2 0");
+    return system("gpio write 3 0");
 }
 
 int move(int direction, Can &can){
