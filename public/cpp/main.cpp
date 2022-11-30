@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <iostream>
 #include "canClass.h"
 #include "convertionTramePR.h"
@@ -51,16 +52,26 @@ int move(int direction, Can &can){
 
 }
 
-/* string nextParameter(string *input){ // Retourne le prochain paramètre et le supprime de l'input
+string nextParameter(string &s){ // Retourne le prochain paramètre et le supprime de l'input
     //https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c
-    if ((pos = input.find(delimiter)) != string::npos) {
+    string delimiter = "|";
+    size_t pos = 0;
+    string token;
+    while ((pos = s.find(delimiter)) != std::string::npos) {
+        token = s.substr(0, pos);
+        std::cout << token << std::endl;
+        s.erase(0, pos + delimiter.length());
+    }
+    return token;
+}
+/*     int pos = input.find(delimiter);
+    if (pos != string::npos) {
         token = input.substr(0, pos);
         input.erase(0, pos + delimiter.length());
         return token;
     }
     else return "";
-} */
-
+}  */
 
 
 
@@ -75,80 +86,81 @@ int main(int argc, char **argv)
         return err;
     }
 
+/*
 
+    string input = argv[argc-1];
 
-    // string input = argv[argc-1];
+    if(nextParameter(input.c_str()) =="BR"){
 
-    // if(nextParameter(&input) =="BR"){
-    //     int id = atoi(nextParameter(&input));
-    //     switch(id){
-    //     case 1:
-    //         //Tourne à droite
-    //         cout << move(7,can);
-    //         break;
-    //     case 2:
-    //         //Avance à gauche
-    //         cout << move(2,can);
-    //         break;
-    //     case 3:
-    //         //Recule à gauche
-    //         cout << move(3,can);
-    //         break;
-    //     case 4:
-    //         //Avance
-    //         cout << move(1,can);
-    //         break;
-    //     case 5:
-    //         //Recule
-    //         cout << move(4,can);
-    //         break;
-    //     case 6:
-    //         //Avance à droite
-    //         cout << move(6,can);
-    //         break;
-    //     case 7:
-    //         //Recule à droite
-    //         cout << move(5,can);
-    //         break; 
-    //     case 8:
-    //         //Tourne à gauche
-    //         cout << move(8,can);
-    //         break;     
-    //     default:
-    //         cout << "Commande " << id << " invalide";
-    //         return 2; 
-    //     }    
-    // }
+        int id = atoi(nextParameter(input.c_str()));
+        switch(id){
+        case 1:
+            //Tourne à droite
+            cout << move(7,can);
+            break;
+        case 2:
+            //Avance à gauche
+            cout << move(2,can);
+            break;
+        case 3:
+            //Recule à gauche
+            cout << move(3,can);
+            break;
+        case 4:
+            //Avance
+            cout << move(1,can);
+            break;
+        case 5:
+            //Recule
+            cout << move(4,can);
+            break;
+        case 6:
+            //Avance à droite
+            cout << move(6,can);
+            break;
+        case 7:
+            //Recule à droite
+            cout << move(5,can);
+            break; 
+        case 8:
+            //Tourne à gauche
+            cout << move(8,can);
+            break;     
+        default:
+            cout << "Commande " << id << " invalide";
+            return 2; 
+        }    
+    }
     
-    // else if(nextParameter(&input) =="Relay"){
-    //     string id = nextParameter(&input);
-    //     if(id = "ON") powerOn();
-    //     else if(id = "OFF") powerOff();
-    //     else cout << "Commande " << id << " invalide";
+     else if(nextParameter(input) =="Relay"){
+        string id = nextParameter(input);
+        if(id == "ON") powerOn();
+        else if(id == "OFF") powerOff();
+        else cout << "Commande " << id << " invalide";
 
-    // }
-    // else if(nextParameter(&input) =="Test"){
-    //     id = nextParameter(&input);
-    //     switch(id){
-    //     case 1:
-    //         cout << "La connectivité est correcte";
-    //         break;
-    //     case 2:
-    //         cout << "Le robot avance";
-    //         break;
-    //     case 3:
-    //         cout << "25,6N 43,2E";
-    //         break;
-    //     default:
-    //         cout << "Commande " << id << " invalide";
-    //         return 2;
-    //     }
+    }
+    else if(nextParameter(input) =="Test"){
+        id = nextParameter(input);
+        switch(id){
+        case 1:
+            cout << "La connectivité est correcte";
+            break;
+        case 2:
+            cout << "Le robot avance";
+            break;
+        case 3:
+            cout << "25,6N 43,2E";
+            break;
+        default:
+            cout << "Commande " << id << " invalide";
+            return 2;
+        }
         
-    // }
-    // else cout << "Erreur de syntaxe" << endl;
+    } 
+    else cout << "Erreur de syntaxe" << endl;
+*/
 
-
-	int id = atoi(argv[argc-1]);
+ 	int id = atoi(argv[argc-1]);
     switch(id){
         case 1:
             cout << "La connectivité est correcte";
@@ -201,7 +213,7 @@ int main(int argc, char **argv)
             cout << "Commande " << id << " invalide";
             return 2;
     return 0;
-    }
+    } 
 }
 
     
