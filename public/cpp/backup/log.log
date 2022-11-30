@@ -1,0 +1,14 @@
+[11:18:31 - systeme] 
+[11:18:31 - systeme] 
+[11:18:31 - systeme] Début du programme
+[11:18:31 - can] bus can initialiser
+[11:18:31 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x1000   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x52 0xf 0x1 0 0x2f 0x2f 0x2f 0x7 
+[11:18:31 - can] lancement de l'ecoute du bus can
+[11:18:38 - can] get : addr : 0x1000000   emetteur : 0x200000   codeFct : 0x81000   isRep : 0x1   RepId : 0x1       Data : [0x1] 0x1 
+[11:18:54 - systeme] 
+[11:18:54 - systeme] 
+[11:18:54 - systeme] Début du programme
+[11:18:54 - can] bus can initialiser
+[11:18:54 - can] send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x1000   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x8] 0x52 0xf 0x1 0 0x2f 0x2f 0x2f 0x7 
+[11:18:54 - can] lancement de l'ecoute du bus can
+[11:19:1 - can] get : addr : 0x1000000   emetteur : 0x200000   codeFct : 0x81000   isRep : 0x1   RepId : 0x1       Data : [0x1] 0x1 
