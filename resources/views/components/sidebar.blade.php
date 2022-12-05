@@ -1,7 +1,7 @@
 <nav id="sidebar" class="nav flex-column position-fixed nav-pills bg-dark p-3 border border-light border-opacity-25 rounded d-none d-lg-block" style="z-index:100; overflow: scroll;">
     <div class="d-grid gap-3 m-3">
 
-        <span class="nav-link bg-secondary text-white">Batterie <i class="fa-solid fa-car-battery"></i> <span class="badge text-bg-info">Beta</span></span>
+        <!--span class="nav-link bg-secondary text-white">Batterie <i class="fa-solid fa-car-battery"></i> <span class="badge text-bg-info">Beta</span></span>
 
         <button class="btn btn-light btn-sm d-lg-none btn_sidebar mb-3 position-absolute end-0 top-0"><i class="fa-solid fa-xmark"></i></button>
 
@@ -39,15 +39,21 @@
             <span class="badge text-dark bg-secondary">Cellule 6</span>
             <i class="text-danger fa-solid fa-battery-quarter" style="font-size: 20px;"></i>
             <span class="badge text-dark bg-danger">33%</span>
-        </div>
+        </div-->
 
         <a class="nav-link bg-secondary text-white mt-3">Alimentation <i class="fa-solid fa-plug-circle-bolt"></i></a>
 
         <x-button title="OFF" id="12" url="{{ route('log') }}" icon="fa-solid fa-toggle-off" addons="btn-danger"/>
 
         <a class="nav-link bg-secondary text-white mt-3">Base roulante <i class="fa-solid fa-map-location-dot"></i></a>
+	
+	<label for="rangeDistance" class="form-label">Distance : <span id="valeurSliderDistance"></span> cm</label>
+	<input type="range" class="form-range" value="1" min="0" max="200" step="1" id="rangeDistance" onchange="changeValueRange(0)">
 
-        <div class="vstack gap-2">
+	<label for="rangeVitesse" class="form-label">Vitesse : <span id="valeurSliderVitesse"></span> %</label>
+	<input type="range" class="form-range" value="50" min="0" max="100" step="1" id="rangeVitesse" onchange="changeValueRange(1)">
+        
+	<div class="vstack gap-2">
             <div class="hstack gap-2">
 
                 <x-button id="4" icon="fa-solid fa-arrow-rotate-right"
