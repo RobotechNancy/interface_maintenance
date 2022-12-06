@@ -24,10 +24,10 @@ function sendData(request_url, request_id) {
             e.preventDefault();
             $(".btn_form").attr("disabled", true);
 
-            
+
             if($("#btn_12").hasClass("btn-success") && request_id == 12) final_id = 13;
             else final_id = request_id;
-            
+
             $.ajax({
                 type: "POST",
                 url: request_url,

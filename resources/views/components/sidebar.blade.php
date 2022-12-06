@@ -41,18 +41,18 @@
             <span class="badge text-dark bg-danger">33%</span>
         </div-->
 
-        <a class="nav-link bg-secondary text-white mt-3">Alimentation <i class="fa-solid fa-plug-circle-bolt"></i></a>
+        <a class="nav-link bg-warning text-black mt-3">Alimentation <i class="fa-solid fa-plug-circle-bolt"></i></a>
 
         <x-button title="OFF" id="12" url="{{ route('log') }}" icon="fa-solid fa-toggle-off" addons="btn-danger"/>
 
-        <a class="nav-link bg-secondary text-white mt-3">Base roulante <i class="fa-solid fa-map-location-dot"></i></a>
-	
+        <a class="nav-link bg-success text-black mt-3">Base roulante <i class="fa-solid fa-map-location-dot"></i></a>
+
 	<label for="rangeDistance" class="form-label">Distance : <span id="valeurSliderDistance"></span> cm</label>
 	<input type="range" class="form-range" value="1" min="0" max="200" step="1" id="rangeDistance" onchange="changeValueRange(0)">
 
 	<label for="rangeVitesse" class="form-label">Vitesse : <span id="valeurSliderVitesse"></span> %</label>
 	<input type="range" class="form-range" value="50" min="0" max="100" step="1" id="rangeVitesse" onchange="changeValueRange(1)">
-        
+
 	<div class="vstack gap-2">
             <div class="hstack gap-2">
 
@@ -99,7 +99,7 @@
 
         </div>
 
-        <a class="nav-link bg-secondary text-white">Commandes <i class="fa-solid fa-gamepad"></i></a>
+        <a class="nav-link bg-primary text-black">Commandes <i class="fa-solid fa-gamepad"></i></a>
 
         <x-button title="Test connectivité" id="1" icon="fa-solid fa-tower-cell"
         url="{{ route('log') }}" addons="btn-sm"/>
