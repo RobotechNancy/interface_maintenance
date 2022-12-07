@@ -124,7 +124,7 @@
                                 <div id="collapse_log_<?= $log->id ?>" class="accordion-collapse collapse"
                                     aria-labelledby="log_<?= $log->id ?>" data-bs-parent="#accordionConsole">
                                     <div class="accordion-body">
-                                        <div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 g-4 p-3">
+                                        <div class="row row-cols-1 row-cols-lg-1 g-4 p-3">
                                             @foreach ($datas as $data)
                                                 <div class="col">
                                                     <div
@@ -140,13 +140,13 @@
                                                                 class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
                                                                 Data
                                                                 <span
-                                                                    class="badge bg-primary rounded-pill">{{ $data->{"data"} }}</span>
+                                                                    class="badge bg-primary rounded-pill text-wrap fs-6" style="width:30rem">{{ $data->{"data"} }}</span>
                                                             </li>
                                                             <li
                                                                 class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
                                                                 Status
                                                                 <span
-                                                                    class="badge @if ($data->{'status'} == 0) bg-success @else bg-danger @endif rounded-pill">{{ $data->{"status"} }}</span>
+                                                                    class="badge @if ($data->{'status'} == 0) bg-success @else bg-danger @endif rounded-pill fs-6">{{ $data->{"status"} }}</span>
                                                             </li>
                                                         </ul>
                                                     </div>

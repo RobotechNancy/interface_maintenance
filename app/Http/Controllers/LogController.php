@@ -46,49 +46,49 @@ class LogController extends Controller
             case 4:
                 $command_name ="Tourne à droite";
                 $count = 1;
-                $trame = "BR,100,100,1";
+                $trame = "BR,100,100,RotD";
                 break;
 
             case 5:
                 $command_name ="Avance à gauche";
                 $count = 1;
-                $trame = "BR,100,100,2";
+                $trame = "BR,100,100,AvG";
                 break;
 
             case 6:
                 $command_name ="Recule à gauche";
                 $count = 1;
-                $trame = "BR,100,100,3";
+                $trame = "BR,100,100,ReG";
                 break;
 
             case 7:
                 $command_name ="Avance";
                 $count = 1;
-                $trame = "BR,100,100,4";
+                $trame = "BR,100,100,Av";
                 break;
 
             case 8:
                 $command_name ="Recule";
                 $count = 1;
-                $trame = "BR,100,100,5";
+                $trame = "BR,100,100,Re";
                 break;
 
             case 9:
                 $command_name ="Avance à droite";
                 $count = 1;
-                $trame = "BR,100,100,6";
+                $trame = "BR,100,100,AvD";
                 break;
 
             case 10:
                 $command_name ="Recule à droite";
                 $count = 1;
-                $trame = "BR,100,100,7";
+                $trame = "BR,100,100,ReD";
                 break;
 
             case 11:
                 $command_name ="Tourne à gauche";
                 $count = 1;
-                $trame = "BR,100,100,8";
+                $trame = "BR,100,100,RotG";
                 break;
             case 12:
                 $command_name ="Allumage général";
@@ -120,7 +120,7 @@ class LogController extends Controller
             //exec($execfile." ".$request->id, $output, $retval);
             exec($execfile." ".$trame, $output, $retval); 
 
-            if(!empty($output) && count($output) <= 1)
+            if(!empty($output)) // && count($output) <= 1
             {
                 $response[$i] = ["id" => $custom_i, "data" => $output[0], "status" => $retval];
                 if($retval != 0) $log->state = $retval; 

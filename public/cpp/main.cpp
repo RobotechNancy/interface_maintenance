@@ -20,31 +20,26 @@ int tryCommand(string c)
 
     string output = "";
 
-    //fp = popen(command);
-
     if (fp == NULL) return 5;
     
     while (fgets(path, sizeof(path), fp) != NULL) pclose(fp);
-
-    for (int i = 0; i < sizeof(path); i++) output += path[i];
-    
+    //for (int i = 0; i < sizeof(path); i++) output += path[i];
     return 0;
 }
 
+
 bool readRelayPin()
 { //Lit l'état du relais avec la commande popen("gpio read 2", "r")
-    /* FILE *fp;
+     FILE *fp;
     char path[1035];
     fp = popen("gpio read 2", "r");
-    if (fp == NULL) {
-        cout<<"Failed reading relay pin with popen\n" << endl;
-    }
+    if (fp == NULL) return false;
     while (fgets(path, sizeof(path), fp) !=NULL)
     pclose(fp);
 
     if(path[0] == '1') return true;
-    else return false;   */  
-
+    else return false;    
+/* 
     int id = 0;
 
     id = tryCommand("gpio read 2");
@@ -52,7 +47,7 @@ bool readRelayPin()
     if (id == 0)
         return true;
     else
-        return false;
+        return false; */
 }
 
 
@@ -130,17 +125,12 @@ int move(string s)
     {
         Trame_BR_dpt data;
         Trame_Moteur_t trameMoteur;    
-        data.fields.distance = atoi(nextParameter(s).c_str()); // or atoi(nextParameter(s).c_str());
-        data.fields.vitesse = atoi(nextParameter(s).c_str()); 
+        data.fields.distance = (uint16_t)atoi(nextParameter(s).c_str()); // or atoi(nextParameter(s).c_str());
+        data.fields.vitesse = (uint16_t)atoi(nextParameter(s).c_str()); 
         string dir = nextParameter(s);
         int retour_can;
 
-        if(dir == "Av")
-        { 
-            data.fields.direction = 1; 
-            //cout << "Direction avant" << endl;
-            //cout << "Direction : " << data.fields.direction << endl;
-        }
+        if(dir == "Av") data.fields.direction = 1;
         else if(dir == "Re") data.fields.direction = 4;
         else if(dir == "AvD") data.fields.direction = 6;
         else if(dir == "AvG") data.fields.direction = 2;
@@ -148,13 +138,10 @@ int move(string s)
         else if(dir == "ReG") data.fields.direction = 3;
         else if(dir == "RotD") data.fields.direction = 7;
         else if(dir == "RotG") data.fields.direction = 8;
-        else return 105;
-        
-        //cout << "Distance : " << data.fields.distance << endl;
-        //cout << "Vitesse : " << data.fields.vitesse << endl;
-        //cout << "Direction : " << data.fields.direction << endl;
-        convertir(&data, &trameMoteur);
+        else return 105;       
 
+
+        convertir(&data, &trameMoteur);
         retour_can = can.send(CAN_ADDR_BASE_ROULANTE, AVANCE, trameMoteur.raw_data, 8, false, 1,0);
 
         switch (retour_can){
@@ -203,7 +190,7 @@ int move(string s)
                 break;  
 
             default:
-                return 1;
+                return 0;
                 break;
         }
     }
@@ -211,10 +198,9 @@ int move(string s)
     else return 106;
 }
 
-int initCan()
+int initCan(Can & can)
 {
     Log sysLog("systeme");
-    Can can;
 
     int err = can.init(CAN_ADDR_RASPBERRY_E);//CAN_ADDR_RASPBERRY
     
@@ -255,9 +241,10 @@ int main(int argc, char **argv)
     ajoutCodeErreur(151, "Adresse destination CAN inconnue");
     ajoutCodeErreur(152, "Code fonction CAN inconnu");
 
-    initCan();
+    initCan(can);
 
     string input = argv[argc-1], param = nextParameter(input);
+    
     int id = 0;
 
     if(param == "BR")
