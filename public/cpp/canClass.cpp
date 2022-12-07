@@ -27,13 +27,9 @@
 
 #include <thread>
 
-
-
 #include "canClass.h"
 #include "defineCan.h"
 using namespace std;
-
-
 
 /*!
  *  \brief initialise le bus can
@@ -70,7 +66,7 @@ int Can::init(CAN_EMIT_ADDR myAddr){
     // si l'address est incorect on ne setup juste pas de filtre
     //if(myAddr <0 || myAddr > CAN_MAX_VALUE_ADDR) return CAN_E_OOB_ADDR;
     //if(!is_valid_addr(myAddr)) return CAN_E_UNKNOW_ADDR;
-    
+
     //  Initialisation de l'adresse
     struct can_filter rfilter[1];
     rfilter[0].can_id   = myAddr ;
@@ -79,7 +75,7 @@ int Can::init(CAN_EMIT_ADDR myAddr){
 
     //setsockopt(s, SOL_CAN_RAW, CAN_RAW_FILTER, &rfilter, sizeof(rfilter));
 
-    logC << "bus can initialiser" << mendl;
+    //logC << "bus can initialiser" << mendl;
     return 0;
 }
 
@@ -92,7 +88,7 @@ int Can::init(CAN_EMIT_ADDR myAddr){
  *  \param data_len nombre d'octet de data, compris entre 0 et 8
  *  \param isRep true si le message est une réponse à une requete, false sinon
  *  \param repLenght isRep = true : id du msg dans la réponse. isRep = false : nbr de reponse atendu
- *  \retval 0 le message a bien etait envoyé
+ *  \retval 0 le message a bien été envoyé
  *  \retval {CAN_E_DATA_SIZE_TOO_LONG} data_len n'est pas compris entre 0 et 8 inclu
  *  \retval {CAN_E_OOB_ADDR} l'adresse n'est pas dans les valeurs possible (0 - {CAN_MAX_VALUE_ADDR})
  *  \retval {CAN_E_OOB_CODE_FCT} le code fct n'est pas dans les valeurs possible (0 - {CAN_MAX_VALUE_CODE_FCT})
@@ -100,7 +96,7 @@ int Can::init(CAN_EMIT_ADDR myAddr){
  *  \retval {CAN_E_OOB_DATA} au moins une des donnés n'est pas dans les valeurs possible (0 - 255)
  *  \retval {CAN_E_UNKNOW_ADDR} l'adresse n'est pas dans le #define
  *  \retval {CAN_E_UNKNOW_CODE_FCT} le code fonction n'est pas dans le #define
- *  \retval {CAN_E_WRITE_ERROR} une erreur à eu lieu lors de l'envoie du message
+ *  \retval {CAN_E_WRITE_ERROR} une erreur à eu lieu lors de l'envoi du message
 */
 int Can::send(CAN_ADDR addr, CAN_CODE_FCT codeFct , uint8_t data[], uint dataLen, bool isRep, uint repLenght, uint idmessage){
     if (dataLen >8){

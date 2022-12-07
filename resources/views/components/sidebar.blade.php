@@ -102,10 +102,13 @@
         <a class="nav-link bg-primary text-black">Commandes <i class="fa-solid fa-gamepad"></i></a>
 
         <div class="vstack gap-2">
-            <x-button title="Test connectivité" id="1" icon="fa-solid fa-tower-cell"
+            <x-button title="Test odométrie" id="1" icon="fa-solid fa-tower-cell"
             url="{{ route('log') }}" addons="btn-outlined"/>
 
-            <x-button title="Position du robot" id="3" icon="fa-solid fa-crosshairs"
+            <x-button title="Test base roulante" id="2" icon="fa-solid fa-tower-cell"
+            url="{{ route('log') }}" addons="btn-outlined"/>
+
+            <x-button title="Test xbee" id="3" icon="fa-solid fa-crosshairs"
             url="{{ route('log') }}"/>
         </div>
 

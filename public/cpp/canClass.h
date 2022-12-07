@@ -16,10 +16,6 @@
 
 #include <sys/time.h>
 
-
-
-
-
 /*!
  * \struct CanResponse_t
  * \brief contient un message décoder venant du bus can
@@ -87,10 +83,6 @@ typedef enum{
     INCONNUE = 3
 } POSITION_GLICIERE_STATUE;
 
-
-
-
-
 /*!
  *	\class Can
  *  \brief classe qui gère l'envoie et la réception de msg via un bus can
@@ -99,19 +91,16 @@ typedef enum{
 */
 class Can{
   private:
+
 	int s;
 	std::thread* threadListen;
 	void listen();
 	int traitement_trame(CanResponse_t &rep, can_frame frame);
-    
-  
+
   
   public:
 
     std::map<uint,CanResponse_t>messages;
-
-
-
 
 	Can() : logC("can") {};
 	Log logC;
@@ -119,7 +108,6 @@ class Can{
     
     bool is_message(uint id);
     CanResponse_t get_message(uint id);
-
 
 	int send(CAN_ADDR addr, CAN_CODE_FCT codeFct , uint8_t data[], uint data_len, bool isRep, uint repLenght, uint idmessage);
 	void traitement(CanResponse_t msg);

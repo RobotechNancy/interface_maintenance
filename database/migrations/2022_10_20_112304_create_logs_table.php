@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('command_name');
             $table->text('response');
-            $table->boolean('state')->default(1);
+            $table->integer('state')->default(1);
         });
     }
 
