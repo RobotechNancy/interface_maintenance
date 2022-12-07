@@ -119,7 +119,7 @@ $(document).ready(function () {
 
 function changeValueRange(type){
     if (type == 0)
-	$("#valeurSliderDistance").text($("#rangeDistance").val());
+	    $("#valeurSliderDistance").text($("#rangeDistance").val());
     else
-	$("#valeurSliderVitesse").text($("#rangeVitesse").val());
+	    $("#valeurSliderVitesse").text($("#rangeVitesse").val());
 }

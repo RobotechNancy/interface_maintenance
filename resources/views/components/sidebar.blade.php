@@ -101,10 +101,13 @@
 
         <a class="nav-link bg-primary text-black">Commandes <i class="fa-solid fa-gamepad"></i></a>
 
-        <x-button title="Test connectivité" id="1" icon="fa-solid fa-tower-cell"
-        url="{{ route('log') }}" addons="btn-sm"/>
-        <x-button title="Position du robot" id="3" icon="fa-solid fa-crosshairs"
-        url="{{ route('log') }}" addons="btn-sm"/>
+        <div class="vstack gap-2">
+            <x-button title="Test connectivité" id="1" icon="fa-solid fa-tower-cell"
+            url="{{ route('log') }}" addons="btn-outlined"/>
+
+            <x-button title="Position du robot" id="3" icon="fa-solid fa-crosshairs"
+            url="{{ route('log') }}"/>
+        </div>
 
     </div>
 </nav>
