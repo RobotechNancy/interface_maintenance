@@ -1,4 +1,4 @@
-# Trucs à mettre sur l'interface
+# To do list
 
 ## Info du robot :
 Etat du bouton d'arrêt d'urgence & activation actionneurs
