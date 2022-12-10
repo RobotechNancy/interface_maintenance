@@ -2,9 +2,7 @@
     <h5 class="mb-4">
         <div class="hstack gap-2">
             @include('components.sidebarbtn')
-            <span class="badge bg-white text-dark fs-5">
-                Console de logs
-            </span>
+            Console de logs
             <x-button id="20" icon="fa-solid fa-eraser" url="{{ route('clearlogs') }}" color="btn-danger"
                 addons="btn-sm" />
 

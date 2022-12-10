@@ -28,13 +28,22 @@
 </head>
 
 <body class="bg-dark text-white">
-    @if ($_SERVER["REQUEST_URI"] == "/dashboard")
-        @include('components.sidebar')
-    @endif
+    @auth
+        @if ($_SERVER["REQUEST_URI"] == "/dashboard" || $_SERVER["REQUEST_URI"] == "/index")
+
+            @include('components.sidebar')
+
+        @endif
+    @endauth
+
     @include('components.navbar')
+
     <div class="container-sm mt-5">
         {{ $slot }}
     </div>
+
+    @include('components.modal-user')
+
 </body>
 
 </html>

@@ -151,9 +151,9 @@
             {{ $user->updated_at->format('H:i:s') }}.</small></p>
 
     @if (session()->has('success'))
-        <x-notification title="Modification du profil" color="bg-success">{{ session('success') }}</x-notification>
+        <x-notification title="Modification du profil" color="text-bg-success">{{ session('success') }}</x-notification>
     @endif
     @if (session()->has('warning'))
-        <x-notification title="Modification du profil" color="bg-warning">{{ session('warning') }}</x-notification>
+        <x-notification title="Modification du profil" color="text-bg-warning">{{ session('warning') }}</x-notification>
     @endif
 </x-app-layout>

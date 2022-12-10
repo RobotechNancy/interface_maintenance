@@ -2,7 +2,7 @@
     <x-slot name="addons"></x-slot>
     <x-slot name="title"> @lang('Dashboard') </x-slot>
 
-    <div id="container_dashboard" class="position-absolute">
+    <div id="container_dashboard">
         <ul class="nav nav-tabs nav-fill mb-5">
             <li class="nav-item">
                 <button class="nav-link active btn_tabs" id="btn_tab_console_logs">Console de logs</button>
@@ -27,7 +27,7 @@
         <x-notification title="Gestion du profil">{{ session('message') }}</x-notification>
     @endif
     @if (session()->has('warning'))
-        <x-notification title="Erreur de compte" color="bg-warning">{{ session('warning') }}</x-notification>
+        <x-notification title="Erreur de compte" color="text-bg-warning">{{ session('warning') }}</x-notification>
     @endif
     @if (session()->has('actions'))
         <x-notification title="Compte rendu d'action">{{ session('actions') }}</x-notification>

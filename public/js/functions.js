@@ -92,7 +92,7 @@ function tabs_manager(tab_name){
 }
 
 $(document).ready(function () {
-    $(".btn_sidebar").click(function () {
+    /*$(".btn_sidebar").click(function () {
         $("#sidebar").toggleClass("d-none");
         $("#sidebar").toggleClass("d-md-block");
     });
@@ -103,7 +103,7 @@ $(document).ready(function () {
     if($("#sidebar").hasClass("d-none")){
         $("#container_dashboard").css("left", $("#sidebar").width() + 35);
         $("#container_dashboard").css("width", $("#navbar").width() - $("#sidebar").width() - 35);
-    }
+    }*/
 
     $("#btn_reload_console").click(function(){
         $("#logs_console").load(" #logs_console");
