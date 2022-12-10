@@ -9,7 +9,28 @@ using namespace std;
 
 Can can;
 
-map<int, string> error_codes;
+
+
+map<int, string> error_codes {
+    {0, "Succès de la commande"},
+    {1, "Erreur générale ou inconnue"},
+    {2, "Commande générale inconnue"},
+    {3, "Commande relais inconnue"},
+    {4, "Commande test comm inconnue"},
+    {5, "Impossible de modifier le relais"},
+    {6, "Délais de réponse dépassé"},
+    {101, "Envoi CAN impossible"},
+    {105, "Direction non reconnue"},
+    {106, "Relais désactivé"},
+    {110, "Longueur DATA CAN trop grande"},
+    {111, "Adresse destination CAN incorrecte"},
+    {112, "Code fonction CAN incorrect"},
+    {113, "Valeur REP NBR CAN incorrecte"},
+    {114, "Valeur DATA CAN incorrecte"},
+    {151, "Adresse destination CAN inconnue"},
+    {152, "Code fonction CAN inconnu"}
+};
+
 
 int tryCommand(string c)
 { //Tente d'executer la commande passée en paramètre
@@ -69,6 +90,60 @@ string nextParameter(string & s)
 
 } 
 
+// Convertit les codes d'erreur CAN pour qu'ils soient positifs
+int convertCanError(int error){
+    switch (error){
+        case -501:
+            return 101;
+            break;
+
+        case -502:
+            return 102;
+            break;
+
+        case -503:
+            return 103;
+            break;
+
+        case -504:
+            return 104;
+            break;
+
+        case -510:
+            return 110;
+            break;
+
+        case -511:
+            return 111;
+            break;
+
+        case -512:
+            return 112;
+            break;
+
+        case -513:
+            return 113;
+            break;
+
+        case -514:
+            return 114;
+            break;
+
+        case -551:
+            return 151;
+            break;
+
+        case -552:
+            return 152;
+            break;  
+
+        default:
+            return 0;
+            break;
+    }
+}
+
+
 int relais(string s)
 { 
     string command = nextParameter(s);
@@ -95,18 +170,50 @@ int relais(string s)
     else return 3;
 }
 
+
 int testComm(string s){ 
     string command = nextParameter(s);
 
-    if(command == "ODO")
+    if(command == "ODO") // Envoie une trame de test de communication à la carte d'odométrie via le bus CAN
     {
-        //cout << "Test communication odométrie non implémentée" << endl;
-        return 0;
+        int retour_can = can.send(CAN_ADDR_ODOMETRIE, TEST_COMM, 0, 8, false, 1,0); // Envoie une trame sans data
+        if(retour_can == 0){
+
+            for(int t = 0; t < 100; t++){ // Attend 100ms
+                if(can.messages.find(1) != can.messages.end()){
+                    for(int i = 0; i < can.messages.size(); i++){
+                        if(can.messages[i].emetteur == CAN_ADDR_ODOMETRIE && can.messages[i].codeFct == TEST_COMM && can.messages[i].isRep){ // Si le message reçu est celui attendu
+                            return 0;
+                        }
+                    }
+                }
+                wait(1);
+            }
+            return 6;
+        }
+        else return convertCanError(retour_can);
     }
-    else if(command == "BR")
+        
+    
+
+    else if(command == "BR") //Même principe que pour l'odométrie
     {
-        //cout << "Test communication base roulante non implémentée" << endl;
-        return 0;
+        int retour_can = can.send(CAN_ADDR_BASE_ROULANTE, TEST_COMM, 0, 8, false, 1,0);
+        if(retour_can == 0){
+
+            for(int t = 0; t < 100; t++){
+                if(can.messages.find(1) != can.messages.end()){
+                    for(int i = 0; i < can.messages.size(); i++){
+                        if(can.messages[i].emetteur == CAN_ADDR_BASE_ROULANTE && can.messages[i].codeFct == TEST_COMM && can.messages[i].isRep){
+                            return 0;
+                        }
+                    }
+                }
+                wait(1);
+            }
+            return 6;
+        }
+        else return convertCanError(retour_can);
     }
     else if(command == "XB")
     {
@@ -142,61 +249,16 @@ int move(string s)
 
 
         convertir(&data, &trameMoteur);
-        retour_can = can.send(CAN_ADDR_BASE_ROULANTE, AVANCE, trameMoteur.raw_data, 8, false, 1,0);
+        retour_can = can.send(CAN_ADDR_BASE_ROULANTE, AVANCE, new Trame_Moteur_t , 8, false, 1,0);
+        return convertCanError(retour_can);
 
-        switch (retour_can){
-            case -501:
-                return 101;
-                break;
-
-            case -502:
-                return 102;
-                break;
-
-            case -503:
-                return 103;
-                break;
-
-            case -504:
-                return 104;
-                break;
-
-            case -510:
-                return 110;
-                break;
-
-            case -511:
-                return 111;
-                break;
-
-            case -512:
-                return 112;
-                break;
-
-            case -513:
-                return 113;
-                break;
-
-            case -514:
-                return 114;
-                break;
-
-            case -551:
-                return 151;
-                break;
-
-            case -552:
-                return 152;
-                break;  
-
-            default:
-                return 0;
-                break;
-        }
     }
 
     else return 106;
 }
+
+
+
 
 int initCan(Can & can)
 {
@@ -213,14 +275,14 @@ int initCan(Can & can)
     return err;
 }
 
-void ajoutCodeErreur(int id, string erreur){
+/* void ajoutCodeErreur(int id, string erreur){
     error_codes.insert(pair<int, string>(id, erreur));
-}
+} */
 
 int main(int argc, char **argv) 
 {
     
-    ajoutCodeErreur(0, "Succès de la commande");
+/*     ajoutCodeErreur(0, "Succès de la commande");
     ajoutCodeErreur(1, "Erreur générale ou inconnue");
 
     ajoutCodeErreur(2, "Commande générale inconnue");
@@ -239,7 +301,7 @@ int main(int argc, char **argv)
     ajoutCodeErreur(114, "Valeur DATA CAN incorrecte");
 
     ajoutCodeErreur(151, "Adresse destination CAN inconnue");
-    ajoutCodeErreur(152, "Code fonction CAN inconnu");
+    ajoutCodeErreur(152, "Code fonction CAN inconnu"); */
 
     initCan(can);
 

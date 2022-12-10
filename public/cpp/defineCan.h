@@ -85,11 +85,13 @@ typedef enum {
 
     BRAS_GLICIERE_STATUE =          0x67000,
 
-    GET_VALEUR_TOF =                 0x31000,
-    VALEUR_TOF = 		0xB1000,
+    GET_VALEUR_TOF =                0x31000,
+    VALEUR_TOF = 		            0xB1000,
     GET_VARIATION_XY =              0x32000,
     VARIATION_XY =                  0xB2000,
-    RESET_LIDAR =                0x33000,
+    RESET_LIDAR =                   0x33000,
+
+    TEST_COMM =                     0x08000, // Valeur temporaire, il faudra peut-être la modifier
     
     ACCUSER_RECPETION =				0xff000,
     
