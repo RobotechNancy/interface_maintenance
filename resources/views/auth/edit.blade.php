@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="title"> @lang('Profile edition') </x-slot>
 
-    <h4 class="mb-5"><x-button-back />Formulaire de modification du compte "{{ $user->name }}"</h4>
+    <h4 class="mb-2 ms-3">Formulaire de modification du compte "{{ $user->name }}"</h4>
 
     <form method="POST" action="{{ route('update', ['user' => $user]) }}" class="p-3">
         @csrf
@@ -146,6 +146,16 @@
             <button type="submit" class="btn btn-primary">{{ __('Edit profile') }}</button>
         </div>
     </form>
+
+
+    <form method="POST" action="{{ route('delete', ['user' => $user]) }}" class="d-none" id="form_delete">
+        @csrf
+    </form>
+
+    <a role="button" class="btn btn-danger ms-3"
+    onclick="event.preventDefault(); $('#form_delete').submit();">
+        @lang('Delete profile')
+    </a>
 
     <p class="mt-5 p-3"><small>Dernière modification de ce profil le {{ $user->updated_at->format('d/m/Y') }} à
             {{ $user->updated_at->format('H:i:s') }}.</small></p>
