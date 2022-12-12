@@ -8,9 +8,9 @@
         {{ $name }}
 
         @if (isset($beta) && $beta)
-            <span class="position-absolute top-0 start-100 translate-middle p-1 text-warning bg-dark badge rounded-pill"
-                style="font-size: 15px;">
-                <i class="fa-solid fa-triangle-exclamation"></i>
+            <span class="position-absolute top-0 start-100 translate-middle p-1 bg-dark badge rounded-pill"
+                style="font-size: 15px; color: #f39c12;">
+                <i class="fa-solid fa-bug"></i>
             </span>
         @endif
     </a>
