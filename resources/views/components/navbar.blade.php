@@ -6,7 +6,7 @@
 
         @if ($_SERVER["REQUEST_URI"] != "/dashboard" && $_SERVER["REQUEST_URI"] != "/")
 
-            <a role="button" onclick="history.go(-1)" class="text-white fs-5 d-inline d-lg-none">
+            <a role="button" onclick="history.go(-1)" class="text-white fs-5 d-inline d-lg-none ms-1 me-1">
                 <i class="fa-solid fa-circle-arrow-left"></i>
             </a>
 
@@ -22,11 +22,13 @@
             <img src="{{ asset('img/logo.png') }}" width="120">
         </a>
 
-        <a class="navbar-brand d-inline d-lg-none" href="/">
+        <a class="navbar-brand d-inline d-lg-none ms-2" href="/">
             <img src="{{ asset('img/logo_court_couleur.jpg') }}" width="50">
         </a>
 
         <div class="collapse navbar-collapse">
+
+            <div class="vr me-3"></div>
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 

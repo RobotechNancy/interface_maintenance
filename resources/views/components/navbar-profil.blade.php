@@ -33,6 +33,8 @@
             </li>
             <li><a class="dropdown-item disabled"><span class="badge rounded-pill text-bg-info">{{ $role }}</span></a></li>
             <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item btn" href="{{ route('dashboard') }}"><i class="fa-solid fa-map-location-dot"></i> Tableau de bord</a></li>
+            <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item btn" href="{{ route('edit', ['id' => Auth::user()->id]) }}"><i class="fa-solid fa-user-gear"></i> Gestion du profil</a></li>
             <li><hr class="dropdown-divider"></li>
             <form method="POST" action="{{ route('logout') }}" class="d-none" id="logout">
