@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="title"> @lang('Profile edition') </x-slot>
 
-    <h4 class="mb-5"><x-button-back />Formulaire de modification du compte "{{ $user->name }}"</h4>
+    <h4 class="mb-2 ms-3">Formulaire de modification du compte "{{ $user->name }}"</h4>
 
     <form method="POST" action="{{ route('update', ['user' => $user]) }}" class="p-3">
         @csrf
@@ -73,22 +73,22 @@
 
             @if (Auth::user()->role != 2 && Auth::user()->id != $user->id)
 
-            <p class="mt-2 text-warning"><small>Il n'est pas possible de modifier le rôle de l'utilisateur car
+            <p class="mt-2 text-warning"><small><i class="fa-solid fa-triangle-exclamation"></i> Il n'est pas possible de modifier le rôle de l'utilisateur car
                     vous n'êtes pas administrateur.</small></p>
 
             @elseif (Auth::user()->role != 2 && Auth::user()->id == $user->id)
 
-            <p class="mt-2 text-warning"><small>Il n'est pas possible de modifier le rôle de votre compte car vous
+            <p class="mt-2 text-warning"><small><i class="fa-solid fa-triangle-exclamation"></i> Il n'est pas possible de modifier le rôle de votre compte car vous
                     n'êtes pas administrateur.</small></p>
 
             @elseif ($user->role == 2 && Auth::user()->id != $user->id)
 
-            <p class="mt-2 text-warning"><small>Il n'est pas possible de modifier le rôle de l'utilisateur car il
+            <p class="mt-2 text-warning"><small><i class="fa-solid fa-triangle-exclamation"></i> Il n'est pas possible de modifier le rôle de l'utilisateur car il
                     s'agit d'un compte administrateur.</small></p>
 
             @elseif ($user->role == 2 && Auth::user()->id == $user->id)
 
-            <p class="mt-2 text-warning"><small>Il n'est pas possible de modifier le rôle de votre compte car vous
+            <p class="mt-2 text-warning"><small><i class="fa-solid fa-triangle-exclamation"></i> Il n'est pas possible de modifier le rôle de votre compte car vous
                     disposez déjà d'un compte administrateur.</small></p>
             @endif
         </div>
@@ -143,17 +143,27 @@
         </div>
 
         <div class="btn-group" role="group">
-            <button type="submit" class="btn btn-primary">{{ __('Edit profile') }}</button>
+            <button type="submit" class="btn btn-primary">{{ __('Edit profile') }} <i class="fa-solid fa-floppy-disk"></i></button>
         </div>
     </form>
 
-    <p class="mt-5 p-3"><small>Dernière modification de ce profil le {{ $user->updated_at->format('d/m/Y') }} à
+
+    <form method="POST" action="{{ route('delete', ['user' => $user]) }}" class="d-none" id="form_delete">
+        @csrf
+    </form>
+
+    <a role="button" class="btn btn-danger ms-3"
+    onclick="event.preventDefault(); $('#form_delete').submit();">
+        @lang('Delete profile') <i class="fa-solid fa-trash-can"></i>
+    </a>
+
+    <p class="mt-5 p-3"><small><i class="fa-solid fa-circle-info"></i> Dernière modification de ce profil le {{ $user->updated_at->format('d/m/Y') }} à
             {{ $user->updated_at->format('H:i:s') }}.</small></p>
 
     @if (session()->has('success'))
-        <x-notification title="Modification du profil" color="bg-success">{{ session('success') }}</x-notification>
+        <x-notification title="Modification du profil" color="text-bg-success">{{ session('success') }}</x-notification>
     @endif
     @if (session()->has('warning'))
-        <x-notification title="Modification du profil" color="bg-warning">{{ session('warning') }}</x-notification>
+        <x-notification title="Modification du profil" color="text-bg-warning">{{ session('warning') }}</x-notification>
     @endif
 </x-app-layout>

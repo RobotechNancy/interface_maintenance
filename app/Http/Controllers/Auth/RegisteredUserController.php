@@ -119,7 +119,7 @@ class RegisteredUserController extends Controller
 
             $user->role = $request->role;
         }
-        
+
         if($request->name != $user->name){
             $request->validate([
                 'name' => ['required', 'string', 'alpha_num', 'max:50']
@@ -156,7 +156,7 @@ class RegisteredUserController extends Controller
             return redirect('logout')->with('message', "Votre compte a été correctement supprimé.");
         }
 
-        return back()->with('message', "Le compte utilisateur ". $user->name ." a été supprimé avec succès !");
+        return redirect("/index")->with('message', "Le compte utilisateur ". $user->name ." a été supprimé avec succès !");
     }
 
 }

@@ -6,10 +6,10 @@
     <h5 class="mt-5 p-3">
         @auth
             Toutes les fonctions de contrôle et de commande des robots sont disponibles sur le <strong><a
-                    href="{{ url('dashboard') }}">tableau de bord</a></strong>.
+                    href="{{ url('dashboard') }}" style="text-decoration: none;">tableau de bord</a></strong>.
         @else
-            Pour commencer, veuillez <strong><a href="{{ route('register') }}">créer un compte</a></strong>, ou
-            <strong><a href="{{ route('login') }}">vous connecter</a></strong>.
+            Pour commencer, veuillez <strong><a href="{{ route('register') }}" style="text-decoration: none;">créer un compte</a></strong>, ou
+            <strong><a href="{{ route('login') }}" style="text-decoration: none;">vous connecter</a></strong>.
         @endauth
     </h5>
 

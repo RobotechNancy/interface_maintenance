@@ -28,13 +28,38 @@
 </head>
 
 <body class="bg-dark text-white">
-    @if ($_SERVER["REQUEST_URI"] == "/dashboard")
-        @include('components.sidebar')
-    @endif
-    @include('layouts.navbar')
-    <div class="container-sm mt-5">
+    @auth
+        @if ($_SERVER["REQUEST_URI"] == "/dashboard" || $_SERVER["REQUEST_URI"] == "/index" || substr($_SERVER["REQUEST_URI"], 0, 5) == "/edit")
+
+            @include('components.sidebar')
+
+        @endif
+
+        <?php
+        $role = '';
+        switch (Auth::user()->role) {
+            case 1:
+                $role = 'ÉDITEUR';
+                break;
+
+            case 2:
+                $role = 'ADMINISTRATEUR';
+                break;
+
+            default:
+                $role = 'LECTEUR';
+                break;
+        }
+        $initiales = strtoupper(substr(Auth::user()->name, 0, 2));
+        ?>
+    @endauth
+
+    @include('components.navbar')
+
+    <div class="container-sm mt-5 ps-lg-5">
         {{ $slot }}
     </div>
+
 </body>
 
 </html>
