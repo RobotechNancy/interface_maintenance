@@ -60,8 +60,6 @@
         {{ $slot }}
     </div>
 
-    @include('components.modal-user')
-
 </body>
 
 </html>

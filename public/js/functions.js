@@ -82,13 +82,13 @@ function sendData(request_url, request_id) {
 
 function tabs_manager(tab_name) {
     $("#btn_" + tab_name).click(function () {
-        if (!$("#btn_" + tab_name).hasClass("active")) {
+        if (!$("#btn_" + tab_name).hasClass("btn-light")) {
             $(".tabs").addClass("d-none");
             $("#" + tab_name).removeClass("d-none");
-            $(".btn_tabs").removeClass("active");
-            $(".btn_tabs").addClass("text-white");
-            $("#btn_" + tab_name).addClass("active");
-            $("#btn_" + tab_name).removeClass("text-white");
+            $(".btn_tabs").removeClass("btn-light");
+            $(".btn_tabs").addClass("btn-outline-light");
+            $("#btn_" + tab_name).addClass("btn-light");
+            $("#btn_" + tab_name).removeClass("btn-outline-light");
         }
     });
 }
@@ -111,9 +111,6 @@ $(document).ready(function () {
     $("#btn_reload_console").click(function () {
         $("#logs_console").load(" #logs_console");
     });
-
-    tabs_manager("tab_connectivite");
-    tabs_manager("tab_console_logs");
 
     $("#valeurSliderDistance").text($("#rangeDistance").val());
     $("#valeurSliderVitesse").text($("#rangeVitesse").val());
