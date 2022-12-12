@@ -3,11 +3,9 @@
     style="z-index:99; overflow: scroll;">
     <div class="d-grid gap-3 m-1">
 
-        <a href="/">
+        <a href="/" class="mb-4">
             <img src="{{ asset('img/logo.png') }}" width="120">
         </a>
-        <button class="btn btn-light btn-sm d-lg-none btn_sidebar mb-3 position-absolute end-0 top-0"><i
-                class="fa-solid fa-xmark"></i></button>
 
         <!--span class="nav-link bg-secondary text-white">Batterie <i class="fa-solid fa-car-battery"></i> <span class="badge text-bg-info">Beta</span></span>
 
@@ -49,7 +47,7 @@
 
         @if ($_SERVER["REQUEST_URI"] == "/dashboard")
 
-        <a class="nav-link bg-success text-black mt-3">Base roulante <i class="fa-solid fa-map-location-dot"></i></a>
+        <a class="nav-link bg-success text-black">Base roulante <i class="fa-solid fa-map-location-dot"></i></a>
 
         <label for="rangeDistance" class="form-label">Distance : <span id="valeurSliderDistance"></span> cm</label>
         <input type="range" class="form-range" value="1" min="0" max="200" step="1"
@@ -114,7 +112,7 @@
 
         @else
 
-        <li class="nav-item mt-3">
+        <li class="nav-item">
             <a class="btn btn-primary w-100" href="{{ route('dashboard') }}">
                 <span class="icon">
                     <i class="fa-solid fa-arrow-left"></i>
@@ -128,7 +126,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="btn w-100 @if ($_SERVER["REQUEST_URI"] == "/index") btn-light @else btn-dark @endif" href="{{ route('users') }}">
+            <a class="btn w-100 @if ($_SERVER["REQUEST_URI"] == "/index") btn-light @else btn-outline-light @endif" href="{{ route('users') }}">
                 <span class="icon">
                     <i class="fa-solid fa-users-gear"></i>
                 </span>
@@ -141,7 +139,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="btn w-100 @if ($_SERVER["REQUEST_URI"] == "/edit/".Auth::user()->id) btn-light @else btn-dark @endif" href="{{ route('edit', ['id' => Auth::user()->id]) }}">
+            <a class="btn w-100 @if ($_SERVER["REQUEST_URI"] == "/edit/".Auth::user()->id) btn-light @else btn-outline-light @endif" href="{{ route('edit', ['id' => Auth::user()->id]) }}">
                 <span class="icon">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </span>
@@ -150,7 +148,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="btn w-100 text-warning" href="{{ route('logout') }}">
+            <a class="btn w-100 btn-outline-warning" href="{{ route('logout') }}">
                 <span class="icon">
                     <i class="fa-solid fa-right-from-bracket"></i>
                 </span>
@@ -163,7 +161,7 @@
                 @csrf
             </form>
 
-            <a class="btn w-100 text-danger" onclick="event.preventDefault(); $('#form_my_delete').submit();">
+            <a class="btn w-100 btn-outline-danger" onclick="event.preventDefault(); $('#form_my_delete').submit();">
                 <span class="icon">
                     <i class="fa-solid fa-trash-can"></i>
                 </span>

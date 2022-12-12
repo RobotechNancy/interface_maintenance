@@ -56,7 +56,7 @@
 
     @include('components.navbar')
 
-    <div class="container-sm mt-5">
+    <div class="container-sm mt-5 ps-lg-5">
         {{ $slot }}
     </div>
 

@@ -4,6 +4,14 @@
 
     <div class="container-fluid">
 
+        @if ($_SERVER["REQUEST_URI"] != "/dashboard")
+            <a role="button" onclick="history.go(-1)" class="text-white fs-5 d-inline d-lg-none">
+                <i class="fa-solid fa-circle-arrow-left"></i>
+            </a>
+        @endif
+
+        @include('components.sidebarbtn')
+
         <a class="navbar-brand d-none d-lg-inline" href="/">
             <img src="{{ asset('img/logo.png') }}" width="120">
         </a>
@@ -12,19 +20,12 @@
             <img src="{{ asset('img/logo_court_couleur.jpg') }}" width="50">
         </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navBarMain"
-            aria-controls="navBarMain" aria-expanded="false" aria-label="Toggle navigation">
-
-            <span class="navbar-toggler-icon"></span>
-
-        </button>
-
-        <div class="collapse navbar-collapse" id="navBarMain">
+        <div class="collapse navbar-collapse">
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 @auth
                     <li class="nav-item">
-                        <x-button title="OFF" id="12" url="{{ route('log') }}" icon="fa-solid fa-toggle-off" addons="btn-danger"/>
+                        <x-button id="12" url="{{ route('log') }}" icon="fa-solid fa-power-off" addons="btn-danger"/>
                     </li>
                 @endauth
             </ul>

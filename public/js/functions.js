@@ -4,15 +4,16 @@ function sendData(request_url, request_id) {
 
         const alert = (message, type) => {
             wrapper = [
-                '<div class="alert alert-'+type+' alert-dismissible" role="alert">',
-                '   <div>'+message+'</div>',
+                '<div class="alert alert-' +
+                    type +
+                    ' alert-dismissible" role="alert">',
+                "   <div>" + message + "</div>",
                 '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-                '</div>',
+                "</div>",
             ].join("");
 
             alertPlaceholder.append(wrapper);
         };
-
 
         $.ajaxSetup({
             headers: {
@@ -24,8 +25,8 @@ function sendData(request_url, request_id) {
             e.preventDefault();
             $(".btn_form").attr("disabled", true);
 
-
-            if($("#btn_12").hasClass("btn-success") && request_id == 12) final_id = 13;
+            if ($("#btn_12").hasClass("btn-success") && request_id == 12)
+                final_id = 13;
             else final_id = request_id;
 
             $.ajax({
@@ -41,20 +42,21 @@ function sendData(request_url, request_id) {
                                 "</a>",
                             "success"
                         );
+                    else if (request_id == 12) {
+                        $("#btn_" + request_id).toggleClass("btn-danger");
+                        $("#btn_" + request_id).toggleClass("btn-success");
 
-                    else if(request_id == 12){
-                        $("#btn_"+request_id).toggleClass("btn-danger");
-                        $("#btn_"+request_id).toggleClass("btn-success");
-
-                        if($("#btn_"+request_id).hasClass("btn-success"))
-                            $("#btn_"+request_id).html("ON <i class='fa-solid fa-toggle-on'></i>");
+                        if ($("#btn_" + request_id).hasClass("btn-success"))
+                            $("#btn_" + request_id).html(
+                                "<i class='fa-solid fa-power-off'></i>"
+                            );
                         else
-                            $("#btn_"+request_id).html("OFF <i class='fa-solid fa-toggle-off'></i>");
+                            $("#btn_" + request_id).html(
+                                "<i class='fa-solid fa-power-off'></i>"
+                            );
 
                         $("#logs_console").load(" #logs_console");
-                    }
-
-                    else $("#logs_console").load(" #logs_console");
+                    } else $("#logs_console").load(" #logs_console");
 
                     $(".btn_form").attr("disabled", false);
                 },
@@ -78,34 +80,35 @@ function sendData(request_url, request_id) {
     });
 }
 
-function tabs_manager(tab_name){
-    $("#btn_"+tab_name).click(function(){
-        if(!($("#btn_"+tab_name).hasClass("active"))){
+function tabs_manager(tab_name) {
+    $("#btn_" + tab_name).click(function () {
+        if (!$("#btn_" + tab_name).hasClass("active")) {
             $(".tabs").addClass("d-none");
-            $("#"+tab_name).removeClass("d-none");
+            $("#" + tab_name).removeClass("d-none");
             $(".btn_tabs").removeClass("active");
             $(".btn_tabs").addClass("text-white");
-            $("#btn_"+tab_name).addClass("active");
-            $("#btn_"+tab_name).removeClass("text-white");
+            $("#btn_" + tab_name).addClass("active");
+            $("#btn_" + tab_name).removeClass("text-white");
         }
     });
 }
 
 $(document).ready(function () {
-    /*$(".btn_sidebar").click(function () {
+    $(".btn_sidebar").click(function () {
         $("#sidebar").toggleClass("d-none");
         $("#sidebar").toggleClass("d-md-block");
+
+        if ($("#sidebar").hasClass("d-md-block"))
+            $(".btn_sidebar").html(
+                "<i class='fa-solid fa-xmark'></i>"
+            );
+        else
+            $(".btn_sidebar").html(
+                "<i class='fa-solid fa-bars'></i>"
+            );
     });
 
-    $("#sidebar").css("top", $("#navbar").height() + 18);
-    $("#sidebar").css("height", document.documentElement.scrollHeight - 18 - $("#navbar").height());
-
-    if($("#sidebar").hasClass("d-none")){
-        $("#container_dashboard").css("left", $("#sidebar").width() + 35);
-        $("#container_dashboard").css("width", $("#navbar").width() - $("#sidebar").width() - 35);
-    }*/
-
-    $("#btn_reload_console").click(function(){
+    $("#btn_reload_console").click(function () {
         $("#logs_console").load(" #logs_console");
     });
 
@@ -116,10 +119,7 @@ $(document).ready(function () {
     $("#valeurSliderVitesse").text($("#rangeVitesse").val());
 });
 
-
-function changeValueRange(type){
-    if (type == 0)
-	    $("#valeurSliderDistance").text($("#rangeDistance").val());
-    else
-	    $("#valeurSliderVitesse").text($("#rangeVitesse").val());
+function changeValueRange(type) {
+    if (type == 0) $("#valeurSliderDistance").text($("#rangeDistance").val());
+    else $("#valeurSliderVitesse").text($("#rangeVitesse").val());
 }

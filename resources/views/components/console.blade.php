@@ -1,7 +1,6 @@
 <div class="container tabs" id="tab_console_logs">
     <h5 class="mb-4">
         <div class="hstack gap-2">
-            @include('components.sidebarbtn')
             Console de logs
             <x-button id="20" icon="fa-solid fa-eraser" url="{{ route('clearlogs') }}" color="btn-danger"
                 addons="btn-sm" />
