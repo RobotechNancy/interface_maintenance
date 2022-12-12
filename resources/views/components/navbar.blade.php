@@ -28,12 +28,13 @@
 
         <div class="collapse navbar-collapse">
 
-            <div class="vr me-3"></div>
-
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                 @auth
                     @if (Auth::user()->role != 0)
+
+                        <div class="vr me-3"></div>
+
                         <li class="nav-item">
                             <x-button id="12" url="{{ route('log') }}" icon="fa-solid fa-power-off" addons="btn-danger"/>
                         </li>

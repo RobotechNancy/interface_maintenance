@@ -64,7 +64,7 @@
 
                     <option value=0 @if ($user->role == 0) selected @endif>Lecteur</option>
                     <option value=1 @if ($user->role == 1) selected @endif>Editeur</option>
-                    <option value=2 @if ($user->role == 2) selected @endif>Administrateur</option>
+                    <option value=2 @if ($user->role == 2) selected @endif disabled>Administrateur</option>
                 </select>
 
                 <label for="role" class="label">{{ __('Rôle') }}</label>

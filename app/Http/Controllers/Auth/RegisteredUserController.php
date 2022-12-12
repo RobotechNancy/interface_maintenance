@@ -114,7 +114,7 @@ class RegisteredUserController extends Controller
 
         if($user->role != 2 && $request->role != $user->role){
             $request->validate([
-                'role' => ['integer', 'in:0,1,2']
+                'role' => ['integer', 'in:0,1']
             ]);
 
             $user->role = $request->role;
