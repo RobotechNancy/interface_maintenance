@@ -12,7 +12,11 @@
 
         @endif
 
-        <button class="btn btn-dark d-inline d-lg-none btn_sidebar fs-5"><i class="fa-solid fa-bars"></i></button>
+        @auth
+
+            <button class="btn btn-dark d-inline d-lg-none btn_sidebar fs-5"><i class="fa-solid fa-bars"></i></button>
+
+        @endauth
 
         <a class="navbar-brand d-none d-lg-inline" href="/">
             <img src="{{ asset('img/logo.png') }}" width="120">
