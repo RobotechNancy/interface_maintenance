@@ -4,7 +4,7 @@
 
     <div class="container-fluid">
 
-        @if ($_SERVER["REQUEST_URI"] != "/dashboard")
+        @if ($_SERVER["REQUEST_URI"] != "/dashboard" && $_SERVER["REQUEST_URI"] != "/")
 
             <a role="button" onclick="history.go(-1)" class="text-white fs-5 d-inline d-lg-none">
                 <i class="fa-solid fa-circle-arrow-left"></i>
@@ -27,9 +27,11 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                 @auth
-                    <li class="nav-item">
-                        <x-button id="12" url="{{ route('log') }}" icon="fa-solid fa-power-off" addons="btn-danger"/>
-                    </li>
+                    @if (Auth::user()->role != 0)
+                        <li class="nav-item">
+                            <x-button id="12" url="{{ route('log') }}" icon="fa-solid fa-power-off" addons="btn-danger"/>
+                        </li>
+                    @endif
                 @endauth
 
             </ul>
@@ -37,7 +39,7 @@
             <ul class="navbar-nav mb-2 mb-lg-0 gap-2">
                 @auth
 
-                    @if ($_SERVER["REQUEST_URI"] == "/dashboard")
+                    @if ($_SERVER["REQUEST_URI"] == "/dashboard" && (Auth::user()->role == 2))
 
                         <li class="nav-item">
                             <a class="btn btn-light" href="{{ route('users') }}">

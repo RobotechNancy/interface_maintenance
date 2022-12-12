@@ -2,8 +2,11 @@
     <h5 class="mb-4">
         <div class="hstack gap-2">
             Console de logs
-            <x-button id="20" icon="fa-solid fa-eraser" url="{{ route('clearlogs') }}" color="btn-danger"
+
+            @if (Auth::user()->role == 2)
+                <x-button id="20" icon="fa-solid fa-eraser" url="{{ route('clearlogs') }}" color="btn-danger"
                 addons="btn-sm" />
+            @endif
 
             <x-button id="0" icon="fa-solid fa-file-export" url="{{ route('exportlogs') }}" addons="btn-sm" />
 

@@ -14,8 +14,12 @@
 
             <!--@include("components.sidebar-batterie")-->
 
-            @include("components.sidebar-base-roulante")
-            @include("components.sidebar-commandes")
+            @if (Auth::user()->role == 2)
+
+                @include("components.sidebar-base-roulante")
+                @include("components.sidebar-commandes")
+
+            @endif
 
         @else
 
@@ -28,7 +32,10 @@
                 </a>
             </li>
 
-            @include("components.sidebar-administration")
+            @if (Auth::user()->role == 2)
+                @include("components.sidebar-administration")
+            @endif
+
             @include("components.sidebar-gestion-profil")
 
         @endif
