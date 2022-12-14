@@ -175,52 +175,53 @@ int relais(string s)
 
 int testComm(string s){ 
     string command = nextParameter(s);
-
-    if(command == "ODO") //Même principe que pour l'odométrie
-    {
-        uint8_t data[1] = {0x00};
-        int retour_can = can.send(CAN_ADDR_ODOMETRIE, TEST_COMM, data, 1, false, 1,0);
-        can.start_listen();
-        if(retour_can == 0){
-            for(int t = 0; t < 100; t++)
-            {
-                while(can.is_message(0)){
-                    CanResponse_t msg = can.get_message(0);
-                    if(msg.codeFct == TEST_COMM && msg.addr == CAN_ADDR_ODOMETRIE_E){                         
-                        return 0;
+    if(readRelayPin()){
+        if(command == "ODO") //Même principe que pour l'odométrie
+        {
+            uint8_t data[1] = {0x00};
+            int retour_can = can.send(CAN_ADDR_ODOMETRIE, TEST_COMM, data, 1, false, 1,0);
+            can.start_listen();
+            if(retour_can == 0){
+                for(int t = 0; t < 100; t++)
+                {
+                    while(can.is_message(0)){
+                        CanResponse_t msg = can.get_message(0);
+                        if(msg.codeFct == TEST_COMM && msg.addr == CAN_ADDR_ODOMETRIE_E){                         
+                            return 0;
+                        }
                     }
+                    usleep(1000);
                 }
-                usleep(1000);
+                return 6;
             }
-            return 6;
+            else return convertCanError(retour_can);
         }
-        else return convertCanError(retour_can);
-    }
-  
-
-    else if(command == "BR") //Même principe que pour l'odométrie
-    {
-        uint8_t data[1] = {0x00};
-        int retour_can = can.send(CAN_ADDR_BASE_ROULANTE, TEST_COMM, data, 1, false, 1,0);
-        can.start_listen();
-        if(retour_can == 0){
-            for(int t = 0; t < 100; t++)
-            {
-                while(can.is_message(0)){
-                    CanResponse_t msg = can.get_message(0);
-                    if(msg.codeFct == TEST_COMM && msg.emetteur == CAN_ADDR_BASE_ROULANTE_E){                 
-                        return 0;
+    
+        else if(command == "BR") //Même principe que pour l'odométrie
+        {
+            uint8_t data[1] = {0x00};
+            int retour_can = can.send(CAN_ADDR_BASE_ROULANTE, TEST_COMM, data, 1, false, 1,0);
+            can.start_listen();
+            if(retour_can == 0){
+                for(int t = 0; t < 100; t++)
+                {
+                    while(can.is_message(0)){
+                        CanResponse_t msg = can.get_message(0);
+                        if(msg.codeFct == TEST_COMM && msg.emetteur == CAN_ADDR_BASE_ROULANTE_E){                 
+                            return 0;
+                        }
                     }
+                    usleep(1000);
                 }
-                usleep(1000);
+                return 6;
             }
-            return 6;
+            else return convertCanError(retour_can);
         }
-        else return convertCanError(retour_can);
     }
-    else if(command == "XB")
+    else return 106;
+
+    if(command == "XB")
     {
-        //cout << "Test communication xbee non implémentée" << endl;
         return 0;
     }
     else return 4;
