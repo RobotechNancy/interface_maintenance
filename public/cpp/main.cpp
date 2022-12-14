@@ -169,6 +169,11 @@ int relais(string s)
 
         return id;
     }
+    else if(command == "Test")
+    {
+        if(readRelayPin()) return 0;
+        else return 106;
+    }
     else return 3;
 }
 
@@ -176,7 +181,7 @@ int relais(string s)
 int testComm(string s){ 
     string command = nextParameter(s);
     if(readRelayPin()){
-        if(command == "ODO") //Même principe que pour l'odométrie
+        if(command == "Odo") //Même principe que pour l'odométrie
         {
             uint8_t data[1] = {0x00};
             int retour_can = can.send(CAN_ADDR_ODOMETRIE, TEST_COMM, data, 1, false, 1,0);
@@ -313,15 +318,9 @@ int main(int argc, char **argv)
     
     int id = 0;
 
-    if(param == "BR")
-        id = move(input);
-    
-    else if(param == "Relais")
-        id = relais(input);
-    
-    else if(param == "TestComm")
-        id = testComm(input);
-    
+    if(param == "BR") id = move(input);    
+    else if(param == "Relais") id = relais(input);    
+    else if(param == "TestComm") id = testComm(input);    
     else id = 2;
 
     cout << error_codes[id] << endl;
