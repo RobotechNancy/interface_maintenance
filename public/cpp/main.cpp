@@ -4,6 +4,8 @@
 #include "convertionTramePR.h"
 #include "logLib.h"
 #include "defineCan.h"
+#include <unistd.h>
+
 
 using namespace std;
 
@@ -174,42 +176,43 @@ int relais(string s)
 int testComm(string s){ 
     string command = nextParameter(s);
 
-    if(command == "ODO") // Envoie une trame de test de communication à la carte d'odométrie via le bus CAN
+    if(command == "ODO") //Même principe que pour l'odométrie
     {
-        int retour_can = can.send(CAN_ADDR_ODOMETRIE, TEST_COMM, 0, 8, false, 1,0); // Envoie une trame sans data
+        uint8_t data[1] = {0x00};
+        int retour_can = can.send(CAN_ADDR_ODOMETRIE, TEST_COMM, data, 1, false, 1,0);
+        can.start_listen();
         if(retour_can == 0){
-
-            for(int t = 0; t < 100; t++){ // Attend 100ms
-                if(can.messages.find(1) != can.messages.end()){
-                    for(int i = 0; i < can.messages.size(); i++){
-                        if(can.messages[i].emetteur == CAN_ADDR_ODOMETRIE && can.messages[i].codeFct == TEST_COMM && can.messages[i].isRep){ // Si le message reçu est celui attendu
-                            return 0;
-                        }
+            for(int t = 0; t < 100; t++)
+            {
+                while(can.is_message(0)){
+                    CanResponse_t msg = can.get_message(0);
+                    if(msg.codeFct == TEST_COMM && msg.addr == CAN_ADDR_ODOMETRIE_E){                         
+                        return 0;
                     }
                 }
-                wait(1);
+                usleep(1000);
             }
             return 6;
         }
         else return convertCanError(retour_can);
     }
-        
-    
+  
 
     else if(command == "BR") //Même principe que pour l'odométrie
     {
-        int retour_can = can.send(CAN_ADDR_BASE_ROULANTE, TEST_COMM, 0, 8, false, 1,0);
+        uint8_t data[1] = {0x00};
+        int retour_can = can.send(CAN_ADDR_BASE_ROULANTE, TEST_COMM, data, 1, false, 1,0);
+        can.start_listen();
         if(retour_can == 0){
-
-            for(int t = 0; t < 100; t++){
-                if(can.messages.find(1) != can.messages.end()){
-                    for(int i = 0; i < can.messages.size(); i++){
-                        if(can.messages[i].emetteur == CAN_ADDR_BASE_ROULANTE && can.messages[i].codeFct == TEST_COMM && can.messages[i].isRep){
-                            return 0;
-                        }
+            for(int t = 0; t < 100; t++)
+            {
+                while(can.is_message(0)){
+                    CanResponse_t msg = can.get_message(0);
+                    if(msg.codeFct == TEST_COMM && msg.emetteur == CAN_ADDR_BASE_ROULANTE_E){                 
+                        return 0;
                     }
                 }
-                wait(1);
+                usleep(1000);
             }
             return 6;
         }
@@ -249,7 +252,7 @@ int move(string s)
 
 
         convertir(&data, &trameMoteur);
-        retour_can = can.send(CAN_ADDR_BASE_ROULANTE, AVANCE, new Trame_Moteur_t , 8, false, 1,0);
+        retour_can = can.send(CAN_ADDR_BASE_ROULANTE, AVANCE, trameMoteur.raw_data, 8, false, 1,0);
         return convertCanError(retour_can);
 
     }

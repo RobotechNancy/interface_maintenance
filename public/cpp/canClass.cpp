@@ -154,7 +154,7 @@ int Can::traitement_trame(CanResponse_t &rep, can_frame frame){
 			perror("Read");
             return CAN_E_READ_ERROR;
 		}
-        cout << "ExtId : " << hex << frame.can_id << endl;
+        //cout << "ExtId : " << hex << frame.can_id << endl;
 
         rep.addr = (frame.can_id & CAN_FILTER_ADDR_EMETTEUR )  ;
         rep.emetteur = (frame.can_id &  CAN_FILTER_ADDR_RECEPTEUR) ;
@@ -219,7 +219,7 @@ void Can::traitement(CanResponse_t msg){
     if(msg.addr == CAN_ADDR_RASPBERRY){
 
     messages.insert( pair<int,CanResponse_t>(msg.idMessage,msg));
-    cout << "OSKOUTR : " <<messages[1].codeFct << endl;
+    //cout << "OSKOUTR : " <<messages[1].codeFct << endl;
    }
 
     switch (msg.emetteur){     
@@ -229,6 +229,10 @@ void Can::traitement(CanResponse_t msg){
             
 
         break;
+        case TEST_COMM:
+
+        break;
+
         default:
             cout << "code fonction inconu" << endl;
         break;
@@ -275,8 +279,8 @@ void Can::traitement(CanResponse_t msg){
     CanResponse_t Can::get_message(uint id){
         CanResponse_t rep;
         rep = messages[id];
-        messages.erase(id);
-	return rep;
+        messages.erase(id);              
+	    return rep;
     }
 
 
