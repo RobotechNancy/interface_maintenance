@@ -1,6 +1,6 @@
 <div class="container tabs" id="tab_console_logs">
     <h5 class="mb-4">
-        <div class="hstack gap-2">
+        <div class="hstack gap-2 fw-bold">
             Console de logs
 
             @if (Auth::user()->role == 2)
@@ -54,7 +54,7 @@
                         <div id="collapse_log_<?= $log->id ?>" class="accordion-collapse collapse"
                             aria-labelledby="log_<?= $log->id ?>" data-bs-parent="#accordionConsole">
                             <div class="accordion-body">
-                                <div class="row row-cols-1 row-cols-lg-4 row-cols-md-2 g-4 p-3">
+                                <div class="row row-cols-1 g-4 p-3">
                                     @foreach ($datas as $data)
                                         <div class="col">
                                             <div class="card text-bg-dark border border-light h-100 border-opacity-25">
@@ -67,15 +67,33 @@
                                                     </li>
                                                     <li
                                                         class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
-                                                        Data
+                                                        Données
                                                         <span
                                                             class="badge bg-primary rounded-pill">{{ $data->{"data"} }}</span>
                                                     </li>
                                                     <li
                                                         class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
-                                                        Status
+                                                        Statut
                                                         <span
-                                                            class="badge @if ($data->{'status'} == 0) bg-success @else bg-danger @endif rounded-pill">{{ $data->{"status"} }}</span>
+                                                            class="badge @if ($data->{'status'} == 0) bg-success @else bg-danger @endif rounded-pill">{{ $data->{"status"} }} : {{ $data->{"status_description"} }}</span>
+                                                    </li>
+                                                    <li
+                                                        class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
+                                                        Trame CAN env.
+                                                        <span
+                                                            class="badge bg-primary rounded-pill">{{ $data->{"trame_can_env"} }}</span>
+                                                    </li>
+                                                    <li
+                                                        class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
+                                                        Trame CAN rec.
+                                                        <span
+                                                            class="badge bg-primary rounded-pill">{{ $data->{"trame_can_rec"} }}</span>
+                                                    </li>
+                                                    <li
+                                                        class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
+                                                        Trame PHP env.
+                                                        <span
+                                                            class="badge bg-primary rounded-pill">{{ $data->{"trame_php"} }}</span>
                                                     </li>
                                                 </ul>
                                             </div>

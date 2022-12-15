@@ -2,9 +2,15 @@
     <x-slot name="addons"></x-slot>
     <x-slot name="title"> @lang('Dashboard') </x-slot>
 
-    <div id="container_dashboard">
-        @include('components.autotests')
-        @include('components.console')
+
+    <div class="container">
+        <div class="row">
+            <div class="col-1 d-none d-md-block"></div>
+            <div class="col ms-lg-4" id="container_dashboard">
+                @include('components.autotests')
+                @include('components.console')
+            </div>
+        </div>
     </div>
 
     @if (session()->has('message'))

@@ -1,8 +1,12 @@
-<div class="container tabs ms-lg-5 d-none" id="tab_connectivite">
+<div class="container tabs d-none" id="tab_connectivite">
     <div class="vstack gap-5">
-        <span class="badge bg-white text-dark fs-5">
-            Connectivité (CAN, XBee)
-        </span>
+        <div class="hstack gap-2">
+            <span class="fs-5 fw-bold">
+                Connectivité (CAN, XBee)
+            </span>
+            <div class="vr"></div>
+            <!--x-button title="Autotests" id="" url="{{ route('log') }}" icon="fa-solid fa-wrench" addons="btn-warning"/-->
+        </div>    
         <div>
             <span class="badge bg-white text-dark fs-6">
                 Bus CAN
@@ -11,14 +15,12 @@
                 <div class="col">
                     <img src="{{ asset('img/carte_stm32.png') }}" height="70" /><br>
                     <span class="mt-3 mb-3 d-block">Base roulante</span>
-                    <button class="btn btn-primary disabled">Tester <span class="badge text-bg-light">A
-                            venir</span></button>
+                    <x-button title="Tester" id="2" url="{{ route('log') }}"/>
                 </div>
                 <div class="col">
                     <img src="{{ asset('img/carte_stm32.png') }}" height="70" /><br>
                     <span class="mt-3 mb-3 d-block">Odométrie</span>
-                    <button class="btn btn-primary disabled">Tester <span class="badge text-bg-light">A
-                            venir</span></button>
+                    <x-button title="Tester" id="1" url="{{ route('log') }}"/>
                 </div>
                 <div class="col">
                     <img src="{{ asset('img/carte_stm32.png') }}" height="70" /><br>

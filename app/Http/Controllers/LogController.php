@@ -28,7 +28,7 @@ class LogController extends Controller
             case 1:
                 $command_name = "Test odométrie";
                 $count = 1;
-                $trame = "TestComm,ODO";
+                $trame = "TestComm,Odo";
                 break;
 
             case 2:
@@ -116,18 +116,33 @@ class LogController extends Controller
 
             $custom_i = ($i < 10) ? "0".strval($i) : strval($i);
 
-            $execfile = env('CUSTOM_EXECFILE');
-            //exec($execfile." ".$request->id, $output, $retval);
-            exec($execfile." ".$trame, $output, $retval); 
+            $execfile = env('CUSTOM_EXECFILE'); 
+            $execoutput = env('CUSTOM_EXEC_OUTPUT');
+            
+            exec($execfile." ".$trame." > ".$execoutput, $output, $retval); 
 
-            if(!empty($output)) // && count($output) <= 1
+            $handle = fopen($execoutput, "r");
+ 
+            $contents = fread($handle, filesize($execoutput));
+            $content_table = explode("\n",$contents);
+
+            fclose($handle);
+
+            if (FALSE != $handle)
             {
-                $response[$i] = ["id" => $custom_i, "data" => $output[0], "status" => $retval];
+                $response[$i] = ["id" => $custom_i, "data" => "", "status" => $retval, "status_description" => $content_table[0], "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => $trame];
+
+                if(count($content_table) > 2) {
+                    $response[$i]["status_description"] = $content_table[count($content_table)-2];
+                    $response[$i]["trame_can_env"] = $content_table[0];
+                    $response[$i]["trame_can_rec"] = $content_table[2];
+                }
+
                 if($retval != 0) $log->state = $retval; 
             }
             else
             {
-                $response[$i] = ["id" => $custom_i, "data" => "Aucune data récupérable", "status" => 255];
+                $response[$i] = ["id" => $custom_i, "data" => "", "status" => 255, "status_description" => $content_table[0], "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => $trame];
                 $log->state = 255;
             }
         }
