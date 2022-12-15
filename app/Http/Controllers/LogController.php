@@ -116,33 +116,95 @@ class LogController extends Controller
 
             $custom_i = ($i < 10) ? "0".strval($i) : strval($i);
 
-            $execfile = env('CUSTOM_EXECFILE'); 
+            $execfile = env('CUSTOM_EXECFILE');
             $execoutput = env('CUSTOM_EXEC_OUTPUT');
-            
-            exec($execfile." ".$trame." > ".$execoutput, $output, $retval); 
+
+            //exec($execfile." ".$trame." > ".$execoutput, $output, $retval);
 
             $handle = fopen($execoutput, "r");
- 
+
             $contents = fread($handle, filesize($execoutput));
             $content_table = explode("\n",$contents);
+
+            $retval = 0;
 
             fclose($handle);
 
             if (FALSE != $handle)
             {
-                $response[$i] = ["id" => $custom_i, "data" => "", "status" => $retval, "status_description" => $content_table[0], "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => $trame];
+                $response[$i] = ["id" => $custom_i, "data" => "", "status" => $retval, "status_description" => $content_table[0], "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => ""];
+
+                $trame_php_array = explode(",", $trame);
+
+                if(count($trame_php_array) == 2){
+
+                    $trame_php = json_encode(["commande" => $trame_php_array[0], "arg" => $trame_php_array[1]]);
+
+                }else if(count($trame_php_array) == 4){
+
+                    $trame_php = json_encode(["commande" => $trame_php_array[0],
+                                              "distance" => $trame_php_array[1],
+                                              "vitesse" => $trame_php_array[2],
+                                              "direction" => $trame_php_array[3]]);
+                }else{
+                    $trame_php = "Trame corrompue ou incorrecte";
+                }
+
+                $response[$i]["trame_php"] = $trame_php;
 
                 if(count($content_table) > 2) {
                     $response[$i]["status_description"] = $content_table[count($content_table)-2];
-                    $response[$i]["trame_can_env"] = $content_table[0];
-                    $response[$i]["trame_can_rec"] = $content_table[2];
+
+                    $trame_can_env_array = explode(" : ",$content_table[0]);
+                    array_splice($trame_can_env_array, 0, 2);
+
+                    for($j = 0; $j < count($trame_can_env_array); $j++){
+                        $trame_can_env_decoupe = explode(" ",$trame_can_env_array[$j]);
+                        $trame_can_env_array[$j] = $trame_can_env_decoupe[0];
+
+                        if($j == 6){
+                            $trame_can_env_array[$j] = str_replace("[", "", $trame_can_env_array[$j]);
+                            $trame_can_env_array[$j] = str_replace("]", "", $trame_can_env_array[$j]);
+                        }
+                    }
+
+                    $response[$i]["trame_can_env"] = json_encode(["addr" => $trame_can_env_array[0],
+                                                                  "emetteur" => $trame_can_env_array[1],
+                                                                  "code_fct" => $trame_can_env_array[2],
+                                                                  "id_msg" => $trame_can_env_array[3],
+                                                                  "is_rep" => $trame_can_env_array[4],
+                                                                  "id_rep" => $trame_can_env_array[5],
+                                                                  "data" => $trame_can_env_array[6],
+                                                                ]);
+
+
+                    $trame_can_rec_array = explode(" : ",$content_table[2]);
+                    array_splice($trame_can_rec_array, 0, 2);
+
+                    for($j = 0; $j < count($trame_can_rec_array); $j++){
+                        $trame_can_rec_decoupe = explode(" ",$trame_can_rec_array[$j]);
+                        $trame_can_rec_array[$j] = $trame_can_rec_decoupe[0];
+
+                        if($j == 5){
+                            $trame_can_rec_array[$j] = str_replace("[", "", $trame_can_rec_array[$j]);
+                            $trame_can_rec_array[$j] = str_replace("]", "", $trame_can_rec_array[$j]);
+                        }
+                    }
+
+                    $response[$i]["trame_can_rec"] = json_encode(["addr" => $trame_can_rec_array[0],
+                                                                  "emetteur" => $trame_can_rec_array[1],
+                                                                  "code_fct" => $trame_can_rec_array[2],
+                                                                  "is_rep" => $trame_can_rec_array[3],
+                                                                  "id_rep" => $trame_can_rec_array[4],
+                                                                  "data" => $trame_can_rec_array[5],
+                                                                ]);
                 }
 
-                if($retval != 0) $log->state = $retval; 
+                if($retval != 0) $log->state = $retval;
             }
             else
             {
-                $response[$i] = ["id" => $custom_i, "data" => "", "status" => 255, "status_description" => $content_table[0], "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => $trame];
+                $response[$i] = ["id" => $custom_i, "data" => "", "status" => 255, "status_description" => "Impossible d'accéder au fichier de logs", "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => $trame];
                 $log->state = 255;
             }
         }
