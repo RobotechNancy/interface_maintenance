@@ -94,9 +94,9 @@
                                                     </li>
                                                     <li class="list-group-item bg-dark text-white align-items-center">
                                                         <div class="">
-                                                            <div class="fw-bold" id="btn_trame_can_env_{{ $log->id }}" style="cursor: pointer;">Trame CAN envoyée <span class="text-muted fst-italic fw-normal" id="comment_trame_can_env_{{ $log->id }}">Afficher</span></div>
+                                                            <div class="fw-bold" style="cursor: pointer;" onclick="afficherMasquerTrames('trame_can_env_{{ $log->id }}')">Trame CAN envoyée <span class="text-muted fst-italic fw-normal" id="comment_trame_can_env_{{ $log->id }}">Afficher</span></div>
 
-                                                            <?php $trame_can_env = json_decode($data->{"trame_can_env"}); ?>
+                                                            <?php $trame_can_env = json_decode($data->{"trame_can_env"}); $convert_trame_can = config("app.convert_trame_can"); ?>
 
                                                             <ul class="list-group d-none" id="list_trame_can_env_{{ $log->id }}">
                                                                 <li
@@ -106,6 +106,13 @@
                                                                             <span class="badge bg-primary rounded-pill">
                                                                                 {{ $trame_can_env->{"addr"} }}</span>
                                                                         </div>
+                                                                        <span class="text-white-50">
+                                                                            @isset($convert_trame_can[$trame_can_env->{"addr"}])
+
+                                                                            {{ $convert_trame_can[$trame_can_env->{"addr"}] }}
+
+                                                                            @endisset
+                                                                        </span>
                                                                     </div>
                                                                 </li>
                                                                 <li
@@ -115,6 +122,13 @@
                                                                             <span class="badge bg-primary rounded-pill">
                                                                                 {{ $trame_can_env->{"emetteur"} }}</span>
                                                                         </div>
+                                                                        <span class="text-white-50">
+                                                                            @isset($convert_trame_can[$trame_can_env->{"emetteur"}])
+
+                                                                            {{ $convert_trame_can[$trame_can_env->{"emetteur"}] }}
+
+                                                                            @endisset
+                                                                        </span>
                                                                     </div>
                                                                 </li>
                                                                 <li
@@ -124,10 +138,17 @@
                                                                             <span class="badge bg-primary rounded-pill">
                                                                                 {{ $trame_can_env->{"code_fct"} }}</span>
                                                                         </div>
+                                                                        <span class="text-white-50">
+                                                                            @isset($convert_trame_can[$trame_can_env->{"code_fct"}])
+
+                                                                            {{ $convert_trame_can[$trame_can_env->{"code_fct"}] }}
+
+                                                                            @endisset
+                                                                        </span>
                                                                     </div>
                                                                 </li>
                                                                 <li
-                                                                    class="list-group-item bg-dark text-white  d-flex justify-content-between align-items-start">
+                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                     <div class="ms-2 me-auto">
                                                                         <div class="">Priorité
                                                                             <span class="badge bg-primary rounded-pill">
@@ -144,7 +165,7 @@
                                                                     </div>
                                                                 </li>
                                                                 <li
-                                                                    class="list-group-item bg-dark text-white  d-flex justify-content-between align-items-start">
+                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                     <div class="ms-2 me-auto">
                                                                         <div class="">ID trame
                                                                             <span class="badge bg-primary rounded-pill">
@@ -153,7 +174,7 @@
                                                                     </div>
                                                                 </li>
                                                                 <li
-                                                                    class="list-group-item bg-dark text-white  d-flex justify-content-between align-items-start">
+                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                     <div class="ms-2 me-auto">
                                                                         <div class="">Type de trame
                                                                             <span class="badge bg-primary rounded-pill">
@@ -171,7 +192,7 @@
                                                                     </div>
                                                                 </li>
                                                                 <li
-                                                                    class="list-group-item bg-dark text-white  d-flex justify-content-between align-items-start">
+                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                     <div class="ms-2 me-auto">
                                                                         <div class="">Données
                                                                             <span class="badge bg-primary rounded-pill">
@@ -184,7 +205,7 @@
                                                     </li>
                                                     <li
                                                         class="list-group-item bg-dark text-white align-items-center">
-                                                        <div class="fw-bold" id="btn_trame_can_rec_{{ $log->id }}" style="cursor: pointer;">Trame CAN reçue <span class="text-muted fst-italic fw-normal" id="comment_trame_can_rec_{{ $log->id }}">Afficher</span></div>
+                                                        <div class="fw-bold" style="cursor: pointer;" onclick="afficherMasquerTrames('trame_can_rec_{{ $log->id }}')">Trame CAN reçue <span class="text-muted fst-italic fw-normal" id="comment_trame_can_rec_{{ $log->id }}">Afficher</span></div>
                                                         <?php $trame_can_rec = json_decode($data->{"trame_can_rec"}); ?>
 
                                                             <ul class="list-group d-none" id="list_trame_can_rec_{{ $log->id }}">
@@ -195,6 +216,13 @@
                                                                             <span class="badge bg-primary rounded-pill">
                                                                                 {{ $trame_can_rec->{"addr"} }}</span>
                                                                         </div>
+                                                                        <span class="text-white-50">
+                                                                            @isset($convert_trame_can[$trame_can_rec->{"addr"}])
+
+                                                                            {{ $convert_trame_can[$trame_can_rec->{"addr"}] }}
+
+                                                                            @endisset
+                                                                        </span>
                                                                     </div>
                                                                 </li>
                                                                 <li
@@ -204,19 +232,33 @@
                                                                             <span class="badge bg-primary rounded-pill">
                                                                                 {{ $trame_can_rec->{"emetteur"} }}</span>
                                                                         </div>
+                                                                        <span class="text-white-50">
+                                                                            @isset($convert_trame_can[$trame_can_rec->{"emetteur"}])
+
+                                                                            {{ $convert_trame_can[$trame_can_rec->{"emetteur"}] }}
+
+                                                                            @endisset
+                                                                        </span>
                                                                     </div>
                                                                 </li>
                                                                 <li
-                                                                    class="list-group-item bg-dark text-white  d-flex justify-content-between align-items-start">
+                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                     <div class="ms-2 me-auto">
                                                                         <div class="">Code fonction
                                                                             <span class="badge bg-primary rounded-pill">
                                                                                 {{ $trame_can_rec->{"code_fct"} }}</span>
                                                                         </div>
+                                                                        <span class="text-white-50">
+                                                                            @isset($convert_trame_can[$trame_can_rec->{"code_fct"}])
+
+                                                                            {{ $convert_trame_can[$trame_can_rec->{"code_fct"}] }}
+
+                                                                            @endisset
+                                                                        </span>
                                                                     </div>
                                                                 </li>
                                                                 <li
-                                                                    class="list-group-item bg-dark text-white  d-flex justify-content-between align-items-start">
+                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                     <div class="ms-2 me-auto">
                                                                         <div class="">ID trame
                                                                             <span class="badge bg-primary rounded-pill">
@@ -225,7 +267,7 @@
                                                                     </div>
                                                                 </li>
                                                                 <li
-                                                                    class="list-group-item bg-dark text-white  d-flex justify-content-between align-items-start">
+                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                     <div class="ms-2 me-auto">
                                                                         <div class="">Type de trame
                                                                             <span class="badge bg-primary rounded-pill">
@@ -243,7 +285,7 @@
                                                                     </div>
                                                                 </li>
                                                                 <li
-                                                                    class="list-group-item bg-dark text-white  d-flex justify-content-between align-items-start">
+                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                     <div class="ms-2 me-auto">
                                                                         <div class="">Données
                                                                             <span class="badge bg-primary rounded-pill">
@@ -255,9 +297,9 @@
                                                     </li>
                                                     <li
                                                         class="list-group-item bg-dark text-white align-items-center">
-                                                        <div class="fw-bold" id="btn_trame_php_{{ $log->id }}" style="cursor: pointer;">Trame PHP envoyée <span class="text-muted fst-italic fw-normal" id="comment_trame_php_{{ $log->id }}">Afficher</span></div>
+                                                        <div class="fw-bold" style="cursor: pointer;" onclick="afficherMasquerTrames('trame_php_{{ $log->id }}')">Trame PHP envoyée <span class="text-muted fst-italic fw-normal" id="comment_trame_php_{{ $log->id }}">Afficher</span></div>
 
-                                                        <?php $trame_php = json_decode($data->{"trame_php"}); ?>
+                                                        <?php $trame_php = json_decode($data->{"trame_php"}); $convert_trame_php = config("app.convert_trame_php"); ?>
 
                                                         <ul class="list-group d-none" id="list_trame_php_{{ $log->id }}">
                                                             <li
@@ -267,6 +309,13 @@
                                                                         <span class="badge bg-primary rounded-pill">
                                                                             {{ $trame_php->{"commande"} }}</span>
                                                                     </div>
+                                                                    <span class="text-white-50">
+                                                                        @isset($convert_trame_php[$trame_php->{"commande"}])
+
+                                                                        {{ $convert_trame_php[$trame_php->{"commande"}] }}
+
+                                                                        @endisset
+                                                                    </span>
                                                                 </div>
                                                             </li>
 
@@ -284,7 +333,7 @@
 
                                                             @isset($trame_php->{"vitesse"})
                                                             <li
-                                                                class="list-group-item bg-dark text-white  d-flex justify-content-between align-items-start">
+                                                                class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                 <div class="ms-2 me-auto">
                                                                     <div class="">Vitesse
                                                                         <span class="badge bg-primary rounded-pill">
@@ -296,7 +345,7 @@
 
                                                             @isset($trame_php->{"direction"})
                                                             <li
-                                                                class="list-group-item bg-dark text-white  d-flex justify-content-between align-items-start">
+                                                                class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                 <div class="ms-2 me-auto">
                                                                     <div class="">Direction
                                                                         <span class="badge bg-primary rounded-pill">
@@ -304,10 +353,11 @@
                                                                         </span>
                                                                     </div>
                                                                     <span class="text-white-50">
-                                                                        @if (0==0)
-                                                                        @else
-                                                                            Prioritaire
-                                                                        @endif
+                                                                        @isset($convert_trame_php[$trame_php->{"direction"}])
+
+                                                                        {{ $convert_trame_php[$trame_php->{"direction"}] }}
+
+                                                                        @endisset
                                                                     </span>
                                                                 </div>
                                                             </li>
@@ -315,12 +365,19 @@
 
                                                             @isset($trame_php->{"arg"})
                                                             <li
-                                                                class="list-group-item bg-dark text-white  d-flex justify-content-between align-items-start">
+                                                                class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                 <div class="ms-2 me-auto">
                                                                     <div class="">Argument
                                                                         <span class="badge bg-primary rounded-pill">
                                                                             {{ $trame_php->{"arg"} }} %</span>
                                                                     </div>
+                                                                    <span class="text-white-50">
+                                                                        @isset($convert_trame_php[$trame_php->{"arg"}])
+
+                                                                        {{ $convert_trame_php[$trame_php->{"arg"}] }}
+
+                                                                        @endisset
+                                                                    </span>
                                                                 </div>
                                                             </li>
                                                             @endisset
@@ -330,12 +387,6 @@
                                                 </ul>
                                             </div>
                                         </div>
-
-                                        <script>
-                                            afficherMasquerTrames("trame_can_rec_{{ $log->id }}");
-                                            afficherMasquerTrames("trame_php_{{ $log->id }}");
-                                            afficherMasquerTrames("trame_can_env_{{ $log->id }}");
-                                        </script>
                                     @endforeach
                                 </div>
                             </div>

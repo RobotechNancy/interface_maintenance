@@ -93,15 +93,13 @@ function tabs_manager(tab_name) {
     });
 }
 
-function afficherMasquerTrames(trame_name){
-    $("#btn_" + trame_name).click(function() {
-        if($("#list_" + trame_name).hasClass("d-none")){
-            $("#comment_" + trame_name).text("Masquer");
-        }else{
-            $("#comment_" + trame_name).text("Afficher");
-        }
-        $("#list_" + trame_name).toggleClass("d-none");
-    });
+function afficherMasquerTrames(trame_name) {
+    if ($("#list_" + trame_name).hasClass("d-none")) {
+        $("#comment_" + trame_name).text("Masquer");
+    } else {
+        $("#comment_" + trame_name).text("Afficher");
+    }
+    $("#list_" + trame_name).toggleClass("d-none");
 }
 
 $(document).ready(function () {
@@ -110,21 +108,13 @@ $(document).ready(function () {
         $("#sidebar").toggleClass("d-md-block");
 
         if ($("#sidebar").hasClass("d-md-block"))
-            $(".btn_sidebar").html(
-                "<i class='fa-solid fa-xmark'></i>"
-            );
-        else
-            $(".btn_sidebar").html(
-                "<i class='fa-solid fa-bars'></i>"
-            );
+            $(".btn_sidebar").html("<i class='fa-solid fa-xmark'></i>");
+        else $(".btn_sidebar").html("<i class='fa-solid fa-bars'></i>");
     });
 
     $("#btn_reload_console").click(function () {
         $("#logs_console").load(" #logs_console");
     });
-
-    afficherMasquerTrames("trame_php");
-    afficherMasquerTrames("trame_can_env");
 
     $("#valeurSliderDistance").text($("#rangeDistance").val());
     $("#valeurSliderVitesse").text($("#rangeVitesse").val());

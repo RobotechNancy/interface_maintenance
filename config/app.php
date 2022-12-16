@@ -212,4 +212,37 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    'convert_trame_php' => [
+        "BR" => "Base roulante",
+        "Odo" => "Odométrie",
+        "TestComm" => "Test de la communication",
+        "XB" => "XBee",
+        "RotD" => "Rotation sens horaire",
+        "RotG" => "Rotation sens trigonométrique",
+        "AvG" => "Avance à gauche",
+        "AvD" => "Avance à droite",
+        "ReG" => "Recule à gauche",
+        "ReD" => "Recule à droite",
+        "Av" => "Avance",
+        "Re" => "Recule",
+        "Relais" => "Arrêt d'urgence",
+        "ON" => "Activation",
+        "OFF" => "Désactivation"
+    ],
+
+    'convert_trame_can' => [
+
+        "0x1000000" => "Carte Raspberry Pi",
+        "0x2000000" => "Carte Base roulante",
+        "0x3000000" => "Carte Odométrie",
+        "0x4000000" => "Carte Actionneurs",
+
+        "0x100000" => "Carte Raspberry Pi",
+        "0x200000" => "Carte Base roulante",
+        "0x300000" => "Carte Odométrie",
+        "0x400000" => "Carte Actionneurs",
+
+        "0x8000" => "Test communication",
+    ],
+
 ];

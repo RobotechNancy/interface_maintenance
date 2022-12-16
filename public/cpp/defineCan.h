@@ -92,9 +92,9 @@ typedef enum {
     RESET_LIDAR =                   0x33000,
 
     TEST_COMM =                     0x08000, // Valeur temporaire, il faudra peut-être la modifier
-    
+
     ACCUSER_RECPETION =				0xff000,
-    
+
 }CAN_CODE_FCT;
 
 

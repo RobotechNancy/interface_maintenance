@@ -29,13 +29,14 @@
 
 <body class="bg-dark text-white">
     @auth
-        @if ($_SERVER["REQUEST_URI"] == "/dashboard" || $_SERVER["REQUEST_URI"] == "/index" || substr($_SERVER["REQUEST_URI"], 0, 5) == "/edit")
-
+        @if ($_SERVER['REQUEST_URI'] == '/dashboard' ||
+            $_SERVER['REQUEST_URI'] == '/index' ||
+            substr($_SERVER['REQUEST_URI'], 0, 5) == '/edit')
             @include('components.sidebar')
-
         @endif
 
         <?php
+
         $role = '';
         switch (Auth::user()->role) {
             case 1:
