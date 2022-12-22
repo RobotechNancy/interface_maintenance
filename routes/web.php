@@ -28,6 +28,10 @@ Route::post('log', [LogController::class, 'create'])
 ->middleware(['auth'])
 ->name('log');
 
+Route::post('relais', [LogController::class, 'relais'])
+->middleware(['auth'])
+->name('relais');
+
 Route::post('clearlogs', [LogController::class, 'clear'])
 ->middleware(['auth'])
 ->name('clearlogs');

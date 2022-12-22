@@ -11,6 +11,18 @@ use Illuminate\Support\Arr;
 class LogController extends Controller
 {
 
+    public function relais(){
+        $execfile = env('CUSTOM_EXECFILE');
+        $trame = "Relais,Test";
+
+        exec($execfile." ".$trame, $output, $retval);
+
+        if($retval == 0)
+            return true;
+
+        return false;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -21,19 +33,17 @@ class LogController extends Controller
         $command_name = $custom_i = "";
         $response = [];
         $output = $retval = null;
-        $count = 0;
+        $count = 1;
         $trame = "";
 
         switch ($request->id) {
             case 1:
                 $command_name = "Test odométrie";
-                $count = 1;
                 $trame = "TestComm,Odo";
                 break;
 
             case 2:
                 $command_name = "Test base roulante";
-                $count = 1;
                 $trame = "TestComm,BR";
                 break;
 
@@ -44,66 +54,57 @@ class LogController extends Controller
                 break;
 
             case 4:
-                $command_name ="Tourne à droite";
-                $count = 1;
-                $trame = "BR,100,100,RotD";
+                $command_name = "Tourne à droite";
+                $trame = "BR,".$request->distance.",".$request->vitesse.",RotD";
                 break;
 
             case 5:
-                $command_name ="Avance à gauche";
-                $count = 1;
-                $trame = "BR,100,100,AvG";
+                $command_name = "Avance à gauche";
+                $trame = "BR,".$request->distance.",".$request->vitesse.",AvG";
                 break;
 
             case 6:
-                $command_name ="Recule à gauche";
-                $count = 1;
-                $trame = "BR,100,100,ReG";
+                $command_name = "Recule à gauche";
+                $trame = "BR,".$request->distance.",".$request->vitesse.",ReG";
                 break;
 
             case 7:
-                $command_name ="Avance";
-                $count = 1;
-                $trame = "BR,100,100,Av";
+                $command_name = "Avance";
+                $trame = "BR,".$request->distance.",".$request->vitesse.",Av";
                 break;
 
             case 8:
-                $command_name ="Recule";
-                $count = 1;
-                $trame = "BR,100,100,Re";
+                $command_name = "Recule";
+                $trame = "BR,".$request->distance.",".$request->vitesse.",Re";
                 break;
 
             case 9:
-                $command_name ="Avance à droite";
-                $count = 1;
-                $trame = "BR,100,100,AvD";
+                $command_name = "Avance à droite";
+                $trame = "BR,".$request->distance.",".$request->vitesse.",AvD";
                 break;
 
             case 10:
-                $command_name ="Recule à droite";
-                $count = 1;
-                $trame = "BR,100,100,ReD";
+                $command_name = "Recule à droite";
+                $trame = "BR,".$request->distance.",".$request->vitesse.",ReD";
                 break;
 
             case 11:
-                $command_name ="Tourne à gauche";
-                $count = 1;
-                $trame = "BR,100,100,RotG";
+                $command_name = "Tourne à gauche";
+                $trame = "BR,".$request->distance.",".$request->vitesse.",RotG";
                 break;
+
             case 12:
-                $command_name ="Allumage général";
-                $count = 1;
+                $command_name = "Allumage général";
                 $trame = "Relais,ON";
                 break;
+
             case 13:
-                $command_name ="Coupure générale";
-                $count = 1;
+                $command_name = "Coupure générale";
                 $trame = "Relais,OFF";
                 break;
 
             default:
                 $command_name = "Commande n°". $request->id ." invalide";
-                $count = 1;
                 break;
 
         }
@@ -130,7 +131,7 @@ class LogController extends Controller
 
             fclose($handle);
 
-            if (FALSE != $handle)
+            if (FALSE !== $handle)
             {
                 $response[$i] = ["id" => $custom_i, "data" => "", "status" => $retval, "status_description" => $content_table[0], "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => ""];
 

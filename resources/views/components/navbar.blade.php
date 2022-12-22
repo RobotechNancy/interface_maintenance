@@ -6,7 +6,7 @@
 
         @if ($_SERVER["REQUEST_URI"] != "/dashboard" && $_SERVER["REQUEST_URI"] != "/")
 
-            <a role="button" onclick="history.go(-1)" class="text-white fs-5 d-inline d-lg-none ms-1 me-1">
+            <a role="button" onclick="history.back()" class="text-white fs-5 d-inline d-lg-none ms-1 me-1">
                 <i class="fa-solid fa-circle-arrow-left"></i>
             </a>
 

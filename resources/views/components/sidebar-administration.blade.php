@@ -3,7 +3,7 @@
 </li>
 
 <li class="nav-item">
-    <a class="btn w-100 @if ($_SERVER['REQUEST_URI'] == '/index') btn-light @else btn-outline-light @endif"
+    <a class="btn w-100 @if ($_SERVER['REQUEST_URI'] == '/index') btn-light @else btn-dark @endif"
         href="{{ route('users') }}">
         <span class="icon">
             <i class="fa-solid fa-users-gear"></i>

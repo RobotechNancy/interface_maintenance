@@ -26,7 +26,7 @@
         </div>
     </h5>
     <div class="title_console"></div>
-    <div id="logs_console" style="max-height: 65vh; overflow: scroll;">
+    <div id="logs_console" style="max-height: 70vh; overflow: scroll;">
         @if (count($logs) > 0)
             <div class="accordion accordion-flush mb-4" id="accordionConsole">
                 @foreach ($logs as $log)
@@ -58,11 +58,14 @@
                                     @foreach ($datas as $data)
                                         <div class="col">
                                             <div class="card text-bg-dark border border-light h-100 border-opacity-25">
+
+
+
                                                 <ul class="list-group list-group-flush">
                                                     <li
                                                         class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
                                                         <div class="me-auto">
-                                                            <div class="fw-bold">ID
+                                                            <div class="fw-bold">Identifiant
                                                                 <span
                                                                     class="badge bg-primary rounded-pill">{{ $data->{"id"} }}</span>
                                                             </div>
@@ -92,298 +95,349 @@
                                                                 {{ $data->{"status_description"} }} </span>
                                                         </div>
                                                     </li>
-                                                    <li class="list-group-item bg-dark text-white align-items-center">
-                                                        <div class="">
-                                                            <div class="fw-bold" style="cursor: pointer;" onclick="afficherMasquerTrames('trame_can_env_{{ $log->id }}')">Trame CAN envoyée <span class="text-muted fst-italic fw-normal" id="comment_trame_can_env_{{ $log->id }}">Afficher</span></div>
 
-                                                            <?php $trame_can_env = json_decode($data->{"trame_can_env"}); $convert_trame_can = config("app.convert_trame_can"); ?>
+                                                    <?php
 
-                                                            <ul class="list-group d-none" id="list_trame_can_env_{{ $log->id }}">
-                                                                <li
-                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div class="">Adresse destination
-                                                                            <span class="badge bg-primary rounded-pill">
-                                                                                {{ $trame_can_env->{"addr"} }}</span>
-                                                                        </div>
-                                                                        <span class="text-white-50">
-                                                                            @isset($convert_trame_can[$trame_can_env->{"addr"}])
+                                                        $trame_can_rec = json_decode($data->{"trame_can_rec"});
+                                                        $trame_can_env = json_decode($data->{"trame_can_env"});
 
-                                                                            {{ $convert_trame_can[$trame_can_env->{"addr"}] }}
+                                                        $convert_trame_can = config('app.convert_trame_can');
 
-                                                                            @endisset
-                                                                        </span>
-                                                                    </div>
-                                                                </li>
-                                                                <li
-                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div class="">Adresse emetteur
-                                                                            <span class="badge bg-primary rounded-pill">
-                                                                                {{ $trame_can_env->{"emetteur"} }}</span>
-                                                                        </div>
-                                                                        <span class="text-white-50">
-                                                                            @isset($convert_trame_can[$trame_can_env->{"emetteur"}])
+                                                        $trame_php = json_decode($data->{"trame_php"});
 
-                                                                            {{ $convert_trame_can[$trame_can_env->{"emetteur"}] }}
+                                                        $convert_trame_php = config('app.convert_trame_php');
+                                                    ?>
+                                                    <div class="p-1 row row-cols-1 row-cols-md-3 g-2">
+                                                        <div class="col">
+                                                            <div class="card text-bg-dark h-100">
+                                                                <div class="card-body">
+                                                                    <button class="btn btn-warning btn-sm"
+                                                                        onclick="addToClipboard({{ $data->{'trame_can_env'} }}, {{ $log->id }}, 0)"><i
+                                                                            class="fa-solid fa-copy"></i></button>
+                                                                    <span class="fw-bold" style="cursor: pointer;"
+                                                                        onclick="afficherMasquerTrames('trame_can_env_{{ $log->id }}')">
+                                                                        <span class="ps-1">Trame CAN envoyée
+                                                                        </span><span
+                                                                            class="text-muted fst-italic fw-normal"
+                                                                            id="comment_trame_can_env_{{ $log->id }}">Afficher</span>
+                                                                    </span>
 
-                                                                            @endisset
-                                                                        </span>
-                                                                    </div>
-                                                                </li>
-                                                                <li
-                                                                    class="list-group-item bg-dark text-white  d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div class="">Code fonction
-                                                                            <span class="badge bg-primary rounded-pill">
-                                                                                {{ $trame_can_env->{"code_fct"} }}</span>
-                                                                        </div>
-                                                                        <span class="text-white-50">
-                                                                            @isset($convert_trame_can[$trame_can_env->{"code_fct"}])
+                                                                    <ul class="list-group d-none"
+                                                                        id="list_trame_can_env_{{ $log->id }}">
+                                                                        <li
+                                                                            class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
+                                                                            <div class="ms-2 me-auto">
+                                                                                <div class="">Adresse destination
+                                                                                    <span
+                                                                                        class="badge bg-primary rounded-pill">
+                                                                                        {{ $trame_can_env->{"addr"} }}</span>
+                                                                                </div>
+                                                                                <span class="text-white-50">
+                                                                                    @isset($convert_trame_can[$trame_can_env->{"addr"}])
+                                                                                        {{ $convert_trame_can[$trame_can_env->{"addr"}] }}
+                                                                                    @endisset
+                                                                                </span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li
+                                                                            class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
+                                                                            <div class="ms-2 me-auto">
+                                                                                <div class="">Adresse emetteur
+                                                                                    <span
+                                                                                        class="badge bg-primary rounded-pill">
+                                                                                        {{ $trame_can_env->{"emetteur"} }}</span>
+                                                                                </div>
+                                                                                <span class="text-white-50">
+                                                                                    @isset($convert_trame_can[$trame_can_env->{"emetteur"}])
+                                                                                        {{ $convert_trame_can[$trame_can_env->{"emetteur"}] }}
+                                                                                    @endisset
+                                                                                </span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li
+                                                                            class="list-group-item bg-dark text-white  d-flex justify-content-between align-items-start">
+                                                                            <div class="ms-2 me-auto">
+                                                                                <div class="">Code fonction
+                                                                                    <span
+                                                                                        class="badge bg-primary rounded-pill">
+                                                                                        {{ $trame_can_env->{"code_fct"} }}</span>
+                                                                                </div>
+                                                                                <span class="text-white-50">
+                                                                                    @isset($convert_trame_can[$trame_can_env->{"code_fct"}])
+                                                                                        {{ $convert_trame_can[$trame_can_env->{"code_fct"}] }}
+                                                                                    @endisset
+                                                                                </span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li
+                                                                            class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
+                                                                            <div class="ms-2 me-auto">
+                                                                                <div class="">Priorité
+                                                                                    <span
+                                                                                        class="badge bg-primary rounded-pill">
+                                                                                        {{ $trame_can_env->{"id_msg"} }}
+                                                                                    </span>
+                                                                                </div>
+                                                                                <span class="text-white-50">
+                                                                                    @if ($trame_can_env->{"id_msg"} == 0)
+                                                                                        Non prioritaire
+                                                                                    @else
+                                                                                        Prioritaire
+                                                                                    @endif
+                                                                                </span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li
+                                                                            class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
+                                                                            <div class="ms-2 me-auto">
+                                                                                <div class="">ID trame
+                                                                                    <span
+                                                                                        class="badge bg-primary rounded-pill">
+                                                                                        {{ $trame_can_env->{"id_rep"} }}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li
+                                                                            class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
+                                                                            <div class="ms-2 me-auto">
+                                                                                <div class="">Type de trame
+                                                                                    <span
+                                                                                        class="badge bg-primary rounded-pill">
+                                                                                        {{ $trame_can_env->{"is_rep"} }}
+                                                                                    </span>
+                                                                                </div>
+                                                                                <span class="text-white-50">
 
-                                                                            {{ $convert_trame_can[$trame_can_env->{"code_fct"}] }}
-
-                                                                            @endisset
-                                                                        </span>
-                                                                    </div>
-                                                                </li>
-                                                                <li
-                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div class="">Priorité
-                                                                            <span class="badge bg-primary rounded-pill">
-                                                                                {{ $trame_can_env->{"id_msg"} }}
-                                                                            </span>
-                                                                        </div>
-                                                                        <span class="text-white-50">
-                                                                            @if ($trame_can_env->{"id_msg"} == 0)
-                                                                                Non prioritaire
-                                                                            @else
-                                                                                Prioritaire
-                                                                            @endif
-                                                                        </span>
-                                                                    </div>
-                                                                </li>
-                                                                <li
-                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div class="">ID trame
-                                                                            <span class="badge bg-primary rounded-pill">
-                                                                                {{ $trame_can_env->{"id_rep"} }}</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li
-                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div class="">Type de trame
-                                                                            <span class="badge bg-primary rounded-pill">
-                                                                                {{ $trame_can_env->{"is_rep"} }}
-                                                                            </span>
-                                                                        </div>
-                                                                        <span class="text-white-50">
-
-                                                                            @if ($trame_can_env->{"is_rep"} == 0)
-                                                                                Trame d'envoi
-                                                                            @else
-                                                                                Trame de réponse
-                                                                            @endif
-                                                                        </span>
-                                                                    </div>
-                                                                </li>
-                                                                <li
-                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div class="">Données
-                                                                            <span class="badge bg-primary rounded-pill">
-                                                                                {{ $trame_can_env->{"data"} }}</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
+                                                                                    @if ($trame_can_env->{"is_rep"} == 0)
+                                                                                        Trame d'envoi
+                                                                                    @else
+                                                                                        Trame de réponse
+                                                                                    @endif
+                                                                                </span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li
+                                                                            class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
+                                                                            <div class="ms-2 me-auto">
+                                                                                <div class="">Données
+                                                                                    <span
+                                                                                        class="badge bg-primary rounded-pill">
+                                                                                        {{ $trame_can_env->{"data"} }}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </li>
-                                                    <li
-                                                        class="list-group-item bg-dark text-white align-items-center">
-                                                        <div class="fw-bold" style="cursor: pointer;" onclick="afficherMasquerTrames('trame_can_rec_{{ $log->id }}')">Trame CAN reçue <span class="text-muted fst-italic fw-normal" id="comment_trame_can_rec_{{ $log->id }}">Afficher</span></div>
-                                                        <?php $trame_can_rec = json_decode($data->{"trame_can_rec"}); ?>
-
-                                                            <ul class="list-group d-none" id="list_trame_can_rec_{{ $log->id }}">
-                                                                <li
-                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div class="">Adresse destination
-                                                                            <span class="badge bg-primary rounded-pill">
-                                                                                {{ $trame_can_rec->{"addr"} }}</span>
-                                                                        </div>
-                                                                        <span class="text-white-50">
-                                                                            @isset($convert_trame_can[$trame_can_rec->{"addr"}])
-
-                                                                            {{ $convert_trame_can[$trame_can_rec->{"addr"}] }}
-
-                                                                            @endisset
-                                                                        </span>
-                                                                    </div>
-                                                                </li>
-                                                                <li
-                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div class="">Adresse emetteur
-                                                                            <span class="badge bg-primary rounded-pill">
-                                                                                {{ $trame_can_rec->{"emetteur"} }}</span>
-                                                                        </div>
-                                                                        <span class="text-white-50">
-                                                                            @isset($convert_trame_can[$trame_can_rec->{"emetteur"}])
-
-                                                                            {{ $convert_trame_can[$trame_can_rec->{"emetteur"}] }}
-
-                                                                            @endisset
-                                                                        </span>
-                                                                    </div>
-                                                                </li>
-                                                                <li
-                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div class="">Code fonction
-                                                                            <span class="badge bg-primary rounded-pill">
-                                                                                {{ $trame_can_rec->{"code_fct"} }}</span>
-                                                                        </div>
-                                                                        <span class="text-white-50">
-                                                                            @isset($convert_trame_can[$trame_can_rec->{"code_fct"}])
-
-                                                                            {{ $convert_trame_can[$trame_can_rec->{"code_fct"}] }}
-
-                                                                            @endisset
-                                                                        </span>
-                                                                    </div>
-                                                                </li>
-                                                                <li
-                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div class="">ID trame
-                                                                            <span class="badge bg-primary rounded-pill">
-                                                                                {{ $trame_can_rec->{"id_rep"} }}</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li
-                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div class="">Type de trame
-                                                                            <span class="badge bg-primary rounded-pill">
-                                                                                {{ $trame_can_rec->{"is_rep"} }}
-                                                                            </span>
-                                                                        </div>
-                                                                        <span class="text-white-50">
-
-                                                                            @if ($trame_can_rec->{"is_rep"} == 0)
-                                                                                Trame d'envoi
-                                                                            @else
-                                                                                Trame de réponse
-                                                                            @endif
-                                                                        </span>
-                                                                    </div>
-                                                                </li>
-                                                                <li
-                                                                    class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
-                                                                    <div class="ms-2 me-auto">
-                                                                        <div class="">Données
-                                                                            <span class="badge bg-primary rounded-pill">
-                                                                                {{ $trame_can_rec->{"data"} }}</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                    </li>
-                                                    <li
-                                                        class="list-group-item bg-dark text-white align-items-center">
-                                                        <div class="fw-bold" style="cursor: pointer;" onclick="afficherMasquerTrames('trame_php_{{ $log->id }}')">Trame PHP envoyée <span class="text-muted fst-italic fw-normal" id="comment_trame_php_{{ $log->id }}">Afficher</span></div>
-
-                                                        <?php $trame_php = json_decode($data->{"trame_php"}); $convert_trame_php = config("app.convert_trame_php"); ?>
-
-                                                        <ul class="list-group d-none" id="list_trame_php_{{ $log->id }}">
-                                                            <li
-                                                                class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
-                                                                <div class="ms-2 me-auto">
-                                                                    <div class="">Commande
-                                                                        <span class="badge bg-primary rounded-pill">
-                                                                            {{ $trame_php->{"commande"} }}</span>
-                                                                    </div>
-                                                                    <span class="text-white-50">
-                                                                        @isset($convert_trame_php[$trame_php->{"commande"}])
-
-                                                                        {{ $convert_trame_php[$trame_php->{"commande"}] }}
-
-                                                                        @endisset
+                                                        <div class="col">
+                                                            <div class="card text-bg-dark h-100">
+                                                                <div class="card-body">
+                                                                    <button class="btn btn-warning btn-sm"
+                                                                        onclick="addToClipboard({{ $data->{'trame_can_rec'} }}, {{ $log->id }}, 1)"><i
+                                                                            class="fa-solid fa-copy"></i></button>
+                                                                    <span class="fw-bold" style="cursor: pointer;"
+                                                                        onclick="afficherMasquerTrames('trame_can_rec_{{ $log->id }}')">
+                                                                        <span class="ps-1">Trame CAN reçue
+                                                                        </span><span
+                                                                            class="text-muted fst-italic fw-normal"
+                                                                            id="comment_trame_can_rec_{{ $log->id }}">Afficher</span>
                                                                     </span>
+
+                                                                    <ul class="list-group d-none"
+                                                                        id="list_trame_can_rec_{{ $log->id }}">
+                                                                        <li
+                                                                            class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
+                                                                            <div class="ms-2 me-auto">
+                                                                                <div class="">Adresse destination
+                                                                                    <span
+                                                                                        class="badge bg-primary rounded-pill">
+                                                                                        {{ $trame_can_rec->{"addr"} }}</span>
+                                                                                </div>
+                                                                                <span class="text-white-50">
+                                                                                    @isset($convert_trame_can[$trame_can_rec->{"addr"}])
+                                                                                        {{ $convert_trame_can[$trame_can_rec->{"addr"}] }}
+                                                                                    @endisset
+                                                                                </span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li
+                                                                            class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
+                                                                            <div class="ms-2 me-auto">
+                                                                                <div class="">Adresse emetteur
+                                                                                    <span
+                                                                                        class="badge bg-primary rounded-pill">
+                                                                                        {{ $trame_can_rec->{"emetteur"} }}</span>
+                                                                                </div>
+                                                                                <span class="text-white-50">
+                                                                                    @isset($convert_trame_can[$trame_can_rec->{"emetteur"}])
+                                                                                        {{ $convert_trame_can[$trame_can_rec->{"emetteur"}] }}
+                                                                                    @endisset
+                                                                                </span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li
+                                                                            class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
+                                                                            <div class="ms-2 me-auto">
+                                                                                <div class="">Code fonction
+                                                                                    <span
+                                                                                        class="badge bg-primary rounded-pill">
+                                                                                        {{ $trame_can_rec->{"code_fct"} }}</span>
+                                                                                </div>
+                                                                                <span class="text-white-50">
+                                                                                    @isset($convert_trame_can[$trame_can_rec->{"code_fct"}])
+                                                                                        {{ $convert_trame_can[$trame_can_rec->{"code_fct"}] }}
+                                                                                    @endisset
+                                                                                </span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li
+                                                                            class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
+                                                                            <div class="ms-2 me-auto">
+                                                                                <div class="">ID trame
+                                                                                    <span
+                                                                                        class="badge bg-primary rounded-pill">
+                                                                                        {{ $trame_can_rec->{"id_rep"} }}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li
+                                                                            class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
+                                                                            <div class="ms-2 me-auto">
+                                                                                <div class="">Type de trame
+                                                                                    <span
+                                                                                        class="badge bg-primary rounded-pill">
+                                                                                        {{ $trame_can_rec->{"is_rep"} }}
+                                                                                    </span>
+                                                                                </div>
+                                                                                <span class="text-white-50">
+
+                                                                                    @if ($trame_can_rec->{"is_rep"} == 0)
+                                                                                        Trame d'envoi
+                                                                                    @else
+                                                                                        Trame de réponse
+                                                                                    @endif
+                                                                                </span>
+                                                                            </div>
+                                                                        </li>
+                                                                        <li
+                                                                            class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
+                                                                            <div class="ms-2 me-auto">
+                                                                                <div class="">Données
+                                                                                    <span
+                                                                                        class="badge bg-primary rounded-pill">
+                                                                                        {{ $trame_can_rec->{"data"} }}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
                                                                 </div>
-                                                            </li>
-
-                                                            @isset($trame_php->{"distance"})
-                                                            <li
-                                                                class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
-                                                                <div class="ms-2 me-auto">
-                                                                    <div class="">Distance
-                                                                        <span class="badge bg-primary rounded-pill">
-                                                                            {{ $trame_php->{"distance"} }} cm</span>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                            @endisset
-
-                                                            @isset($trame_php->{"vitesse"})
-                                                            <li
-                                                                class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
-                                                                <div class="ms-2 me-auto">
-                                                                    <div class="">Vitesse
-                                                                        <span class="badge bg-primary rounded-pill">
-                                                                            {{ $trame_php->{"vitesse"} }} %</span>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                            @endisset
-
-                                                            @isset($trame_php->{"direction"})
-                                                            <li
-                                                                class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
-                                                                <div class="ms-2 me-auto">
-                                                                    <div class="">Direction
-                                                                        <span class="badge bg-primary rounded-pill">
-                                                                            {{ $trame_php->{"direction"} }}
-                                                                        </span>
-                                                                    </div>
-                                                                    <span class="text-white-50">
-                                                                        @isset($convert_trame_php[$trame_php->{"direction"}])
-
-                                                                        {{ $convert_trame_php[$trame_php->{"direction"}] }}
-
-                                                                        @endisset
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="card text-bg-dark h-100">
+                                                                <div class="card-body">
+                                                                    <button class="btn btn-warning btn-sm"
+                                                                        onclick="addToClipboard({{ $data->{'trame_php'} }}, {{ $log->id }}, 2)"><i
+                                                                            class="fa-solid fa-copy"></i></button>
+                                                                    <span class="fw-bold" style="cursor: pointer;"
+                                                                        onclick="afficherMasquerTrames('trame_php_{{ $log->id }}')">
+                                                                        <span class="ps-1">Trame PHP envoyée
+                                                                        </span><span
+                                                                            class="text-muted fst-italic fw-normal"
+                                                                            id="comment_trame_php_{{ $log->id }}">Afficher</span>
                                                                     </span>
-                                                                </div>
-                                                            </li>
-                                                            @endisset
 
-                                                            @isset($trame_php->{"arg"})
-                                                            <li
-                                                                class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
-                                                                <div class="ms-2 me-auto">
-                                                                    <div class="">Argument
-                                                                        <span class="badge bg-primary rounded-pill">
-                                                                            {{ $trame_php->{"arg"} }} %</span>
-                                                                    </div>
-                                                                    <span class="text-white-50">
-                                                                        @isset($convert_trame_php[$trame_php->{"arg"}])
+                                                                    <ul class="list-group d-none"
+                                                                        id="list_trame_php_{{ $log->id }}">
+                                                                        <li
+                                                                            class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
+                                                                            <div class="ms-2 me-auto">
+                                                                                <div class="">Commande
+                                                                                    <span
+                                                                                        class="badge bg-primary rounded-pill">
+                                                                                        {{ $trame_php->{"commande"} }}</span>
+                                                                                </div>
+                                                                                <span class="text-white-50">
+                                                                                    @isset($convert_trame_php[$trame_php->{"commande"}])
+                                                                                        {{ $convert_trame_php[$trame_php->{"commande"}] }}
+                                                                                    @endisset
+                                                                                </span>
+                                                                            </div>
+                                                                        </li>
 
-                                                                        {{ $convert_trame_php[$trame_php->{"arg"}] }}
-
+                                                                        @isset($trame_php->{"distance"})
+                                                                            <li
+                                                                                class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
+                                                                                <div class="ms-2 me-auto">
+                                                                                    <div class="">Distance
+                                                                                        <span
+                                                                                            class="badge bg-primary rounded-pill">
+                                                                                            {{ $trame_php->{"distance"} }}
+                                                                                            cm</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
                                                                         @endisset
-                                                                    </span>
-                                                                </div>
-                                                            </li>
-                                                            @endisset
 
-                                                        </ul>
-                                                    </li>
+                                                                        @isset($trame_php->{"vitesse"})
+                                                                            <li
+                                                                                class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
+                                                                                <div class="ms-2 me-auto">
+                                                                                    <div class="">Vitesse
+                                                                                        <span
+                                                                                            class="badge bg-primary rounded-pill">
+                                                                                            {{ $trame_php->{"vitesse"} }}
+                                                                                            %</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                        @endisset
+
+                                                                        @isset($trame_php->{"direction"})
+                                                                            <li
+                                                                                class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
+                                                                                <div class="ms-2 me-auto">
+                                                                                    <div class="">Direction
+                                                                                        <span
+                                                                                            class="badge bg-primary rounded-pill">
+                                                                                            {{ $trame_php->{"direction"} }}
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <span class="text-white-50">
+                                                                                        @isset($convert_trame_php[$trame_php->{"direction"}])
+                                                                                            {{ $convert_trame_php[$trame_php->{"direction"}] }}
+                                                                                        @endisset
+                                                                                    </span>
+                                                                                </div>
+                                                                            </li>
+                                                                        @endisset
+
+                                                                        @isset($trame_php->{"arg"})
+                                                                            <li
+                                                                                class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
+                                                                                <div class="ms-2 me-auto">
+                                                                                    <div class="">Argument
+                                                                                        <span
+                                                                                            class="badge bg-primary rounded-pill">
+                                                                                            {{ $trame_php->{"arg"} }}</span>
+                                                                                    </div>
+                                                                                    <span class="text-white-50">
+                                                                                        @isset($convert_trame_php[$trame_php->{"arg"}])
+                                                                                            {{ $convert_trame_php[$trame_php->{"arg"}] }}
+                                                                                        @endisset
+                                                                                    </span>
+                                                                                </div>
+                                                                            </li>
+                                                                        @endisset
+
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
                                                 </ul>
                                             </div>
                                         </div>

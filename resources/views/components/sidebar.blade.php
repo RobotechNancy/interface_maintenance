@@ -17,7 +17,8 @@
             @if (Auth::user()->role == 2)
 
                 @include("components.sidebar-base-roulante")
-                @include("components.sidebar-commandes")
+
+                <!--@include("components.sidebar-commandes")-->
 
             @endif
 

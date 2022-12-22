@@ -12,7 +12,7 @@ function sendData(request_url, request_id) {
                 "</div>",
             ].join("");
 
-            alertPlaceholder.append(wrapper);
+            alertPlaceholder.prepend(wrapper);
         };
 
         $.ajaxSetup({
@@ -25,14 +25,19 @@ function sendData(request_url, request_id) {
             e.preventDefault();
             $(".btn_form").attr("disabled", true);
 
-            if ($("#btn_12").hasClass("btn-success") && request_id == 12)
-                final_id = 13;
-            else final_id = request_id;
+            final_id =
+                $("#btn_12").hasClass("btn-success") && request_id == 12
+                    ? 13
+                    : request_id;
 
             $.ajax({
                 type: "POST",
                 url: request_url,
-                data: { id: final_id },
+                data: {
+                    id: final_id,
+                    distance: $("#rangeDistance").val(),
+                    vitesse: $("#rangeVitesse").val(),
+                },
 
                 success: function (data) {
                     if (request_id == 0)
@@ -45,16 +50,6 @@ function sendData(request_url, request_id) {
                     else if (request_id == 12) {
                         $("#btn_" + request_id).toggleClass("btn-danger");
                         $("#btn_" + request_id).toggleClass("btn-success");
-
-                        if ($("#btn_" + request_id).hasClass("btn-success"))
-                            $("#btn_" + request_id).html(
-                                "<i class='fa-solid fa-power-off'></i>"
-                            );
-                        else
-                            $("#btn_" + request_id).html(
-                                "<i class='fa-solid fa-power-off'></i>"
-                            );
-
                         $("#logs_console").load(" #logs_console");
                     } else $("#logs_console").load(" #logs_console");
 
@@ -80,6 +75,56 @@ function sendData(request_url, request_id) {
     });
 }
 
+function addToClipboard(data, id, type) {
+    let type_trame = "", trame = "", obj = JSON.parse(JSON.stringify(data));
+
+    if(type == 0) {
+
+        ype_trame = "CAN envoyée";
+        trame = obj.addr + "," + obj.emetteur + "," + obj.code_fct + "," + obj.id_msg + "," + obj.is_rep + "," + obj.id_rep + "," + obj.data;
+
+    } else if(type == 1) {
+
+        type_trame = "CAN reçue";
+        trame = obj.addr + "," + obj.emetteur + "," + obj.code_fct + "," + obj.is_rep + "," + obj.id_rep + "," + obj.data;
+
+    } else if(type == 2) {
+
+        type_trame = "PHP envoyée";
+        trame = (obj.arg != undefined) ? obj.commande + "," + obj.arg : obj.commande + "," + obj.distance + "," + obj.vitesse + "," + obj.direction;
+    }
+
+    const copyalertPlaceholder = $(".title_console");
+
+    const copyalert = (message, type) => {
+        wrapper = [
+            '<div class="alert alert-' +
+                type +
+                ' alert-dismissible" role="alert">',
+            "   <div>" + message + "</div>",
+            '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+            "</div>",
+        ].join("");
+
+        copyalertPlaceholder.prepend(wrapper);
+    };
+
+    navigator.clipboard
+        .writeText(trame)
+        .then(() => {
+            copyalert(
+                "Le contenu de la trame " + type_trame + " n°"+ id + " a été copié avec succès dans le presse-papier.",
+                "success"
+            );
+        })
+        .catch((err) => {
+            copyalert(
+                "Impossible d'ajouter le contenu de la trame au presse-papier ! Détail de l'erreur : " + err,
+                "danger"
+            );
+        });
+}
+
 function tabs_manager(tab_name) {
     $("#btn_" + tab_name).click(function () {
         if (!$("#btn_" + tab_name).hasClass("btn-light")) {
@@ -102,6 +147,12 @@ function afficherMasquerTrames(trame_name) {
     $("#list_" + trame_name).toggleClass("d-none");
 }
 
+function checkRelaisStatus() {
+    fetch("/relais", {
+        method: "POST",
+    }).then((json) => console.log(json));
+}
+
 $(document).ready(function () {
     $(".btn_sidebar").click(function () {
         $("#sidebar").toggleClass("d-none");
@@ -118,6 +169,8 @@ $(document).ready(function () {
 
     $("#valeurSliderDistance").text($("#rangeDistance").val());
     $("#valeurSliderVitesse").text($("#rangeVitesse").val());
+
+    //setInterval(checkRelaisStatus(), 1000);
 });
 
 function changeValueRange(type) {
