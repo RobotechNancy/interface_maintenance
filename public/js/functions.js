@@ -80,7 +80,7 @@ function addToClipboard(data, id, type) {
 
     if(type == 0) {
 
-        ype_trame = "CAN envoyée";
+        type_trame = "CAN envoyée";
         trame = obj.addr + "," + obj.emetteur + "," + obj.code_fct + "," + obj.id_msg + "," + obj.is_rep + "," + obj.id_rep + "," + obj.data;
 
     } else if(type == 1) {

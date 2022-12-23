@@ -67,7 +67,7 @@
                                                         <div class="me-auto">
                                                             <div class="fw-bold">Identifiant
                                                                 <span
-                                                                    class="badge bg-primary rounded-pill">{{ $data->{"id"} }}</span>
+                                                                    class="badge text-bg-primary rounded-pill">{{ $data->{"id"} }}</span>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -89,7 +89,7 @@
                                                         <div class="me-auto">
                                                             <div class="fw-bold">Statut
                                                                 <span
-                                                                    class="badge @if ($data->{'status'} == 0) bg-success @else bg-danger @endif rounded-pill">{{ $data->{"status"} }}</span>
+                                                                    class="badge @if ($data->{'status'} == 0) text-bg-success @else text-bg-danger @endif rounded-pill">{{ $data->{"status"} }}</span>
                                                             </div>
                                                             <span class="text-white-50">
                                                                 {{ $data->{"status_description"} }} </span>
@@ -102,10 +102,44 @@
                                                         $trame_can_env = json_decode($data->{"trame_can_env"});
 
                                                         $convert_trame_can = config('app.convert_trame_can');
+                                                        $convert_type_trame_can = config('app.convert_type_trame_can');
 
                                                         $trame_php = json_decode($data->{"trame_php"});
 
                                                         $convert_trame_php = config('app.convert_trame_php');
+
+                                                        if(isset($convert_trame_can[$trame_can_env->{"addr"}]) && isset($convert_trame_can[$trame_can_rec->{"emetteur"}])){
+                                                            $test_addr = ($convert_trame_can[$trame_can_env->{"addr"}] == $convert_trame_can[$trame_can_rec->{"emetteur"}]) ? "success" : "danger";
+                                                        }else{
+                                                            $test_addr = "danger";
+                                                        }
+
+                                                        if(isset($convert_trame_can[$trame_can_rec->{"addr"}]) && isset($convert_trame_can[$trame_can_env->{"emetteur"}])){
+                                                            $test_emetteur = ($convert_trame_can[$trame_can_rec->{"addr"}] == $convert_trame_can[$trame_can_env->{"emetteur"}]) ? "success" : "danger";
+                                                        }else{
+                                                            $test_emetteur = "danger";
+                                                        }
+
+                                                        $test_code_fct = ($trame_can_env->{"code_fct"} == $trame_can_rec->{"code_fct"}) ? "success" : "danger";
+
+                                                        if(isset($convert_type_trame_can[$trame_can_env->{"is_rep"}])){
+                                                            $test_is_rep_env = ($convert_type_trame_can[$trame_can_env->{"is_rep"}] == "Trame d'envoi") ? "success" : "danger";
+                                                        }else{
+                                                            $test_is_rep_env = "danger";
+                                                        }
+
+                                                        if(isset($convert_type_trame_can[$trame_can_rec->{"is_rep"}])){
+                                                            $test_is_rep_rec = ($convert_type_trame_can[$trame_can_rec->{"is_rep"}] == "Trame de réponse") ? "success" : "danger";
+                                                        }else{
+                                                            $test_is_rep_rec = "danger";
+                                                        }
+
+                                                        $test_id_rep = ($trame_can_env->{"id_rep"} == $trame_can_rec->{"id_rep"}) ? "success" : "danger";
+
+                                                        $test_trame_can_env = ($test_addr != "danger" && $test_emetteur != "danger" && $test_is_rep_env != "danger" && $test_code_fct != "danger" && $test_id_rep != "danger" && $test_is_rep_env != "danger") ? "success" : "danger";
+                                                        $test_trame_can_rec = ($test_addr != "danger" && $test_emetteur != "danger" && $test_is_rep_env != "danger" && $test_code_fct != "danger" && $test_id_rep != "danger" && $test_is_rep_rec != "danger") ? "success" : "danger";
+
+                                                        $test_icon = ["success" => "fa-check", "danger" => "fa-xmark"];
                                                     ?>
                                                     <div class="p-1 row row-cols-1 row-cols-md-3 g-2">
                                                         <div class="col">
@@ -117,7 +151,9 @@
                                                                     <span class="fw-bold" style="cursor: pointer;"
                                                                         onclick="afficherMasquerTrames('trame_can_env_{{ $log->id }}')">
                                                                         <span class="ps-1">Trame CAN envoyée
-                                                                        </span><span
+                                                                        </span>
+                                                                        <span class="badge text-bg-{{ $test_trame_can_env }}"><i class='fa-solid {{ $test_icon[$test_trame_can_env] }}'></i></span>
+                                                                        <span
                                                                             class="text-muted fst-italic fw-normal"
                                                                             id="comment_trame_can_env_{{ $log->id }}">Afficher</span>
                                                                     </span>
@@ -136,6 +172,7 @@
                                                                                     @isset($convert_trame_can[$trame_can_env->{"addr"}])
                                                                                         {{ $convert_trame_can[$trame_can_env->{"addr"}] }}
                                                                                     @endisset
+                                                                                    <span class="badge text-bg-{{ $test_addr }}"><i class='fa-solid {{ $test_icon[$test_addr] }}'></i></span>
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -151,6 +188,7 @@
                                                                                     @isset($convert_trame_can[$trame_can_env->{"emetteur"}])
                                                                                         {{ $convert_trame_can[$trame_can_env->{"emetteur"}] }}
                                                                                     @endisset
+                                                                                    <span class="badge text-bg-{{ $test_emetteur }}"><i class='fa-solid {{ $test_icon[$test_emetteur] }}'></i></span>
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -166,6 +204,7 @@
                                                                                     @isset($convert_trame_can[$trame_can_env->{"code_fct"}])
                                                                                         {{ $convert_trame_can[$trame_can_env->{"code_fct"}] }}
                                                                                     @endisset
+                                                                                    <span class="badge text-bg-{{ $test_code_fct }}"><i class='fa-solid {{ $test_icon[$test_code_fct] }}'></i></span>
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -194,6 +233,7 @@
                                                                                     <span
                                                                                         class="badge bg-primary rounded-pill">
                                                                                         {{ $trame_can_env->{"id_rep"} }}</span>
+                                                                                        <span class="badge text-bg-{{ $test_id_rep }}"><i class='fa-solid {{ $test_icon[$test_id_rep] }}'></i></span>
                                                                                 </div>
                                                                             </div>
                                                                         </li>
@@ -207,12 +247,10 @@
                                                                                     </span>
                                                                                 </div>
                                                                                 <span class="text-white-50">
-
-                                                                                    @if ($trame_can_env->{"is_rep"} == 0)
-                                                                                        Trame d'envoi
-                                                                                    @else
-                                                                                        Trame de réponse
-                                                                                    @endif
+                                                                                    @isset($convert_type_trame_can[$trame_can_env->{"is_rep"}])
+                                                                                        {{ $convert_type_trame_can[$trame_can_env->{"is_rep"}] }}
+                                                                                    @endisset
+                                                                                    <span class="badge text-bg-{{ $test_is_rep_env }}"><i class='fa-solid {{ $test_icon[$test_is_rep_env] }}'></i></span>
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -239,7 +277,9 @@
                                                                     <span class="fw-bold" style="cursor: pointer;"
                                                                         onclick="afficherMasquerTrames('trame_can_rec_{{ $log->id }}')">
                                                                         <span class="ps-1">Trame CAN reçue
-                                                                        </span><span
+                                                                        </span>
+                                                                        <span class="badge text-bg-{{ $test_trame_can_rec }}"><i class='fa-solid {{ $test_icon[$test_trame_can_rec] }}'></i></span>
+                                                                        <span
                                                                             class="text-muted fst-italic fw-normal"
                                                                             id="comment_trame_can_rec_{{ $log->id }}">Afficher</span>
                                                                     </span>
@@ -258,6 +298,7 @@
                                                                                     @isset($convert_trame_can[$trame_can_rec->{"addr"}])
                                                                                         {{ $convert_trame_can[$trame_can_rec->{"addr"}] }}
                                                                                     @endisset
+                                                                                    <span class="badge text-bg-{{ $test_emetteur }}"><i class='fa-solid {{ $test_icon[$test_emetteur] }}'></i></span>
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -273,6 +314,7 @@
                                                                                     @isset($convert_trame_can[$trame_can_rec->{"emetteur"}])
                                                                                         {{ $convert_trame_can[$trame_can_rec->{"emetteur"}] }}
                                                                                     @endisset
+                                                                                    <span class="badge text-bg-{{ $test_addr }}"><i class='fa-solid {{ $test_icon[$test_addr] }}'></i></span>
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -288,6 +330,7 @@
                                                                                     @isset($convert_trame_can[$trame_can_rec->{"code_fct"}])
                                                                                         {{ $convert_trame_can[$trame_can_rec->{"code_fct"}] }}
                                                                                     @endisset
+                                                                                    <span class="badge text-bg-{{ $test_code_fct }}"><i class='fa-solid {{ $test_icon[$test_code_fct] }}'></i></span>
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -298,6 +341,8 @@
                                                                                     <span
                                                                                         class="badge bg-primary rounded-pill">
                                                                                         {{ $trame_can_rec->{"id_rep"} }}</span>
+
+                                                                                    <span class="badge text-bg-{{ $test_id_rep }}"><i class='fa-solid {{ $test_icon[$test_id_rep] }}'></i></span>
                                                                                 </div>
                                                                             </div>
                                                                         </li>
@@ -311,12 +356,10 @@
                                                                                     </span>
                                                                                 </div>
                                                                                 <span class="text-white-50">
-
-                                                                                    @if ($trame_can_rec->{"is_rep"} == 0)
-                                                                                        Trame d'envoi
-                                                                                    @else
-                                                                                        Trame de réponse
-                                                                                    @endif
+                                                                                    @isset($convert_type_trame_can[$trame_can_rec->{"is_rep"}])
+                                                                                        {{ $convert_type_trame_can[$trame_can_rec->{"is_rep"}] }}
+                                                                                    @endisset
+                                                                                    <span class="badge text-bg-{{ $test_is_rep_rec }}"><i class='fa-solid {{ $test_icon[$test_is_rep_rec] }}'></i></span>
                                                                                 </span>
                                                                             </div>
                                                                         </li>

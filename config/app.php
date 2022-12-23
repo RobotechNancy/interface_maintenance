@@ -230,6 +230,12 @@ return [
         "OFF" => "Désactivation"
     ],
 
+    'convert_type_trame_can' => [
+        "0" => "Trame d'envoi",
+        "1" => "Trame de réponse",
+        "0x1" => "Trame de réponse"
+    ],
+
     'convert_trame_can' => [
 
         "0x1000000" => "Carte Raspberry Pi",
