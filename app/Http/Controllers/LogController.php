@@ -11,6 +11,13 @@ use Illuminate\Support\Arr;
 class LogController extends Controller
 {
 
+    public function get_logtable_size(){
+
+        $nb_logs = Log::get()->count();
+
+        return $nb_logs;
+    }
+
     public function relais(){
         $execfile = env('CUSTOM_EXECFILE');
         $trame = "Relais,Test";
@@ -216,7 +223,7 @@ class LogController extends Controller
             return response()->json(["file" => $execfile, "exception" => "Fichier non trouvé", "message" => "Le fichier exécutable n'a pas été trouvé", "line" => 57], 404);
 
         $log->saveOrFail();
-        return response()->json(200);
+        return response()->json(["status" => 200, "rep" => json_decode($log->response)]);
     }
 
     /**

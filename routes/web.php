@@ -32,6 +32,10 @@ Route::post('relais', [LogController::class, 'relais'])
 ->middleware(['auth'])
 ->name('relais');
 
+Route::post('get_logtable_size', [LogController::class, 'get_logtable_size'])
+->middleware(['auth'])
+->name('get_logtable_size');
+
 Route::post('clearlogs', [LogController::class, 'clear'])
 ->middleware(['auth'])
 ->name('clearlogs');

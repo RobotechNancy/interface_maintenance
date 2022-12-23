@@ -24,6 +24,8 @@
                 </span>
             </button>
         </div>
+
+        <p class="fs-6 mt-3 text-muted"><small><i class="fa-solid fa-circle-info"></i> Dernière mise à jour le <span id="maj_console_datetime">XX/XX/XXXX à xx:xx:xx</span></small></p>
     </h5>
     <div class="title_console"></div>
     <div id="logs_console" style="max-height: 70vh; overflow: scroll;">
@@ -37,7 +39,10 @@
                             <button class="accordion-button btn-dark bg-dark text-white-50" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#collapse_log_<?= $log->id ?>"
                                 aria-expanded="false" aria-controls="log_<?= $log->id ?>">
-                                <span class="d-none d-md-block"><b>Log n°<?= $log->id ?></b>&nbsp;&nbsp;</span>
+
+                                <?php $custom_id = ($log->id < 10) ? "0".strval($log->id) : strval($log->id); ?>
+
+                                <span class="d-none d-md-block font-monospace"><b>Log n°<?= $custom_id ?></b>&nbsp;&nbsp;</span>
                                 <span class="text-white">
                                     <b>[<span class="d-none d-md-inline">Le
                                             {{ $log->created_at->format('d/m') }} à
@@ -58,12 +63,9 @@
                                     @foreach ($datas as $data)
                                         <div class="col">
                                             <div class="card text-bg-dark border border-light h-100 border-opacity-25">
-
-
-
-                                                <ul class="list-group list-group-flush">
+                                                <ul class="list-group list-group-flush pt-2">
                                                     <li
-                                                        class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
+                                                        class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center border-none">
                                                         <div class="me-auto">
                                                             <div class="fw-bold">Identifiant
                                                                 <span
@@ -72,7 +74,7 @@
                                                         </div>
                                                     </li>
                                                     <li
-                                                        class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
+                                                        class="list-group-item bg-dark text-white d-flex justify-content-between align-items-center border-none">
                                                         <div class="me-auto">
                                                             <div class="fw-bold">Données</div>
                                                             <span class="text-white-50">
@@ -143,7 +145,7 @@
                                                     ?>
                                                     <div class="p-1 row row-cols-1 row-cols-md-3 g-2">
                                                         <div class="col">
-                                                            <div class="card text-bg-dark h-100">
+                                                            <div class="card text-bg-dark h-100" style="border:none;">
                                                                 <div class="card-body">
                                                                     <button class="btn btn-warning btn-sm"
                                                                         onclick="addToClipboard({{ $data->{'trame_can_env'} }}, {{ $log->id }}, 0)"><i
@@ -158,7 +160,7 @@
                                                                             id="comment_trame_can_env_{{ $log->id }}">Afficher</span>
                                                                     </span>
 
-                                                                    <ul class="list-group d-none"
+                                                                    <ul class="list-group d-none pt-2"
                                                                         id="list_trame_can_env_{{ $log->id }}">
                                                                         <li
                                                                             class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
@@ -269,7 +271,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col">
-                                                            <div class="card text-bg-dark h-100">
+                                                            <div class="card text-bg-dark h-100" style="border:none;">
                                                                 <div class="card-body">
                                                                     <button class="btn btn-warning btn-sm"
                                                                         onclick="addToClipboard({{ $data->{'trame_can_rec'} }}, {{ $log->id }}, 1)"><i
@@ -284,7 +286,7 @@
                                                                             id="comment_trame_can_rec_{{ $log->id }}">Afficher</span>
                                                                     </span>
 
-                                                                    <ul class="list-group d-none"
+                                                                    <ul class="list-group d-none pt-2"
                                                                         id="list_trame_can_rec_{{ $log->id }}">
                                                                         <li
                                                                             class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
@@ -378,7 +380,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col">
-                                                            <div class="card text-bg-dark h-100">
+                                                            <div class="card text-bg-dark h-100" style="border:none;">
                                                                 <div class="card-body">
                                                                     <button class="btn btn-warning btn-sm"
                                                                         onclick="addToClipboard({{ $data->{'trame_php'} }}, {{ $log->id }}, 2)"><i
@@ -391,7 +393,7 @@
                                                                             id="comment_trame_php_{{ $log->id }}">Afficher</span>
                                                                     </span>
 
-                                                                    <ul class="list-group d-none"
+                                                                    <ul class="list-group d-none pt-2"
                                                                         id="list_trame_php_{{ $log->id }}">
                                                                         <li
                                                                             class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">

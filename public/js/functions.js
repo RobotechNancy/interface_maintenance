@@ -40,6 +40,34 @@ function sendData(request_url, request_id) {
                 },
 
                 success: function (data) {
+
+                    if(request_id == 1 || request_id == 2){
+
+                        var trame_can_rec = JSON.parse(data["rep"][0]["trame_can_rec"]);
+                        var icon_autotest = (trame_can_rec.data == "0x1") ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+                        var color_autotest = (trame_can_rec.data == "0x1") ? "success" : "danger";
+
+                        if(request_id == 1){
+
+                            $("#result_test_odo").html(icon_autotest);
+                            $("#result_test_odo").removeClass("text-bg-success");
+                            $("#result_test_odo").removeClass("text-bg-danger");
+                            $("#result_test_odo").addClass("text-bg-"+color_autotest);
+                            $("#container_test_odo_datetime").removeClass("d-none");
+                            $("#maj_test_odo_datetime").text(getCurrentDatetime);
+
+
+                        } else {
+
+                            $("#result_test_br").html(icon_autotest);
+                            $("#result_test_br").removeClass("text-bg-success");
+                            $("#result_test_br").removeClass("text-bg-danger");
+                            $("#result_test_br").addClass("text-bg-"+color_autotest);
+                            $("#container_test_br_datetime").removeClass("d-none");
+                            $("#maj_test_br_datetime").text(getCurrentDatetime);
+                        }
+                    }
+
                     if (request_id == 0)
                         alert(
                             "Les logs ont correctement été exportés vers le fichier <a class='alert-link' href='logs.txt' target='_blank'>" +
@@ -48,10 +76,16 @@ function sendData(request_url, request_id) {
                             "success"
                         );
                     else if (request_id == 12) {
+
                         $("#btn_" + request_id).toggleClass("btn-danger");
                         $("#btn_" + request_id).toggleClass("btn-success");
                         $("#logs_console").load(" #logs_console");
-                    } else $("#logs_console").load(" #logs_console");
+                        $("#maj_console_datetime").text(getCurrentDatetime());
+
+                    } else {
+                        $("#logs_console").load(" #logs_console");
+                        $("#maj_console_datetime").text(getCurrentDatetime());
+                    }
 
                     $(".btn_form").attr("disabled", false);
                 },
@@ -113,13 +147,13 @@ function addToClipboard(data, id, type) {
         .writeText(trame)
         .then(() => {
             copyalert(
-                "Le contenu de la trame " + type_trame + " n°"+ id + " a été copié avec succès dans le presse-papier.",
+                "Le contenu de la <b>trame " + type_trame + " n°"+ id + "</b> a été copié avec succès dans le presse-papier.<br/><i>Trame : " + trame + "</i>",
                 "success"
             );
         })
         .catch((err) => {
             copyalert(
-                "Impossible d'ajouter le contenu de la trame au presse-papier ! Détail de l'erreur : " + err,
+                "Impossible d'ajouter le contenu de la <b>trame " + type_trame + " n°"+ id + "</b> au presse-papier.<br/>Détail de l'erreur : " + err + "<br/><i>Trame : " + trame + "</i>",
                 "danger"
             );
         });
@@ -148,9 +182,57 @@ function afficherMasquerTrames(trame_name) {
 }
 
 function checkRelaisStatus() {
-    fetch("/relais", {
-        method: "POST",
-    }).then((json) => console.log(json));
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "/relais",
+
+        success: function (data) {
+            console.log(data)
+        }
+    });
+}
+
+function getCurrentDatetime() {
+    var now = new Date(Date.now());
+
+    var jour = (now.getDate() < 10) ? "0" + now.getDate() : now.getDate();
+    var mois = (now.getMonth() < 10) ? "0" + now.getMonth() : now.getMonth();
+
+    var heures = (now.getHours() < 10) ? "0" + now.getHours() : now.getHours();
+    var minutes = (now.getMinutes() < 10) ? "0" + now.getMinutes() : now.getMinutes();
+    var secondes = (now.getSeconds() < 10) ? "0" + now.getSeconds() : now.getSeconds();
+
+    var formatted = jour + "/" + mois + "/" + now.getFullYear() + " à " + heures + ":" + minutes + ":" + secondes;
+
+    return formatted;
+}
+
+function checkLogTable() {
+
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "/get_logtable_size",
+
+        success: function (nb_logs) {
+            if(nb_logs != $('.accordion-header').length){
+                $("#logs_console").load(" #logs_console");
+                $("#maj_console_datetime").text(getCurrentDatetime());
+            }
+        }
+    });
+
 }
 
 $(document).ready(function () {
@@ -165,12 +247,17 @@ $(document).ready(function () {
 
     $("#btn_reload_console").click(function () {
         $("#logs_console").load(" #logs_console");
+        $("#maj_console_datetime").text(getCurrentDatetime());
     });
 
     $("#valeurSliderDistance").text($("#rangeDistance").val());
     $("#valeurSliderVitesse").text($("#rangeVitesse").val());
 
-    //setInterval(checkRelaisStatus(), 1000);
+    $("#maj_console_datetime").text(getCurrentDatetime());
+
+    setInterval(checkLogTable, 1000);
+
+    //setInterval(checkRelaisStatus, 1000);
 });
 
 function changeValueRange(type) {

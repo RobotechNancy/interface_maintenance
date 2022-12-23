@@ -16,14 +16,24 @@
                     <img src="{{ asset('img/carte_stm32.png') }}" height="70" /><br>
                     <span class="mt-3 mb-3 d-block">Base roulante</span>
                     @if (Auth::user()->role != 0)
-                        <x-button title="Tester" id="2" url="{{ route('log') }}"/>
+                        <div class="hstack gap-2">
+                            <x-button title="Tester" id="2" url="{{ route('log') }}"/>
+                            <span id="result_test_br" class="badge"></span>
+                        </div>
+
+                        <p class="fs-6 mt-3 text-muted d-none" id="container_test_br_datetime"><small><i class="fa-solid fa-circle-info"></i> Dernier test le <span id="maj_test_br_datetime">XX/XX/XXXX à xx:xx:xx</span></small></p>
                     @endif
                 </div>
                 <div class="col">
                     <img src="{{ asset('img/carte_stm32.png') }}" height="70" /><br>
                     <span class="mt-3 mb-3 d-block">Odométrie</span>
                     @if (Auth::user()->role != 0)
-                        <x-button title="Tester" id="1" url="{{ route('log') }}"/>
+                        <div class="hstack gap-2">
+                            <x-button title="Tester" id="1" url="{{ route('log') }}"/>
+                            <span id="result_test_odo" class="badge"></span>
+                        </div>
+
+                        <p class="fs-6 mt-3 text-muted d-none" id="container_test_odo_datetime"><small><i class="fa-solid fa-circle-info"></i> Dernier test le <span id="maj_test_odo_datetime">XX/XX/XXXX à xx:xx:xx</span></small></p>
                     @endif
                 </div>
                 <div class="col">
