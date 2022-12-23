@@ -54,8 +54,8 @@ class RegisteredUserController extends Controller
     public function defaultuser()
     {
         $name = "AdminTout";
-        $password = "Robotech2022";
-        $email = "robotechnancy@gmail.com";
+        $password = env("MDP_ADMINTOUT");
+        $email = env("EMAIL_ADMINTOUT");
         $role = 2;
 
         $admin_user_id = User::select('id')->where('email', $email)->first();
