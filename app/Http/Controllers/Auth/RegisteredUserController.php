@@ -48,7 +48,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        $expiresAt = date('Y-m-d H:i:s', strtotime("+60 min"));
+        $expiresAt = date('Y-m-d H:i:s', strtotime("+5 min"));
         Cache::put('user-is-online-' . Auth::user()->email, true, $expiresAt);
 
         return redirect(RouteServiceProvider::HOME)->with('message', "Bienvenue parmi nous, cher ".$user->name." ! Votre compte utilisateur a été créé avec succès !");
@@ -76,7 +76,7 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        $expiresAt = date('Y-m-d H:i:s', strtotime("+60 min"));
+        $expiresAt = date('Y-m-d H:i:s', strtotime("+5 min"));
         Cache::put('user-is-online-' . Auth::user()->email, true, $expiresAt);
 
         Auth::login($user);

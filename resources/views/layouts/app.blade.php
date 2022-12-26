@@ -29,6 +29,10 @@
 
 <body class="bg-dark text-white">
     @auth
+        <?php
+            $expiresAt = date('Y-m-d H:i:s', strtotime("+5 min"));
+            Cache::put('user-is-online-' . Auth::user()->email, true, $expiresAt);
+        ?>
         @if ($_SERVER['REQUEST_URI'] == '/dashboard' ||
             $_SERVER['REQUEST_URI'] == '/index' ||
             substr($_SERVER['REQUEST_URI'], 0, 5) == '/edit')
