@@ -27,7 +27,7 @@
                     <div class="card-body">
                         <h5 class="card-title">
                             <span>{{ $user->name }}
-                                @if(Cache::has('user-is-online-' . $user->id))
+                                @if(Cache::has('user-is-online-' . $user->email))
                                     <span class="text-success fs-6 ms-2 fst-italic"><small>En ligne</small></span>
                                 @else
                                     <span class="text-danger fs-6 ms-2 fst-italic"><small>Déconnecté</small></span>

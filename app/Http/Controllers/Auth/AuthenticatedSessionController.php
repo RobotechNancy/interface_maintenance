@@ -30,14 +30,18 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+        if(Cache::has('user-is-online-' . $request->email)){
+            return back()->with('warning', "Impossible d'accéder au compte car l'utilisateur ".$request->email." est déjà connecté !");
+        }
+
         $request->authenticate();
 
         $request->session()->regenerate();
 
         $expiresAt = date('Y-m-d H:i:s', strtotime("+60 min"));
-        Cache::put('user-is-online-' . Auth::user()->id, true, $expiresAt);
+        Cache::put('user-is-online-' . Auth::user()->email, true, $expiresAt);
 
-        return redirect()->intended(RouteServiceProvider::HOME)->with('message', "Content de vous revoir cher ".Auth::user()->name." !");
+        return redirect("/dashboard")->with('message', "Content de vous revoir cher ".Auth::user()->name." !");
     }
 
     /**
@@ -48,7 +52,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        Cache::forget('user-is-online-' . Auth::user()->id);
+        Cache::forget('user-is-online-' . Auth::user()->email);
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

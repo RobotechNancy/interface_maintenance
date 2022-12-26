@@ -46,4 +46,9 @@
             <a class="btn btn-outline-light" href="{{ route('register') }}">{{ __('Not already registered?') }}</a>
         </div>
     </form>
+
+
+    @if (session()->has('warning'))
+        <x-notification title="Connexion impossible" color="text-bg-warning">{{ session('warning') }}</x-notification>
+    @endif
 </x-app-layout>
