@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="title"> @lang('Home') </x-slot>
     <h3 class="title mb-6 p-3 fs-4"> @auth Hello {{ Auth::user()->name }} ! <br><br> @endauth Bienvenue sur l'interface de
-        maintenance de Robotech Nancy !
+        maintenance de Robotech Nancy.
     </h3>
     <h5 class="mt-3 fs-5 p-3">
         @auth

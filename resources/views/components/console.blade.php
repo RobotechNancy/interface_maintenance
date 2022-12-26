@@ -202,7 +202,7 @@
 
                                                         $test_icon = ["success" => "fa-check", "danger" => "fa-xmark", "warning" => "fa-triangle-exclamation"];
                                                     ?>
-                                                    <div class="p-1 row row-cols-1 row-cols-md-3 g-2">
+                                                    <div class="p-1 row row-cols-1 row-cols-lg-3 row-cols-md-2 g-2">
                                                         <div class="col">
                                                             <div class="card text-bg-dark h-100" style="border:none;">
                                                                 <div class="card-body">
