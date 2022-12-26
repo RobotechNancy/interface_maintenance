@@ -33,14 +33,12 @@
             </li>
             <li><a class="dropdown-item disabled"><span class="badge rounded-pill text-bg-info">{{ $role }}</span></a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item btn" href="{{ route('dashboard') }}"><i class="fa-solid fa-map-location-dot"></i> Tableau de bord</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item btn" href="{{ route('edit', ['id' => Auth::user()->id]) }}"><i class="fa-solid fa-user-gear"></i> Gestion du profil</a></li>
-            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item btn mb-2" href="{{ route('dashboard') }}"><i class="fa-solid fa-map-location-dot"></i> Tableau de bord</a></li>
+            <li><a class="dropdown-item btn mt-2" href="{{ route('edit', ['id' => Auth::user()->id]) }}"><i class="fa-solid fa-user-gear"></i> Gestion du profil</a></li>
             <form method="POST" action="{{ route('logout') }}" class="d-none" id="logout">
                 @csrf
             </form>
-            <li><a class="dropdown-item disabled"><a role="button" class="d-grid btn btn-warning me-2 ms-2 mb-1" onclick="event.preventDefault(); $('#logout').submit();">Se déconnecter</a></a></li>
+            <li><a class="dropdown-item disabled"><a role="button" class="d-grid btn btn-warning me-2 ms-2 mb-1 mt-2" onclick="event.preventDefault(); $('#logout').submit();">Se déconnecter</a></a></li>
         </ul>
 
     </div>

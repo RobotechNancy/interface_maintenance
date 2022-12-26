@@ -39,8 +39,8 @@ class RegisteredUserController extends Controller
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name' => ucfirst(strtolower($request->name)),
+            'email' => strtolower($request->email),
             'password' => Hash::make($request->password)
         ]);
 
@@ -53,7 +53,7 @@ class RegisteredUserController extends Controller
 
     public function defaultuser()
     {
-        $name = "AdminTout";
+        $name = "Admintout";
         $password = env("MDP_ADMINTOUT");
         $email = env("EMAIL_ADMINTOUT");
         $role = 2;
@@ -65,8 +65,8 @@ class RegisteredUserController extends Controller
         }
 
         $user = User::create([
-            'name' => $name,
-            'email' => $email,
+            'name' => ucfirst(strtolower($name)),
+            'email' => strtolower($email),
             'role' => $role,
             'password' => Hash::make($password)
         ]);
@@ -125,7 +125,7 @@ class RegisteredUserController extends Controller
                 'name' => ['required', 'string', 'alpha_num', 'max:50']
             ]);
 
-            $user->name = $request->name;
+            $user->name = ucfirst(strtolower($request->name));
         }
 
         if($request->email != $user->email){
@@ -133,7 +133,7 @@ class RegisteredUserController extends Controller
                 'email' => ['required', 'string', 'email', 'max:100', 'unique:users']
             ]);
 
-            $user->email = $request->email;
+            $user->email = strtolower($request->email);
         }
 
         if(!empty($request->password)){

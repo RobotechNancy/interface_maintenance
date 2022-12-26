@@ -4,8 +4,10 @@
             <span class="fs-5 fw-bold">
                 Connectivité (CAN, XBee)
             </span>
-            <!--div class="vr"></div>
-            <x-button title="Autotests" id="" url="{{ route('log') }}" icon="fa-solid fa-wrench" addons="btn-warning"/-->
+            <div class="vr"></div>
+            @if (Auth::user()->role != 0)
+                <button role="button" type="button" id="btn_autotests" class="btn btn-warning">Autotests <i class="fa-solid fa-wrench"></i></button>
+            @endif
         </div>
         <div>
             <span class="badge bg-white text-dark fs-6">

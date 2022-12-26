@@ -1,14 +1,16 @@
 <div class="container tabs" id="tab_console_logs">
     <h5 class="mb-4">
         <div class="hstack gap-2 fw-bold">
-            Console de logs
+            <span class="pe-2">Console de logs</span>
 
             @if (Auth::user()->role == 2)
                 <x-button id="20" icon="fa-solid fa-eraser" url="{{ route('clearlogs') }}" color="btn-danger"
                     addons="btn-sm" />
             @endif
 
+            @if (Auth::user()->role != 0)
             <x-button id="0" icon="fa-solid fa-file-export" url="{{ route('exportlogs') }}" addons="btn-sm" />
+            @endif
 
             <a href="{{ asset('logs.txt') }}" target="_blank">
                 <button class="btn btn-secondary btn-sm">

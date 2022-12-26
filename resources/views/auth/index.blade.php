@@ -25,42 +25,44 @@
             <div class="col">
                 <div aria-hidden="true" class="card text-bg-dark border border-light h-100 border-opacity-25">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $user->name }}
-                            @if (Auth::user()->role == 2 || $user->id == Auth::user()->id)
-
-                                <a class="btn btn-sm btn-primary" href="{{ route('edit', ['id' => $user->id]) }}"><i
-                                        class="fa-solid fa-pencil"></i></a>
-
-                                <form id="delete{{ $user->id }}" action="{{ route('delete', ['user' => $user]) }}"
-                                    method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-
-                                <a class="btn btn-sm btn-danger"
-                                    onclick="event.preventDefault(); document.getElementById('delete{{ $user->id }}').submit();"><i
-                                    class="fa-solid fa-trash"></i></a>
-
-                            @endif
+                        <h5 class="card-title">
+                            <span>{{ $user->name }}</span>
                         </h5>
-                        <p class="card-text mt-3">
-                            <dl class="row">
-                                <dt class="col-sm-3">ID</dt>
-                                <dd class="col-sm-9">{{ $user->id }}</dd>
-
-                                <hr>
-
-                                <dt class="col-sm-3">@lang('Email')</dt>
-                                <dd class="col-sm-9">{{ $user->email }}</dd>
-
-                                <hr>
-
-                                <dt class="col-sm-3">@lang('Role')</dt>
-                                <dd class="col-sm-9">{{ $role }}</dd>
-                            </dl>
-                            <small class="text-muted">Dernière modification le {{ $user->updated_at->format('d/m/Y') }} à
-                                {{ $user->updated_at->format('H:i:s') }}</small>
-                        </p>
+                        <h6 class="card-subtitle pt-2 text-muted">
+                            <small>
+                                <i class="fa-solid fa-circle-info"></i> Profil modifié le
+                                {{ $user->updated_at->format('d/m/Y') }} à
+                                {{ $user->updated_at->format('H:i:s') }}
+                            </small>
+                        </h6>
                     </div>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item text-bg-dark border border-white border-opacity-10"><i
+                                class="fa-solid fa-id-card-clip pe-1"></i> Identifiant : {{ $user->id }}</li>
+                        <li class="list-group-item text-bg-dark border border-white border-opacity-25"><i
+                                class="fa-solid fa-at pe-1"></i> @lang('Email') : <a
+                                href="mailto:{{ $user->email }}" class="text-info" style="text-decoration: none;">{{ $user->email }}</a>
+                        </li>
+                        <li class="list-group-item text-bg-dark border border-white border-opacity-10"><i
+                                class="fa-solid fa-ranking-star pe-1"></i> @lang('Role') : {{ $role }}</li>
+                    </ul>
+
+                    @if (Auth::user()->role == 2 || $user->id == Auth::user()->id)
+                        <div class="card-footer text-center m-2">
+                            <a class="btn btn-sm btn-primary" href="{{ route('edit', ['id' => $user->id]) }}"><i
+                                    class="fa-solid fa-pencil"></i> Modifier <span class="d-none d-lg-inline">le compte</span></a>
+
+                            <form id="delete{{ $user->id }}" action="{{ route('delete', ['user' => $user]) }}"
+                                method="POST" style="display: none;">
+                                @csrf
+                            </form>
+
+                            <a class="btn btn-sm btn-danger ms-2"
+                                onclick="event.preventDefault(); document.getElementById('delete{{ $user->id }}').submit();"><i
+                                    class="fa-solid fa-trash"></i> Supprimer <span class="d-none d-lg-inline">le compte</span></a>
+                        </div>
+                    @endif
                 </div>
             </div>
         @endforeach

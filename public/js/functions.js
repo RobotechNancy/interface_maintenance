@@ -1,112 +1,120 @@
 function sendData(request_url, request_id) {
     $(document).ready(function () {
-        const alertPlaceholder = $(".title_console");
-
-        const alert = (message, type) => {
-            wrapper = [
-                '<div class="alert alert-' +
-                    type +
-                    ' alert-dismissible" role="alert">',
-                "   <div>" + message + "</div>",
-                '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-                "</div>",
-            ].join("");
-
-            alertPlaceholder.prepend(wrapper);
-        };
-
-        $.ajaxSetup({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-        });
-
         $("#form_" + request_id).submit(function (e) {
             e.preventDefault();
-            $(".btn_form").attr("disabled", true);
-
-            final_id =
-                $("#btn_12").hasClass("btn-success") && request_id == 12
-                    ? 13
-                    : request_id;
-
-            $.ajax({
-                type: "POST",
-                url: request_url,
-                data: {
-                    id: final_id,
-                    distance: $("#rangeDistance").val(),
-                    vitesse: $("#rangeVitesse").val(),
-                },
-
-                success: function (data) {
-
-                    if(request_id == 1 || request_id == 2){
-
-                        var trame_can_rec = JSON.parse(data["rep"][0]["trame_can_rec"]);
-                        var icon_autotest = (trame_can_rec.data == "0x1") ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
-                        var color_autotest = (trame_can_rec.data == "0x1") ? "success" : "danger";
-
-                        if(request_id == 1){
-
-                            $("#result_test_odo").html(icon_autotest);
-                            $("#result_test_odo").removeClass("text-bg-success");
-                            $("#result_test_odo").removeClass("text-bg-danger");
-                            $("#result_test_odo").addClass("text-bg-"+color_autotest);
-                            $("#container_test_odo_datetime").removeClass("d-none");
-                            $("#maj_test_odo_datetime").text(getCurrentDatetime);
-
-
-                        } else {
-
-                            $("#result_test_br").html(icon_autotest);
-                            $("#result_test_br").removeClass("text-bg-success");
-                            $("#result_test_br").removeClass("text-bg-danger");
-                            $("#result_test_br").addClass("text-bg-"+color_autotest);
-                            $("#container_test_br_datetime").removeClass("d-none");
-                            $("#maj_test_br_datetime").text(getCurrentDatetime);
-                        }
-                    }
-
-                    if (request_id == 0)
-                        alert(
-                            "Les logs ont correctement été exportés vers le fichier <a class='alert-link' href='logs.txt' target='_blank'>" +
-                                data["file"] +
-                                "</a>",
-                            "success"
-                        );
-                    else if (request_id == 12) {
-
-                        $("#btn_" + request_id).toggleClass("btn-danger");
-                        $("#btn_" + request_id).toggleClass("btn-success");
-                        $("#logs_console").load(" #logs_console");
-                        $("#maj_console_datetime").text(getCurrentDatetime());
-
-                    } else {
-                        $("#logs_console").load(" #logs_console");
-                        $("#maj_console_datetime").text(getCurrentDatetime());
-                    }
-
-                    $(".btn_form").attr("disabled", false);
-                },
-
-                error: function (data) {
-                    alert(
-                        "Error " +
-                            data.status +
-                            " : " +
-                            data.responseJSON["message"] +
-                            "<br>file " +
-                            data.responseJSON["file"] +
-                            ", line " +
-                            data.responseJSON["line"],
-                        "danger"
-                    );
-                    $(".btn_form").attr("disabled", false);
-                },
-            });
+            processRequestBtn(request_id, request_url);
         });
     });
+}
+
+function alertConsole(message, type){
+    wrapper = [
+        '<div class="alert alert-' +
+            type +
+            ' alert-dismissible" role="alert">',
+        "   <div>" + message + "</div>",
+        '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+        "</div>",
+    ].join("");
+
+    $(".title_console").prepend(wrapper);
+}
+
+function processRequestBtn(request_id, request_url){
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
+
+    $(".btn_form").attr("disabled", true);
+
+    final_id =
+        $("#btn_12").hasClass("btn-success") && request_id == 12
+            ? 13
+            : request_id;
+
+    $.ajax({
+        type: "POST",
+        url: request_url,
+        data: {
+            id: final_id,
+            distance: $("#rangeDistance").val(),
+            vitesse: $("#rangeVitesse").val(),
+        },
+
+        success: function (data) {
+
+            if(request_id == 1 || request_id == 2){
+
+                var trame_can_rec = JSON.parse(data["rep"][0]["trame_can_rec"]);
+                var icon_autotest = (trame_can_rec.data == "0x1") ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+                var color_autotest = (trame_can_rec.data == "0x1") ? "success" : "danger";
+
+                if(request_id == 1){
+
+                    $("#result_test_odo").html(icon_autotest);
+                    $("#result_test_odo").removeClass("text-bg-success");
+                    $("#result_test_odo").removeClass("text-bg-danger");
+                    $("#result_test_odo").addClass("text-bg-"+color_autotest);
+                    $("#container_test_odo_datetime").removeClass("d-none");
+                    $("#maj_test_odo_datetime").text(getCurrentDatetime);
+
+
+                } else {
+
+                    $("#result_test_br").html(icon_autotest);
+                    $("#result_test_br").removeClass("text-bg-success");
+                    $("#result_test_br").removeClass("text-bg-danger");
+                    $("#result_test_br").addClass("text-bg-"+color_autotest);
+                    $("#container_test_br_datetime").removeClass("d-none");
+                    $("#maj_test_br_datetime").text(getCurrentDatetime);
+                }
+            }
+
+            if (request_id == 0)
+                alertConsole(
+                    "Les logs ont correctement été exportés vers le fichier <a class='alert-link' href='logs.txt' target='_blank'>" +
+                        data["file"] +
+                        "</a>",
+                    "success"
+                );
+            else if (request_id == 12) {
+
+                $("#btn_" + request_id).toggleClass("btn-danger");
+                $("#btn_" + request_id).toggleClass("btn-success");
+                $("#logs_console").load(" #logs_console");
+                $("#maj_console_datetime").text(getCurrentDatetime());
+
+            } else {
+                $("#logs_console").load(" #logs_console");
+                $("#maj_console_datetime").text(getCurrentDatetime());
+            }
+
+            $(".btn_form").attr("disabled", false);
+        },
+
+        error: function (data) {
+            alert(
+                "Error " +
+                    data.status +
+                    " : " +
+                    data.responseJSON["message"] +
+                    "<br>file " +
+                    data.responseJSON["file"] +
+                    ", line " +
+                    data.responseJSON["line"],
+                "danger"
+            );
+            $(".btn_form").attr("disabled", false);
+        },
+    });
+}
+
+function cycleAutotests(){
+    var route_log = "/log";
+    processRequestBtn(1, route_log);
+    processRequestBtn(2, route_log);
 }
 
 function addToClipboard(data, id, type) {
@@ -128,31 +136,16 @@ function addToClipboard(data, id, type) {
         trame = (obj.arg != undefined) ? obj.commande + "," + obj.arg : obj.commande + "," + obj.distance + "," + obj.vitesse + "," + obj.direction;
     }
 
-    const copyalertPlaceholder = $(".title_console");
-
-    const copyalert = (message, type) => {
-        wrapper = [
-            '<div class="alert alert-' +
-                type +
-                ' alert-dismissible" role="alert">',
-            "   <div>" + message + "</div>",
-            '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-            "</div>",
-        ].join("");
-
-        copyalertPlaceholder.prepend(wrapper);
-    };
-
     navigator.clipboard
         .writeText(trame)
         .then(() => {
-            copyalert(
+            alertConsole(
                 "Le contenu de la <b>trame " + type_trame + " n°"+ id + "</b> a été copié avec succès dans le presse-papier.<br/><i>Trame : " + trame + "</i>",
                 "success"
             );
         })
         .catch((err) => {
-            copyalert(
+            alertConsole(
                 "Impossible d'ajouter le contenu de la <b>trame " + type_trame + " n°"+ id + "</b> au presse-papier.<br/>Détail de l'erreur : " + err + "<br/><i>Trame : " + trame + "</i>",
                 "danger"
             );
@@ -254,6 +247,10 @@ $(document).ready(function () {
     $("#valeurSliderVitesse").text($("#rangeVitesse").val());
 
     $("#maj_console_datetime").text(getCurrentDatetime());
+
+    $("#btn_autotests").click(function() {
+        cycleAutotests();
+    });
 
     setInterval(checkLogTable, 1000);
 
