@@ -7,6 +7,11 @@ function sendData(request_url, request_id) {
     });
 }
 
+function refreshTooltips(){
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+}
+
 function alertConsole(message, type){
     wrapper = [
         '<div class="alert alert-' +
@@ -45,11 +50,27 @@ function processRequestBtn(request_id, request_url){
 
         success: function (data) {
 
-            if(request_id == 1 || request_id == 2){
+            if(request_id == 1 || request_id == 2){
 
-                var trame_can_rec = JSON.parse(data["rep"][0]["trame_can_rec"]);
-                var icon_autotest = (trame_can_rec.data == "0x1") ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
-                var color_autotest = (trame_can_rec.data == "0x1") ? "success" : "danger";
+                try {
+                    var trame_can_rec = JSON.parse(data["rep"][0]["trame_can_rec"]);
+
+                    if(trame_can_rec.data == null){
+                        var icon_autotest = "<i class='fa-solid fa-xmark'></i>";
+                        var color_autotest = "danger";
+                        var msg_tooltip = "Connexion non établie avec la carte - Vérifiez l'alimentation de la carte et le code implémenté";
+                    }else{
+                        var icon_autotest = (trame_can_rec.data == "0x1") ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-triangle-exclamation'></i>";
+                        var color_autotest = (trame_can_rec.data == "0x1") ? "success" : "warning";
+                        var msg_tooltip = (trame_can_rec.data == "0x1") ? "Connexion établie avec succès - La carte est alimentée correctement - La réponse de la carte est cohérente" : "Connexion établie avec succes - La carte est alimentée correctement - La réponse de la carte est incohérente";
+                    }
+
+                } catch (error) {
+                    alertConsole(error, "danger");
+                    var icon_autotest = "<i class='fa-solid fa-xmark'></i>";
+                    var color_autotest = "danger";
+                    var msg_tooltip = "Connexion non établie avec la carte - Vérifiez l'état du BUS CAN, l'alimentation de la carte et le code implémenté";
+                }
 
                 if(request_id == 1){
 
@@ -57,6 +78,7 @@ function processRequestBtn(request_id, request_url){
                     $("#result_test_odo").removeClass("text-bg-success");
                     $("#result_test_odo").removeClass("text-bg-danger");
                     $("#result_test_odo").addClass("text-bg-"+color_autotest);
+                    $('#result_test_odo').attr('data-bs-title', msg_tooltip);
                     $("#container_test_odo_datetime").removeClass("d-none");
                     $("#maj_test_odo_datetime").text(getCurrentDatetime);
 
@@ -67,6 +89,7 @@ function processRequestBtn(request_id, request_url){
                     $("#result_test_br").removeClass("text-bg-success");
                     $("#result_test_br").removeClass("text-bg-danger");
                     $("#result_test_br").addClass("text-bg-"+color_autotest);
+                    $('#result_test_br').attr('data-bs-title', msg_tooltip);
                     $("#container_test_br_datetime").removeClass("d-none");
                     $("#maj_test_br_datetime").text(getCurrentDatetime);
                 }
@@ -91,6 +114,7 @@ function processRequestBtn(request_id, request_url){
                 $("#maj_console_datetime").text(getCurrentDatetime());
             }
 
+            refreshTooltips();
             $(".btn_form").attr("disabled", false);
         },
 
@@ -229,6 +253,9 @@ function checkLogTable() {
 }
 
 $(document).ready(function () {
+
+    refreshTooltips();
+
     $(".btn_sidebar").click(function () {
         $("#sidebar").toggleClass("d-none");
         $("#sidebar").toggleClass("d-md-block");
