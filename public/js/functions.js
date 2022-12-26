@@ -8,8 +8,7 @@ function sendData(request_url, request_id) {
 }
 
 function refreshTooltips(){
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    $('[data-bs-toggle="tooltip"]').tooltip();
 }
 
 function alertConsole(message, type){
@@ -55,7 +54,7 @@ function processRequestBtn(request_id, request_url){
                 try {
                     var trame_can_rec = JSON.parse(data["rep"][0]["trame_can_rec"]);
 
-                    if(trame_can_rec.data == null){
+                    if(typeof trame_can_rec.data === 'undefined'){
                         var icon_autotest = "<i class='fa-solid fa-xmark'></i>";
                         var color_autotest = "danger";
                         var msg_tooltip = "Connexion non établie avec la carte - Vérifiez l'alimentation de la carte et le code implémenté";
@@ -79,6 +78,7 @@ function processRequestBtn(request_id, request_url){
                     $("#result_test_odo").removeClass("text-bg-danger");
                     $("#result_test_odo").addClass("text-bg-"+color_autotest);
                     $('#result_test_odo').attr('data-bs-title', msg_tooltip);
+                    new bootstrap.Tooltip("#result_test_odo")
                     $("#container_test_odo_datetime").removeClass("d-none");
                     $("#maj_test_odo_datetime").text(getCurrentDatetime);
 
@@ -90,6 +90,7 @@ function processRequestBtn(request_id, request_url){
                     $("#result_test_br").removeClass("text-bg-danger");
                     $("#result_test_br").addClass("text-bg-"+color_autotest);
                     $('#result_test_br').attr('data-bs-title', msg_tooltip);
+                    new bootstrap.Tooltip("#result_test_br")
                     $("#container_test_br_datetime").removeClass("d-none");
                     $("#maj_test_br_datetime").text(getCurrentDatetime);
                 }
@@ -103,7 +104,6 @@ function processRequestBtn(request_id, request_url){
                     "success"
                 );
             else if (request_id == 12) {
-
                 $("#btn_" + request_id).toggleClass("btn-danger");
                 $("#btn_" + request_id).toggleClass("btn-success");
                 $("#logs_console").load(" #logs_console");
@@ -231,6 +231,8 @@ function getCurrentDatetime() {
 }
 
 function checkLogTable() {
+
+    refreshTooltips();
 
     $.ajaxSetup({
         headers: {
