@@ -8,6 +8,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use \Cache;
+
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -32,6 +34,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $expiresAt = date('Y-m-d H:i:s', strtotime("+60 min"));
+        Cache::put('user-is-online-' . Auth::user()->id, true, $expiresAt);
+
         return redirect()->intended(RouteServiceProvider::HOME)->with('message', "Content de vous revoir cher ".Auth::user()->name." !");
     }
 
@@ -43,6 +48,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
+        Cache::forget('user-is-online-' . Auth::user()->id);
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

@@ -4,8 +4,8 @@
             <span class="fs-5 fw-bold">
                 Connectivité (CAN, XBee)
             </span>
-            <div class="vr"></div>
             @if (Auth::user()->role != 0)
+            <div class="vr"></div>
                 <button role="button" type="button" id="btn_autotests" class="btn btn-warning"><span class="d-none d-md-inline">Autotests</span> <i class="fa-solid fa-wrench"></i></button>
             @endif
         </div>

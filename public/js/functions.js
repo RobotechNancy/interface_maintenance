@@ -119,17 +119,19 @@ function processRequestBtn(request_id, request_url){
         },
 
         error: function (data) {
-            alert(
-                "Error " +
+
+            alertConsole("Error " +
                     data.status +
                     " : " +
                     data.responseJSON["message"] +
-                    "<br>file " +
+                    "<br><br> Exception : " +
+                    data.responseJSON["exception"] +
+                    "<br><br>File : " +
                     data.responseJSON["file"] +
                     ", line " +
                     data.responseJSON["line"],
-                "danger"
-            );
+                "danger");
+
             $(".btn_form").attr("disabled", false);
         },
     });
@@ -211,6 +213,20 @@ function checkRelaisStatus() {
 
         success: function (data) {
             console.log(data)
+        },
+
+        error: function(error) {
+            alertConsole("Error " +
+                    error.status +
+                    " : " +
+                    error.responseJSON["message"] +
+                    "<br><br> Exception : " +
+                    error.responseJSON["exception"] +
+                    "<br><br>File : " +
+                    error.responseJSON["file"] +
+                    ", line " +
+                    error.responseJSON["line"],
+                "danger");
         }
     });
 }
@@ -234,23 +250,41 @@ function checkLogTable() {
 
     refreshTooltips();
 
-    $.ajaxSetup({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        }
-    });
+    if($(location).attr('pathname') == "/dashboard"){
 
-    $.ajax({
-        type: "POST",
-        url: "/get_logtable_size",
-
-        success: function (nb_logs) {
-            if(nb_logs != $('.accordion-header').length){
-                $("#logs_console").load(" #logs_console");
-                $("#maj_console_datetime").text(getCurrentDatetime());
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             }
-        }
-    });
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/get_logtable_size",
+
+            success: function (nb_logs) {
+                if(nb_logs != $('.accordion-header').length){
+                    $("#logs_console").load(" #logs_console");
+                    $("#maj_console_datetime").text(getCurrentDatetime());
+                }
+            },
+
+            error: function(error) {
+
+                alertConsole("Error " +
+                        error.status +
+                        " : " +
+                        error.responseJSON["message"] +
+                        "<br><br> Exception : " +
+                        error.responseJSON["exception"] +
+                        "<br><br>File : " +
+                        error.responseJSON["file"] +
+                        ", line " +
+                        error.responseJSON["line"],
+                    "danger");
+            }
+        });
+    }
 
 }
 

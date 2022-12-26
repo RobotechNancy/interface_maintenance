@@ -12,7 +12,7 @@
             <div class="form-floating <?php if (!empty($errors->get('name'))) {
                 echo 'is-invalid';
             } ?>">
-                <input class="form-control bg-dark text-white-50 <?php if(!empty($errors->get('name'))) echo "is-invalid" ?>" type="name" id="name" name="name" value="{{ old('name') }}" placeholder="Alex" aria-describedby="user" required autofocus>
+                <input class="form-control bg-dark text-white <?php if(!empty($errors->get('name'))) echo "is-invalid" ?>" type="name" id="name" name="name" value="{{ old('name') }}" placeholder="Alex" aria-describedby="user" required autofocus>
 
                 <label for="name" class="form-label">{{  __('Name') }}</label>
             </div>
@@ -26,7 +26,7 @@
             <div class="form-floating <?php if (!empty($errors->get('email'))) {
                 echo 'is-invalid';
             } ?>">
-                <input class="form-control bg-dark text-white-50 <?php if(!empty($errors->get('email'))) echo "is-invalid" ?>" type="email" id="email" name="email" value="{{ old('email') }}" placeholder="alex@example.com" aria-describedby="envelope" required>
+                <input class="form-control bg-dark text-white <?php if(!empty($errors->get('email'))) echo "is-invalid" ?>" type="email" id="email" name="email" value="{{ old('email') }}" placeholder="alex@example.com" aria-describedby="envelope" required>
 
                 <label for="email" class="form-label">{{  __('Email') }}</label>
             </div>
@@ -43,7 +43,7 @@
                     <div class="form-floating <?php if (!empty($errors->get('password'))) {
                         echo 'is-invalid';
                     } ?>">
-                        <input class="form-control bg-dark text-white-50 <?php if(!empty($errors->get('password'))) echo "is-invalid" ?>" type="password" id="password" name="password" autocomplete="new-password" placeholder="*********" aria-describedby="lock" required>
+                        <input class="form-control bg-dark text-white <?php if(!empty($errors->get('password'))) echo "is-invalid" ?>" type="password" id="password" name="password" autocomplete="new-password" placeholder="*********" aria-describedby="lock" required>
 
                          <label for="password" class="form-label">{{  __('Password') }}</label>
                     </div>
@@ -62,7 +62,7 @@
                     <div class="form-floating <?php if (!empty($errors->get('password_confirmation'))) {
                         echo 'is-invalid';
                     } ?>">
-                        <input class="form-control bg-dark text-white-50 <?php if(!empty($errors->get('password_confirmation'))) echo "is-invalid" ?>" type="password" id="password_confirmation" name="password_confirmation" autocomplete="new-password" placeholder="*********" aria-describedby="lock" required>
+                        <input class="form-control bg-dark text-white <?php if(!empty($errors->get('password_confirmation'))) echo "is-invalid" ?>" type="password" id="password_confirmation" name="password_confirmation" autocomplete="new-password" placeholder="*********" aria-describedby="lock" required>
 
                         <label for="password_confirmation" class="form-label">{{  __('Confirm Password') }}</label>
                     </div>
