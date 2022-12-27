@@ -77,10 +77,10 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        $expiresAt = date('Y-m-d H:i:s', strtotime("+5 min"));
-        Cache::put('user-is-online-' . Auth::user()->email, true, $expiresAt);
-
         Auth::login($user);
+
+        $expiresAt = date('Y-m-d H:i:s', strtotime("+5 min"));
+        Cache::put('user-is-online-' . $user->email, true, $expiresAt);
 
         return redirect("/")->with('message', "Le compte administrateur ".$user->name." a été créé avec succès !");
 
