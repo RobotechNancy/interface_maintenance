@@ -6,7 +6,7 @@
             </span>
             @if (Auth::user()->role != 0)
             <div class="vr"></div>
-                <button role="button" type="button" id="btn_autotests" class="btn btn-warning"><span class="d-none d-md-inline">Autotests</span> <i class="fa-solid fa-wrench"></i></button>
+                <button role="button" type="button" id="btn_autotests" class="btn btn-warning btn_form"><span class="d-none d-md-inline">Autotests</span> <i class="fa-solid fa-wrench"></i></button>
             @endif
         </div>
         <div>

@@ -3,6 +3,9 @@
 
     <h4 class="mb-2 ms-3">Formulaire de modification du compte "{{ $user->name }}"</h4>
 
+    <p class="ps-3 text-muted"><small><i class="fa-solid fa-circle-info"></i> Dernière modification de ce profil le {{ $user->updated_at->format('d/m/Y') }} à
+        {{ $user->updated_at->format('H:i:s') }}.</small></p>
+
     <form method="POST" action="{{ route('update', ['user' => $user]) }}" class="p-3">
         @csrf
 
@@ -156,9 +159,6 @@
     onclick="event.preventDefault(); $('#form_delete').submit();">
         @lang('Delete profile') <i class="fa-solid fa-trash-can"></i>
     </a>
-
-    <p class="mt-5 p-3"><small><i class="fa-solid fa-circle-info"></i> Dernière modification de ce profil le {{ $user->updated_at->format('d/m/Y') }} à
-            {{ $user->updated_at->format('H:i:s') }}.</small></p>
 
     @if (session()->has('success'))
         <x-notification title="Modification du profil" color="text-bg-success">{{ session('success') }}</x-notification>
