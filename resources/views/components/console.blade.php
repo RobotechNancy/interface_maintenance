@@ -56,7 +56,12 @@
                             </button>
                         </h2>
 
-                        <?php $datas = json_decode($log->response); ?>
+                        <?php
+                            $datas = json_decode($log->response);
+                            var_dump($datas);
+                        ?>
+
+                        @if (json_last_error() == JSON_ERROR_NONE)
 
                         <div id="collapse_log_<?= $log->id ?>" class="accordion-collapse collapse"
                             aria-labelledby="log_<?= $log->id ?>" data-bs-parent="#accordionConsole">
@@ -111,6 +116,11 @@
                                                         $trame_php = json_decode($data->{"trame_php"});
 
                                                         $convert_trame_php = config('app.convert_trame_php');
+                                                    ?>
+
+                                                    @if (json_last_error() == JSON_ERROR_NONE)
+
+                                                    <?php
 
                                                         if(isset($convert_trame_can[$trame_can_env->{"addr"}]) && isset($convert_trame_can[$trame_can_rec->{"emetteur"}])){
                                                             $test_addr = ($convert_trame_can[$trame_can_env->{"addr"}] == $convert_trame_can[$trame_can_rec->{"emetteur"}]) ? "success" : "warning";
@@ -540,6 +550,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    @endif
                                                 </ul>
                                             </div>
                                         </div>
@@ -547,6 +558,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                     </div>
                 @endforeach
             </div>

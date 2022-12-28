@@ -1,0 +1,4 @@
+send :    addr : 0x2000000   emetteur : 0x100000   codeFct : 0x8000   id msg : 0   isRep : 0   RepId : 0x1       Data : [0x1] 0 
+lancement de l'ecoute du bus can
+get : addr : 0x1000000   emetteur : 0x200000   codeFct : 0x8000   isRep : 0x1   RepId : 0x1       Data : [0x1] 0 
+Succès de la commande
