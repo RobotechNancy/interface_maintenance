@@ -146,14 +146,14 @@ class LogController extends Controller
 
                 if(count($trame_php_array) == 2){
 
-                    $trame_php = json_encode(["commande" => $trame_php_array[0], "arg" => $trame_php_array[1]]);
+                    $trame_php = json_encode(["commande" => $trame_php_array[0], "arg" => $trame_php_array[1]], JSON_UNESCAPED_SLASHES);
 
                 }else if(count($trame_php_array) == 4){
 
                     $trame_php = json_encode(["commande" => $trame_php_array[0],
                                               "distance" => $trame_php_array[1],
                                               "vitesse" => $trame_php_array[2],
-                                              "direction" => $trame_php_array[3]]);
+                                              "direction" => $trame_php_array[3]], JSON_UNESCAPED_SLASHES);
                 }else{
                     $trame_php = "Trame corrompue ou incorrecte";
                 }
@@ -182,8 +182,8 @@ class LogController extends Controller
                                                                   "id_msg" => $trame_can_env_array[3],
                                                                   "is_rep" => $trame_can_env_array[4],
                                                                   "id_rep" => $trame_can_env_array[5],
-                                                                  "data" => $trame_can_env_array[6],
-                                                                ]);
+                                                                  "data" => $trame_can_env_array[6]
+                                                                ], JSON_UNESCAPED_SLASHES);
 
 
                     $trame_can_rec_array = explode(" : ",$content_table[2]);
@@ -204,8 +204,8 @@ class LogController extends Controller
                                                                   "code_fct" => $trame_can_rec_array[2],
                                                                   "is_rep" => $trame_can_rec_array[3],
                                                                   "id_rep" => $trame_can_rec_array[4],
-                                                                  "data" => $trame_can_rec_array[5],
-                                                                ]);
+                                                                  "data" => $trame_can_rec_array[5]
+                                                                ], JSON_UNESCAPED_SLASHES);
                 }
 
                 if($retval != 0) $log->state = $retval;
@@ -217,7 +217,7 @@ class LogController extends Controller
             }
         }
 
-        $log->response = json_encode($response);
+        $log->response = json_encode($response, );
 
         if($log->state == 1)
             return response()->json(["file" => $execfile, "exception" => "Fichier non trouvé", "message" => "Le fichier exécutable n'a pas été trouvé", "line" => 57], 404);
@@ -252,24 +252,24 @@ class LogController extends Controller
             $custom_log = "[Le ".$log->created_at->format("d/m/Y")." à ".$log->created_at->format("H:i:s")."]\r\r\t🔵 Commande : ".$log->command_name."\r\t".$icon_state_log." Retour : ".$log->state;
             $custom_log .= "\r\t🔵 Réponse : \r";
 
-            $datas = json_decode($log->response);
+            $datas = json_decode($log->response, true);
 
             foreach ($datas as $data) {
 
-                $trame_can_env = json_decode($data->{"trame_can_env"});
-                $trame_can_env_str = $trame_can_env->{"addr"}.",".$trame_can_env->{"emetteur"}.",".$trame_can_env->{"code_fct"}.",".$trame_can_env->{"id_msg"}.",".$trame_can_env->{"is_rep"}.",".$trame_can_env->{"id_rep"}.",".$trame_can_env->{"data"};
+                $trame_can_env = json_decode($data["trame_can_env"], true);
+                $trame_can_env_str = $trame_can_env["addr"].",".$trame_can_env["emetteur"].",".$trame_can_env["code_fct"].",".$trame_can_env["id_msg"].",".$trame_can_env["is_rep"].",".$trame_can_env["id_rep"].",".$trame_can_env["data"];
 
-                $trame_can_rec = json_decode($data->{"trame_can_rec"});
-                $trame_can_rec_str = $trame_can_rec->{"addr"}.",".$trame_can_rec->{"emetteur"}.",".$trame_can_rec->{"code_fct"}.",".$trame_can_rec->{"is_rep"}.",".$trame_can_rec->{"id_rep"}.",".$trame_can_rec->{"data"};
+                $trame_can_rec = json_decode($data["trame_can_rec"], true);
+                $trame_can_rec_str = $trame_can_rec["addr"].",".$trame_can_rec["emetteur"].",".$trame_can_rec["code_fct"].",".$trame_can_rec["is_rep"].",".$trame_can_rec["id_rep"].",".$trame_can_rec["data"];
 
-                $trame_php_env = json_decode($data->{"trame_php"});
-                $trame_php_env_str = (isset($trame_php_env->{"arg"})) ? $trame_php_env->{"commande"}.",".$trame_php_env->{"arg"} : $trame_php_env->{"commande"}.",".$trame_php_env->{"distance"}.",".$trame_php_env->{"vitesse"}.",".$trame_php_env->{"direction"};
+                $trame_php_env = json_decode($data["trame_php"], true);
+                $trame_php_env_str = (isset($trame_php_env["arg"])) ? $trame_php_env["commande"].",".$trame_php_env["arg"] : $trame_php_env["commande"].",".$trame_php_env["distance"].",".$trame_php_env["vitesse"].",".$trame_php_env["direction"];
 
-                $icon_state_data = $data->{"status"} != 0 ? "🟥" : "🟩";
+                $icon_state_data = $data["status"] != 0 ? "🟥" : "🟩";
 
-                $custom_log .= "\r\t\t🔷 ID : ".$data->{"id"};
-                $custom_log .= "\r\t\t💠 Data : ".$data->{"data"};
-                $custom_log .= "\r\t\t".$icon_state_data." Retour : ".$data->{"status"}."\r";
+                $custom_log .= "\r\t\t🔷 ID : ".$data["id"];
+                $custom_log .= "\r\t\t💠 Data : ".$data["data"];
+                $custom_log .= "\r\t\t".$icon_state_data." Retour : ".$data["status"]."\r";
                 $custom_log .= "\r\t\t🔷 Trame CAN envoyée : ".$trame_can_env_str;
                 $custom_log .= "\r\t\t🔷 Trame CAN reçue : ".$trame_can_rec_str;
                 $custom_log .= "\r\t\t🔷 Trame PHP envoyée : ".$trame_php_env_str;

@@ -57,7 +57,11 @@
                         </h2>
 
                         <?php
-                            $datas = json_decode($log->response);
+                            $log->response = preg_replace('/[[:cntrl:]]/', '', $log->response);
+                            $datas = json_decode($log->response, JSON_UNESCAPED_SLASHES);
+
+                            if(json_last_error() != JSON_ERROR_NONE)
+                            echo "Erreur JSON n°".json_last_error() ." lors du décodage de la réponse du log : ".json_last_error_msg()."\n\n";
                         ?>
 
                         @if (json_last_error() == JSON_ERROR_NONE)
@@ -75,7 +79,7 @@
                                                         <div class="me-auto">
                                                             <div class="fw-bold">Identifiant
                                                                 <span
-                                                                    class="badge text-bg-primary rounded-pill">{{ $data->{"id"} }}</span>
+                                                                    class="badge text-bg-primary rounded-pill">{{ $data["id"] }}</span>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -84,10 +88,10 @@
                                                         <div class="me-auto">
                                                             <div class="fw-bold">Données</div>
                                                             <span class="text-white-50">
-                                                                @if ($data->{"data"} == '')
+                                                                @if ($data["data"] == '')
                                                                     Aucune donnée disponible
                                                                 @else
-                                                                    {{ $data->{"data"} }}
+                                                                    {{ $data["data"] }}
                                                                 @endif
                                                             </span>
                                                         </div>
@@ -97,22 +101,32 @@
                                                         <div class="me-auto">
                                                             <div class="fw-bold">Statut
                                                                 <span
-                                                                    class="badge @if ($data->{'status'} == 0) text-bg-success @else text-bg-danger @endif rounded-pill">{{ $data->{"status"} }}</span>
+                                                                    class="badge @if ($data['status'] == 0) text-bg-success @else text-bg-danger @endif rounded-pill">{{ $data["status"] }}</span>
                                                             </div>
                                                             <span class="text-white-50">
-                                                                {{ $data->{"status_description"} }} </span>
+                                                                {{ $data["status_description"] }} </span>
                                                         </div>
                                                     </li>
 
                                                     <?php
 
-                                                        $trame_can_rec = json_decode($data->{"trame_can_rec"});
-                                                        $trame_can_env = json_decode($data->{"trame_can_env"});
+                                                        $trame_can_rec = json_decode($data["trame_can_rec"]);
+
+                                                        if(json_last_error() != JSON_ERROR_NONE)
+                                                        echo "Erreur JSON n°".json_last_error() ." lors du décodage de la trame CAN d'envoi : ".json_last_error_msg()."\n\n";
+
+                                                        $trame_can_env = json_decode($data["trame_can_env"]);
+
+                                                        if(json_last_error() != JSON_ERROR_NONE)
+                                                        echo "Erreur JSON n°".json_last_error() ." lors du décodage de la trame CAN de réponse : ".json_last_error_msg()."\n\n";
 
                                                         $convert_trame_can = config('app.convert_trame_can');
                                                         $convert_type_trame_can = config('app.convert_type_trame_can');
 
-                                                        $trame_php = json_decode($data->{"trame_php"});
+                                                        $trame_php = json_decode($data["trame_php"]);
+
+                                                        if(json_last_error() != JSON_ERROR_NONE)
+                                                        echo "Erreur JSON n°".json_last_error() ." lors du décodage de la trame PHP : ".json_last_error_msg()."\n\n";
 
                                                         $convert_trame_php = config('app.convert_trame_php');
                                                     ?>
@@ -216,7 +230,7 @@
                                                             <div class="card text-bg-dark h-100" style="border:none;">
                                                                 <div class="card-body">
                                                                     <button class="btn btn-warning btn-sm"
-                                                                        onclick="addToClipboard({{ $data->{'trame_can_env'} }}, {{ $log->id }}, 0)"><i
+                                                                        onclick="addToClipboard({{ $data['trame_can_env'] }}, {{ $log->id }}, 0)"><i
                                                                             class="fa-solid fa-copy"></i></button>
                                                                     <span class="fw-bold" style="cursor: pointer;"
                                                                         onclick="afficherMasquerTrames('trame_can_env_{{ $log->id }}')">
@@ -342,7 +356,7 @@
                                                             <div class="card text-bg-dark h-100" style="border:none;">
                                                                 <div class="card-body">
                                                                     <button class="btn btn-warning btn-sm"
-                                                                        onclick="addToClipboard({{ $data->{'trame_can_rec'} }}, {{ $log->id }}, 1)"><i
+                                                                        onclick="addToClipboard({{ $data['trame_can_rec'] }}, {{ $log->id }}, 1)"><i
                                                                             class="fa-solid fa-copy"></i></button>
                                                                     <span class="fw-bold" style="cursor: pointer;"
                                                                         onclick="afficherMasquerTrames('trame_can_rec_{{ $log->id }}')">
@@ -451,7 +465,7 @@
                                                             <div class="card text-bg-dark h-100" style="border:none;">
                                                                 <div class="card-body">
                                                                     <button class="btn btn-warning btn-sm"
-                                                                        onclick="addToClipboard({{ $data->{'trame_php'} }}, {{ $log->id }}, 2)"><i
+                                                                        onclick="addToClipboard({{ $data['trame_php'] }}, {{ $log->id }}, 2)"><i
                                                                             class="fa-solid fa-copy"></i></button>
                                                                     <span class="fw-bold" style="cursor: pointer;"
                                                                         onclick="afficherMasquerTrames('trame_php_{{ $log->id }}')">
