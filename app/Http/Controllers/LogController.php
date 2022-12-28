@@ -215,6 +215,7 @@ class LogController extends Controller
                 $response[$i] = ["id" => $custom_i, "data" => "", "status" => 255, "status_description" => "Impossible d'accéder au fichier de logs", "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => $trame];
                 $log->state = 255;
             }
+            $response[$i] = ["id" => "", "data" => "", "status" => "", "status_description" => "", "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => ""];
         }
 
         $log->response = json_encode($response);
