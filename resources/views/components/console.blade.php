@@ -58,7 +58,6 @@
 
                         <?php
                             $datas = json_decode($log->response);
-                            var_dump($datas);
                         ?>
 
                         @if (json_last_error() == JSON_ERROR_NONE)
@@ -118,7 +117,7 @@
                                                         $convert_trame_php = config('app.convert_trame_php');
                                                     ?>
 
-                                                    @if ((json_last_error() == JSON_ERROR_NONE) && !empty($trame_php) && !empty($trame_can_env) && !empty($trame_can_rec))
+                                                    @if ((json_last_error() == JSON_ERROR_NONE))
 
                                                     <?php
 
