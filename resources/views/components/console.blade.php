@@ -118,7 +118,7 @@
                                                         $convert_trame_php = config('app.convert_trame_php');
                                                     ?>
 
-                                                    @if (json_last_error() == JSON_ERROR_NONE)
+                                                    @if ((json_last_error() == JSON_ERROR_NONE) && !empty($trame_php) && !empty($trame_can_env) && !empty($trame_can_rec))
 
                                                     <?php
 
