@@ -23,14 +23,20 @@
             ?>
 
             <div class="col">
-                <div aria-hidden="true" class="card text-bg-dark border border-light h-100 border-opacity-25">
+                <div aria-hidden="true" class="card text-bg-dark border border-light border-opacity-25">
                     <div class="card-body">
                         <h5 class="card-title">
                             <span>{{ $user->name }}
+
                                 @if(Cache::has('user-is-online-' . $user->email))
                                     <span class="text-success fs-6 ms-2 fst-italic"><small>En ligne</small></span>
                                 @else
                                     <span class="text-danger fs-6 ms-2 fst-italic"><small>Déconnecté</small></span>
+                                @endif
+
+
+                                @if(Auth::user()->id == $user->id)
+                                    <span class="badge rounded-pill ms-2 text-bg-info"><small>Mon compte</small></span>
                                 @endif
                             </span>
                         </h5>
@@ -48,7 +54,7 @@
                                 class="fa-solid fa-id-card-clip pe-1"></i> Identifiant : {{ $user->id }}</li>
                         <li class="list-group-item text-bg-dark border border-white border-opacity-25"><i
                                 class="fa-solid fa-at pe-1"></i> @lang('Email') : <a
-                                href="mailto:{{ $user->email }}" class="text-info" style="text-decoration: none;">{{ $user->email }}</a>
+                                href="mailto:{{ $user->email }}" class="text-white" style="text-decoration: none;">{{ $user->email }}</a>
                         </li>
                         <li class="list-group-item text-bg-dark border border-white border-opacity-10"><i
                                 class="fa-solid fa-ranking-star pe-1"></i> @lang('Role') : {{ $role }}</li>
@@ -57,7 +63,7 @@
                     @if (Auth::user()->role == 2 || $user->id == Auth::user()->id)
                         <div class="card-footer text-center m-2">
                             <a class="btn btn-sm btn-primary" href="{{ route('edit', ['id' => $user->id]) }}"><i
-                                    class="fa-solid fa-pencil"></i> Modifier <span class="d-none d-lg-inline">le compte</span></a>
+                                    class="fa-solid fa-pen-to-square"></i> Éditer <span class="d-none d-lg-inline">@if(Auth::user()->id == $user->id) mon @else le @endif profil</span></a>
 
                             <form id="delete{{ $user->id }}" action="{{ route('delete', ['user' => $user]) }}"
                                 method="POST" style="display: none;">
@@ -66,7 +72,7 @@
 
                             <a class="btn btn-sm btn-danger ms-2"
                                 onclick="event.preventDefault(); document.getElementById('delete{{ $user->id }}').submit();"><i
-                                    class="fa-solid fa-trash"></i> Supprimer <span class="d-none d-lg-inline">le compte</span></a>
+                                    class="fa-solid fa-trash-can"></i> Supprimer <span class="d-none d-lg-inline">@if(Auth::user()->id == $user->id) mon compte @else l'utilisateur @endif</span></a>
                         </div>
                     @endif
                 </div>

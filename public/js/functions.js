@@ -180,13 +180,11 @@ function addToClipboard(data, id, type) {
 
 function tabs_manager(tab_name) {
     $("#btn_" + tab_name).click(function () {
-        if (!$("#btn_" + tab_name).hasClass("btn-light")) {
+        if (!$("#btn_" + tab_name).hasClass("active")) {
             $(".tabs").addClass("d-none");
             $("#" + tab_name).removeClass("d-none");
-            $(".btn_tabs").removeClass("btn-light");
-            $(".btn_tabs").addClass("btn-outline-light");
-            $("#btn_" + tab_name).addClass("btn-light");
-            $("#btn_" + tab_name).removeClass("btn-outline-light");
+            $(".btn_tabs").removeClass("active");
+            $("#btn_" + tab_name).addClass("active");
         }
     });
 }

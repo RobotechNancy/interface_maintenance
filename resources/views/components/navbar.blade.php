@@ -48,19 +48,6 @@
             <ul class="navbar-nav mb-2 mb-lg-0 gap-2">
                 @auth
 
-                    @if ($_SERVER["REQUEST_URI"] == "/dashboard" && (Auth::user()->role == 2))
-
-                        <li class="nav-item">
-                            <a class="btn btn-light" href="{{ route('users') }}">
-                                <span class="icon">
-                                    <i class="fa-solid fa-users-gear"></i>
-                                </span>
-                                <span class="d-none d-lg-inline">Administration</span>
-                            </a>
-                        </li>
-
-                    @endif
-
                     @include("components.navbar-profil")
 
                 @else

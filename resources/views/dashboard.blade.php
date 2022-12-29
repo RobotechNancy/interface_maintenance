@@ -2,7 +2,6 @@
     <x-slot name="addons"></x-slot>
     <x-slot name="title"> @lang('Dashboard') </x-slot>
 
-
     <div class="container">
         <div class="row">
             <div class="col-1 d-none d-md-block"></div>

@@ -146,7 +146,7 @@
         </div>
 
         <div class="btn-group" role="group">
-            <button type="submit" class="btn btn-primary">{{ __('Edit profile') }} <i class="fa-solid fa-floppy-disk"></i></button>
+            <button type="submit" class="btn btn-primary">Enregistrer les modifications <i class="fa-solid fa-floppy-disk"></i></button>
         </div>
     </form>
 
@@ -157,7 +157,7 @@
 
     <a role="button" class="btn btn-danger ms-3"
     onclick="event.preventDefault(); $('#form_delete').submit();">
-        @lang('Delete profile') <i class="fa-solid fa-trash-can"></i>
+        Supprimer l'utilisateur <i class="fa-solid fa-trash-can"></i>
     </a>
 
     @if (session()->has('success'))

@@ -34,7 +34,7 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'alpha_num', 'max:50'],
+            'name' => ['required', 'string', 'alpha_num', 'max:50', "min:5"],
             'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
             'password' => ['required', 'confirmed', 'alpha_dash', Rules\Password::defaults()],
         ]);
@@ -129,7 +129,7 @@ class RegisteredUserController extends Controller
 
         if($request->name != $user->name){
             $request->validate([
-                'name' => ['required', 'string', 'alpha_num', 'max:50']
+                'name' => ['required', 'string', 'alpha_num', 'max:50', "min:5"]
             ]);
 
             $user->name = ucfirst(strtolower($request->name));

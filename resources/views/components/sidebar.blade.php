@@ -24,17 +24,21 @@
 
         @else
 
-            <li class="nav-item">
-                <a class="btn btn-primary w-100" href="{{ route('dashboard') }}">
-                    <span class="icon">
-                        <i class="fa-solid fa-arrow-left"></i>
-                    </span>
-                    <span>Tableau de bord</span>
-                </a>
-            </li>
+            <ul class="nav nav-pills flex-column mb-auto gap-2 mt-none">
+                <li class="nav-item">
+                    <a role="button" class="btn_tabs nav-link text-bg-light" href="{{ route('dashboard') }}">
+
+                        <i class="fa-solid fa-arrow-left bi pe-none me-1" width="16" height="16"></i>
+
+                        Tableau de bord
+                    </a>
+                </li>
+            </ul>
 
             @if (Auth::user()->role == 2)
                 @include("components.sidebar-administration")
+            @else
+                @include("components.sidebar-navigation")
             @endif
 
             @include("components.sidebar-gestion-profil")
