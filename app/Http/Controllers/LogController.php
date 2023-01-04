@@ -257,11 +257,15 @@ class LogController extends Controller
 
             foreach ($datas as $data) {
 
-                $trame_can_env = json_decode($data["trame_can_env"], true);
-                $trame_can_env_str = $trame_can_env["addr"].",".$trame_can_env["emetteur"].",".$trame_can_env["code_fct"].",".$trame_can_env["id_msg"].",".$trame_can_env["is_rep"].",".$trame_can_env["id_rep"].",".$trame_can_env["data"];
+                if(isset($data["trame_can_env"]) && !empty($data["trame_can_env"])){
+                    $trame_can_env = json_decode($data["trame_can_env"], true);
+                    $trame_can_env_str = $trame_can_env["addr"].",".$trame_can_env["emetteur"].",".$trame_can_env["code_fct"].",".$trame_can_env["id_msg"].",".$trame_can_env["is_rep"].",".$trame_can_env["id_rep"].",".$trame_can_env["data"];
+                }
 
-                $trame_can_rec = json_decode($data["trame_can_rec"], true);
-                $trame_can_rec_str = $trame_can_rec["addr"].",".$trame_can_rec["emetteur"].",".$trame_can_rec["code_fct"].",".$trame_can_rec["is_rep"].",".$trame_can_rec["id_rep"].",".$trame_can_rec["data"];
+                if(isset($data["trame_can_rec"]) && !empty($data["trame_can_rec"])){
+                    $trame_can_rec = json_decode($data["trame_can_rec"], true);
+                    $trame_can_rec_str = $trame_can_rec["addr"].",".$trame_can_rec["emetteur"].",".$trame_can_rec["code_fct"].",".$trame_can_rec["is_rep"].",".$trame_can_rec["id_rep"].",".$trame_can_rec["data"];
+                }
 
                 $trame_php_env = json_decode($data["trame_php"], true);
                 $trame_php_env_str = (isset($trame_php_env["arg"])) ? $trame_php_env["commande"].",".$trame_php_env["arg"] : $trame_php_env["commande"].",".$trame_php_env["distance"].",".$trame_php_env["vitesse"].",".$trame_php_env["direction"];
@@ -271,8 +275,13 @@ class LogController extends Controller
                 $custom_log .= "\r\t\t🔷 ID : ".$data["id"];
                 $custom_log .= "\r\t\t💠 Data : ".$data["data"];
                 $custom_log .= "\r\t\t".$icon_state_data." Retour : ".$data["status"]."\r";
+
+                if(isset($trame_can_env_str))
                 $custom_log .= "\r\t\t🔷 Trame CAN envoyée : ".$trame_can_env_str;
+
+                if(isset($trame_can_rec_str))
                 $custom_log .= "\r\t\t🔷 Trame CAN reçue : ".$trame_can_rec_str;
+                
                 $custom_log .= "\r\t\t🔷 Trame PHP envoyée : ".$trame_php_env_str;
             }
 
