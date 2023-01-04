@@ -127,7 +127,7 @@ class LogController extends Controller
             $execfile = env('CUSTOM_EXECFILE');
             $execoutput = env('CUSTOM_EXEC_OUTPUT');
 
-            //exec($execfile." ".$trame." > ".$execoutput, $output, $retval);
+            exec($execfile." ".$trame." > ".$execoutput, $output, $retval);
 
             $handle = fopen($execoutput, "r");
 
@@ -186,26 +186,29 @@ class LogController extends Controller
                                                                 ], JSON_UNESCAPED_SLASHES);
 
 
-                    $trame_can_rec_array = explode(" : ",$content_table[2]);
-                    array_splice($trame_can_rec_array, 0, 2);
+                    if(count($content_table) >= 4){
 
-                    for($j = 0; $j < count($trame_can_rec_array); $j++){
-                        $trame_can_rec_decoupe = explode(" ",$trame_can_rec_array[$j]);
-                        $trame_can_rec_array[$j] = $trame_can_rec_decoupe[0];
+                        $trame_can_rec_array = explode(" : ",$content_table[2]);
+                        array_splice($trame_can_rec_array, 0, 2);
 
-                        if($j == 5){
-                            $trame_can_rec_array[$j] = str_replace("[", "", $trame_can_rec_array[$j]);
-                            $trame_can_rec_array[$j] = str_replace("]", "", $trame_can_rec_array[$j]);
+                        for($j = 0; $j < count($trame_can_rec_array); $j++){
+                            $trame_can_rec_decoupe = explode(" ",$trame_can_rec_array[$j]);
+                            $trame_can_rec_array[$j] = $trame_can_rec_decoupe[0];
+
+                            if($j == 5){
+                                $trame_can_rec_array[$j] = str_replace("[", "", $trame_can_rec_array[$j]);
+                                $trame_can_rec_array[$j] = str_replace("]", "", $trame_can_rec_array[$j]);
+                            }
                         }
-                    }
 
-                    $response[$i]["trame_can_rec"] = json_encode(["addr" => $trame_can_rec_array[0],
-                                                                  "emetteur" => $trame_can_rec_array[1],
-                                                                  "code_fct" => $trame_can_rec_array[2],
-                                                                  "is_rep" => $trame_can_rec_array[3],
-                                                                  "id_rep" => $trame_can_rec_array[4],
-                                                                  "data" => $trame_can_rec_array[5]
-                                                                ], JSON_UNESCAPED_SLASHES);
+                        $response[$i]["trame_can_rec"] = json_encode(["addr" => $trame_can_rec_array[0],
+                                                                    "emetteur" => $trame_can_rec_array[1],
+                                                                    "code_fct" => $trame_can_rec_array[2],
+                                                                    "is_rep" => $trame_can_rec_array[3],
+                                                                    "id_rep" => $trame_can_rec_array[4],
+                                                                    "data" => $trame_can_rec_array[5]
+                                                                    ], JSON_UNESCAPED_SLASHES);
+                    }
                 }
 
                 if($retval != 0) $log->state = $retval;
