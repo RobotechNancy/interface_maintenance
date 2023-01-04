@@ -49,11 +49,11 @@ int tryCommand(string c)
     //for (int i = 0; i < sizeof(path); i++) output += path[i];
     return 0;
 }
-
+//Lit l'état du relais avec la commande popen("gpio read 2", "r")
 
 bool readRelayPin()
-{ //Lit l'état du relais avec la commande popen("gpio read 2", "r")
-     FILE *fp;
+{ 
+    FILE *fp;
     char path[1035];
     fp = popen("gpio read 2", "r");
     if (fp == NULL) return false;
@@ -62,15 +62,6 @@ bool readRelayPin()
 
     if(path[0] == '1') return true;
     else return false;    
-/* 
-    int id = 0;
-
-    id = tryCommand("gpio read 2");
-
-    if (id == 0)
-        return true;
-    else
-        return false; */
 }
 
 
@@ -291,26 +282,6 @@ int initCan(Can & can)
 int main(int argc, char **argv) 
 {
     
-/*     ajoutCodeErreur(0, "Succès de la commande");
-    ajoutCodeErreur(1, "Erreur générale ou inconnue");
-
-    ajoutCodeErreur(2, "Commande générale inconnue");
-    ajoutCodeErreur(3, "Commande relais inconnue");
-    ajoutCodeErreur(4, "Commande test comm inconnue");
-    ajoutCodeErreur(5, "Impossible de modifier le relais");
-
-    ajoutCodeErreur(101, "Envoi CAN impossible");
-    ajoutCodeErreur(105, "Direction non reconnue");
-    ajoutCodeErreur(106, "Relais désactivé");
-
-    ajoutCodeErreur(110, "Longueur DATA CAN trop grande");
-    ajoutCodeErreur(111, "Adresse destination CAN incorrecte");
-    ajoutCodeErreur(112, "Code fonction CAN incorrect");
-    ajoutCodeErreur(113, "Valeur REP NBR CAN incorrecte");
-    ajoutCodeErreur(114, "Valeur DATA CAN incorrecte");
-
-    ajoutCodeErreur(151, "Adresse destination CAN inconnue");
-    ajoutCodeErreur(152, "Code fonction CAN inconnu"); */
 
     initCan(can);
 

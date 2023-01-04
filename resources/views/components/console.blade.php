@@ -57,11 +57,13 @@
                         </h2>
 
                         <?php
+                            $errors_json = [];
+
                             $log->response = preg_replace('/[[:cntrl:]]/', '', $log->response);
                             $datas = json_decode($log->response, JSON_UNESCAPED_SLASHES);
 
                             if(json_last_error() != JSON_ERROR_NONE)
-                            echo "Erreur JSON n°".json_last_error() ." lors du décodage de la réponse du log : ".json_last_error_msg()."\n\n";
+                            array_push($errors_json, "Erreur JSON n°".json_last_error() ." lors du décodage de la réponse du log : ".json_last_error_msg());
                         ?>
 
                         @if (json_last_error() == JSON_ERROR_NONE)
@@ -110,23 +112,25 @@
 
                                                     <?php
 
+                                                        if(!empty($data["trame_can_rec"]))
                                                         $trame_can_rec = json_decode($data["trame_can_rec"]);
 
                                                         if(json_last_error() != JSON_ERROR_NONE)
-                                                        echo "Erreur JSON n°".json_last_error() ." lors du décodage de la trame CAN d'envoi : ".json_last_error_msg()."\n\n";
-
+                                                        array_push($errors_json, "Erreur JSON n°".json_last_error() ." lors du décodage de la trame CAN d'envoi : ".json_last_error_msg());
+                                                        
+                                                        if(!empty($data["trame_can_env"]))
                                                         $trame_can_env = json_decode($data["trame_can_env"]);
 
                                                         if(json_last_error() != JSON_ERROR_NONE)
-                                                        echo "Erreur JSON n°".json_last_error() ." lors du décodage de la trame CAN de réponse : ".json_last_error_msg()."\n\n";
+                                                        array_push($errors_json, "Erreur JSON n°".json_last_error() ." lors du décodage de la trame CAN de réponse : ".json_last_error_msg());
 
                                                         $convert_trame_can = config('app.convert_trame_can');
                                                         $convert_type_trame_can = config('app.convert_type_trame_can');
-
+    
                                                         $trame_php = json_decode($data["trame_php"]);
 
                                                         if(json_last_error() != JSON_ERROR_NONE)
-                                                        echo "Erreur JSON n°".json_last_error() ." lors du décodage de la trame PHP : ".json_last_error_msg()."\n\n";
+                                                        array_push($errors_json, "Erreur JSON n°".json_last_error() ." lors du décodage de la trame PHP : ".json_last_error_msg());
 
                                                         $convert_trame_php = config('app.convert_trame_php');
                                                     ?>
@@ -137,98 +141,111 @@
 
                                                         if(!empty($trame_can_env) && !empty($trame_can_rec)){
 
-                                                        if(isset($convert_trame_can[$trame_can_env->{"addr"}]) && isset($convert_trame_can[$trame_can_rec->{"emetteur"}])){
-                                                            $test_addr = ($convert_trame_can[$trame_can_env->{"addr"}] == $convert_trame_can[$trame_can_rec->{"emetteur"}]) ? "success" : "warning";
-                                                        }else{
-                                                            $test_addr = "danger";
-                                                        }
+                                                            if(isset($convert_trame_can[$trame_can_env->{"addr"}]) && isset($convert_trame_can[$trame_can_rec->{"emetteur"}])){
+                                                                $test_addr = ($convert_trame_can[$trame_can_env->{"addr"}] == $convert_trame_can[$trame_can_rec->{"emetteur"}]) ? "success" : "warning";
+                                                            }else{
+                                                                $test_addr = "danger";
+                                                            }
 
-                                                        if($test_addr == "success") $msg_addr = "Le destinataire du message envoyé est bien l'expéditeur du message reçu";
-                                                        else if($test_addr == "warning") $msg_addr = "Le destinataire du message envoyé est différent de l'expéditeur du message reçu";
-                                                        else $msg_addr = "Le destinataire du message envoyé et/ou l'expéditeur du message reçu n'est pas spécifié dans la trame";
+                                                            if($test_addr == "success") $msg_addr = "Le destinataire du message envoyé est bien l'expéditeur du message reçu";
+                                                            else if($test_addr == "warning") $msg_addr = "Le destinataire du message envoyé est différent de l'expéditeur du message reçu";
+                                                            else $msg_addr = "Le destinataire du message envoyé et/ou l'expéditeur du message reçu n'est pas spécifié dans la trame";
 
-                                                        if(isset($convert_trame_can[$trame_can_rec->{"addr"}]) && isset($convert_trame_can[$trame_can_env->{"emetteur"}])){
-                                                            $test_emetteur = ($convert_trame_can[$trame_can_rec->{"addr"}] == $convert_trame_can[$trame_can_env->{"emetteur"}]) ? "success" : "warning";
-                                                        }else{
-                                                            $test_emetteur = "danger";
-                                                        }
+                                                            if(isset($convert_trame_can[$trame_can_rec->{"addr"}]) && isset($convert_trame_can[$trame_can_env->{"emetteur"}])){
+                                                                $test_emetteur = ($convert_trame_can[$trame_can_rec->{"addr"}] == $convert_trame_can[$trame_can_env->{"emetteur"}]) ? "success" : "warning";
+                                                            }else{
+                                                                $test_emetteur = "danger";
+                                                            }
 
-                                                        if($test_emetteur == "success") $msg_emetteur = "L'expéditeur du message envoyé est bien le destinataire du message reçu";
-                                                        else if($test_emetteur == "warning") $msg_emetteur = "L'expéditeur du message envoyé est différent du destinataire du message reçu";
-                                                        else $msg_emetteur = "L'expéditeur du message envoyé et/ou le destinataire du message reçu n'est pas spécifié dans la trame";
+                                                            if($test_emetteur == "success") $msg_emetteur = "L'expéditeur du message envoyé est bien le destinataire du message reçu";
+                                                            else if($test_emetteur == "warning") $msg_emetteur = "L'expéditeur du message envoyé est différent du destinataire du message reçu";
+                                                            else $msg_emetteur = "L'expéditeur du message envoyé et/ou le destinataire du message reçu n'est pas spécifié dans la trame";
 
-                                                        $test_code_fct = ($trame_can_env->{"code_fct"} == $trame_can_rec->{"code_fct"}) ? "success" : "warning";
+                                                            $test_code_fct = ($trame_can_env->{"code_fct"} == $trame_can_rec->{"code_fct"}) ? "success" : "warning";
 
-                                                        if($test_code_fct == "success") $msg_code_fct = "Les codes fonctions envoyés et reçus sont connus et cohérents";
-                                                        else $msg_code_fct = "Les codes fonctions envoyés et reçus ne sont pas les mêmes";
+                                                            if($test_code_fct == "success") $msg_code_fct = "Les codes fonctions envoyés et reçus sont connus et cohérents";
+                                                            else $msg_code_fct = "Les codes fonctions envoyés et reçus ne sont pas les mêmes";
 
-                                                        if(isset($convert_type_trame_can[$trame_can_env->{"is_rep"}])){
-                                                            $test_is_rep_env = ($convert_type_trame_can[$trame_can_env->{"is_rep"}] == "Trame d'envoi") ? "success" : "warning";
-                                                        }else{
-                                                            $test_is_rep_env = "danger";
-                                                        }
+                                                            $test_id_rep = ($trame_can_env->{"id_rep"} == $trame_can_rec->{"id_rep"}) ? "success" : "warning";
 
-                                                        if($test_is_rep_env == "success") $msg_is_rep_env = "Le type de trame spécifié à l'envoi est connu et cohérent";
-                                                        else if($test_is_rep_env == "warning") $msg_is_rep_env = "Le type de trame spécifié à l'envoi est connu mais incohérent";
-                                                        else $msg_is_rep_env = "Aucun type de trame n'a été spécifié à l'envoi";
+                                                            if($test_id_rep == "success") $msg_id_rep = "Le numéro de trame de reçu est le même que celui envoyé";
+                                                            else $msg_id_rep = "Le numéro de trame de reçu ne correspond pas à celui envoyé";
 
-                                                        if(isset($convert_type_trame_can[$trame_can_rec->{"is_rep"}])){
-                                                            $test_is_rep_rec = ($convert_type_trame_can[$trame_can_rec->{"is_rep"}] == "Trame de réponse") ? "success" : "warning";
-                                                        }else{
-                                                            $test_is_rep_rec = "danger";
-                                                        }
+                                                        } 
 
-                                                        if($test_is_rep_rec == "success") $msg_is_rep_rec = "Le type de trame spécifié à la réception est connu et cohérent";
-                                                        else if($test_is_rep_rec == "warning") $msg_is_rep_rec = "Le type de trame spécifié à la réception est connu mais incohérent";
-                                                        else $msg_is_rep_rec = "Aucun type de trame n'a été spécifié à la réception";
+                                                        if(!isset($test_addr)) $test_addr = "success";
+                                                        if(!isset($test_emetteur)) $test_emetteur = "success";
+                                                        if(!isset($test_code_fct)) $test_code_fct = "success";
+                                                        if(!isset($test_id_rep)) $test_id_rep = "success";
+                                                        
+                                                        if(!empty($trame_can_env)){
 
-                                                        $test_id_rep = ($trame_can_env->{"id_rep"} == $trame_can_rec->{"id_rep"}) ? "success" : "warning";
+                                                            if(isset($convert_type_trame_can[$trame_can_env->{"is_rep"}])){
+                                                                $test_is_rep_env = ($convert_type_trame_can[$trame_can_env->{"is_rep"}] == "Trame d'envoi") ? "success" : "warning";
+                                                            }else{
+                                                                $test_is_rep_env = "danger";
+                                                            }
+    
+                                                            if($test_is_rep_env == "success") $msg_is_rep_env = "Le type de trame spécifié à l'envoi est connu et cohérent";
+                                                            else if($test_is_rep_env == "warning") $msg_is_rep_env = "Le type de trame spécifié à l'envoi est connu mais incohérent";
+                                                            else $msg_is_rep_env = "Aucun type de trame n'a été spécifié à l'envoi";
 
-                                                        if($test_id_rep == "success") $msg_id_rep = "Le numéro de trame de reçu est le même que celui envoyé";
-                                                        else $msg_id_rep = "Le numéro de trame de reçu ne correspond pas à celui envoyé";
+                                                            $test_trame_can_env = ($test_addr != "danger" && $test_emetteur != "danger" && $test_is_rep_env != "danger" && $test_code_fct != "danger" && $test_id_rep != "danger" && $test_is_rep_env != "danger") ? "success" : "danger";
 
-                                                        $test_trame_can_env = ($test_addr != "danger" && $test_emetteur != "danger" && $test_is_rep_env != "danger" && $test_code_fct != "danger" && $test_id_rep != "danger" && $test_is_rep_env != "danger") ? "success" : "danger";
-                                                        $test_trame_can_rec = ($test_addr != "danger" && $test_emetteur != "danger" && $test_is_rep_rec != "danger" && $test_code_fct != "danger" && $test_id_rep != "danger" && $test_is_rep_rec != "danger") ? "success" : "danger";
-
-                                                        if($test_addr == "warning" || $test_emetteur == "warning" || $test_is_rep_env == "warning" || $test_code_fct == "warning" || $test_id_rep == "warning" || $test_is_rep_env == "warning")
+                                                            if($test_addr == "warning" || $test_emetteur == "warning" || $test_is_rep_env == "warning" || $test_code_fct == "warning" || $test_id_rep == "warning" || $test_is_rep_env == "warning")
                                                             $test_trame_can_env = "warning";
 
-                                                        if($test_addr == "warning" || $test_emetteur == "warning" || $test_is_rep_rec == "warning" || $test_code_fct == "warning" || $test_id_rep == "warning" || $test_is_rep_rec == "warning")
+                                                            switch ($test_trame_can_env) {
+                                                                case 'success':
+                                                                    $msg_trame_can_env = "Les élements contenus dans la trame sont cohérents";
+                                                                    break;
+    
+                                                                case 'warning':
+                                                                    $msg_trame_can_env = "Certains élements contenus dans la trame sont incohérents";
+                                                                    break;
+    
+                                                                default:
+                                                                    $msg_trame_can_env = "Certains élements contenus dans la trame sont inconnus et/ou incohérents";
+                                                                    break;
+                                                            }
+                                                        }
+                                                        
+                                                        if(!empty($trame_can_rec)){
+                                                            if(isset($convert_type_trame_can[$trame_can_rec->{"is_rep"}])){
+                                                                $test_is_rep_rec = ($convert_type_trame_can[$trame_can_rec->{"is_rep"}] == "Trame de réponse") ? "success" : "warning";
+                                                            }else{
+                                                                $test_is_rep_rec = "danger";
+                                                            }
+    
+                                                            if($test_is_rep_rec == "success") $msg_is_rep_rec = "Le type de trame spécifié à la réception est connu et cohérent";
+                                                            else if($test_is_rep_rec == "warning") $msg_is_rep_rec = "Le type de trame spécifié à la réception est connu mais incohérent";
+                                                            else $msg_is_rep_rec = "Aucun type de trame n'a été spécifié à la réception";
+
+                                                            $test_trame_can_rec = ($test_addr != "danger" && $test_emetteur != "danger" && $test_is_rep_rec != "danger" && $test_code_fct != "danger" && $test_id_rep != "danger" && $test_is_rep_rec != "danger") ? "success" : "danger";
+
+                                                            if($test_addr == "warning" || $test_emetteur == "warning" || $test_is_rep_rec == "warning" || $test_code_fct == "warning" || $test_id_rep == "warning" || $test_is_rep_rec == "warning")
                                                             $test_trame_can_rec = "warning";
 
-
-                                                        switch ($test_trame_can_rec) {
-                                                            case 'success':
-                                                                $msg_trame_can_rec = "Les élements contenus dans la trame sont cohérents";
-                                                                break;
-
-                                                            case 'warning':
-                                                                $msg_trame_can_rec = "Certains élements contenus dans la trame sont incohérents";
-                                                                break;
-
-                                                            default:
-                                                                $msg_trame_can_rec = "Certains élements contenus dans la trame n'ont pas été spécifiés et/ou sont incohérents";
-                                                                break;
+                                                            switch ($test_trame_can_rec) {
+                                                                case 'success':
+                                                                    $msg_trame_can_rec = "Les élements contenus dans la trame sont cohérents";
+                                                                    break;
+    
+                                                                case 'warning':
+                                                                    $msg_trame_can_rec = "Certains élements contenus dans la trame sont incohérents";
+                                                                    break;
+    
+                                                                default:
+                                                                    $msg_trame_can_rec = "Certains élements contenus dans la trame n'ont pas été spécifiés et/ou sont incohérents";
+                                                                    break;
+                                                            }
+    
                                                         }
-
-                                                        switch ($test_trame_can_env) {
-                                                            case 'success':
-                                                                $msg_trame_can_env = "Les élements contenus dans la trame sont cohérents";
-                                                                break;
-
-                                                            case 'warning':
-                                                                $msg_trame_can_env = "Certains élements contenus dans la trame sont incohérents";
-                                                                break;
-
-                                                            default:
-                                                                $msg_trame_can_env = "Certains élements contenus dans la trame sont inconnus et/ou incohérents";
-                                                                break;
-                                                        }
-                                                    }
-
+                                   
                                                         $test_icon = ["success" => "fa-check", "danger" => "fa-xmark", "warning" => "fa-triangle-exclamation"];
                                                     ?>
-                                                    <div class="p-1 row row-cols-1 row-cols-lg-3 row-cols-md-2 g-2">
+                                                    <div class="p-1 row row-cols-1 row-cols-lg-3 row-cols-md-2 g-2">      
+                                                        @if(!empty($trame_can_env))
                                                         <div class="col">
                                                             <div class="card text-bg-dark h-100" style="border:none;">
                                                                 <div class="card-body">
@@ -239,7 +256,11 @@
                                                                         onclick="afficherMasquerTrames('trame_can_env_{{ $log->id }}')">
                                                                         <span class="ps-1">Trame CAN envoyée
                                                                         </span>
-                                                                        @isset($test_trame_can_env) <span class="badge text-bg-{{ $test_trame_can_env }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_trame_can_env }}"><i class='fa-solid {{ $test_icon[$test_trame_can_env] }}'></i></span> @endisset 
+                                                                        @isset($test_trame_can_env) 
+                                                                        @isset($msg_trame_can_env) 
+                                                                        <span class="badge text-bg-{{ $test_trame_can_env }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_trame_can_env }}"><i class='fa-solid {{ $test_icon[$test_trame_can_env] }}'></i></span>
+                                                                        @endisset
+                                                                        @endisset
                                                                         <span
                                                                             class="text-muted fst-italic fw-normal"
                                                                             id="comment_trame_can_env_{{ $log->id }}">Afficher</span>
@@ -263,7 +284,11 @@
                                                                                             {{ $convert_trame_can[$trame_can_env->{"addr"}] }}
                                                                                         @endisset
                                                                                     @endisset
-                                                                                    @isset($test_addr) <span class="badge text-bg-{{ $test_addr }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_addr }}"><i class='fa-solid {{ $test_icon[$test_addr] }}'></i></span> @endisset
+                                                                                    @isset($test_addr) 
+                                                                                    @isset($msg_addr) 
+                                                                                    <span class="badge text-bg-{{ $test_addr }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_addr }}"><i class='fa-solid {{ $test_icon[$test_addr] }}'></i></span> 
+                                                                                    @endisset
+                                                                                    @endisset
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -284,7 +309,7 @@
                                                                                             {{ $convert_trame_can[$trame_can_env->{"emetteur"}] }}
                                                                                         @endisset
                                                                                     @endisset
-                                                                                    @isset($test_emetteur) <span class="badge text-bg-{{ $test_emetteur }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_emetteur }}"><i class='fa-solid {{ $test_icon[$test_emetteur] }}'></i></span> @endisset
+                                                                                    @isset($test_emetteur) @isset($msg_emetteur) <span class="badge text-bg-{{ $test_emetteur }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_emetteur }}"><i class='fa-solid {{ $test_icon[$test_emetteur] }}'></i></span> @endisset @endisset
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -305,7 +330,9 @@
                                                                                         @endisset
                                                                                     @endisset
                                                                                     @isset($test_code_fct)                                                                                    
-                                                                                    <span class="badge text-bg-{{ $test_code_fct }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_code_fct }}"><i class='fa-solid {{ $test_icon[$test_code_fct] }}'></i></span>
+                                                                                    @isset($msg_code_fct) 
+                                                                                    <span class="badge text-bg-{{ $test_code_fct }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_code_fct }}"><i class='fa-solid {{ $test_icon[$test_code_fct] }}'></i></span> 
+                                                                                    @endisset
                                                                                     @endisset
                                                                                 </span>                                                                        
                                                                             </div>
@@ -340,8 +367,13 @@
                                                                                     <span
                                                                                         class="badge bg-primary rounded-pill">
                                                                                         {{ $trame_can_env->{"id_rep"} }}</span>
-                                                                                        <span class="badge text-bg-{{ $test_id_rep }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_id_rep }}"><i class='fa-solid {{ $test_icon[$test_id_rep] }}'></i></span>
-                                                                                    @endisset  
+                                                                                    @endisset 
+
+                                                                                        @isset($test_id_rep)
+                                                                                        @isset($msg_id_rep)
+                                                                                        <span class="badge text-bg-{{ $test_id_rep }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_id_rep }}"><i class='fa-solid {{ $test_icon[$test_id_rep] }}'></i></span> 
+                                                                                        @endisset
+                                                                                        @endisset
                                                                                     </div>
                                                                             </div>
                                                                         </li>
@@ -362,8 +394,12 @@
                                                                                             {{ $convert_type_trame_can[$trame_can_env->{"is_rep"}] }}
                                                                                         @endisset
                                                                                     @endisset
+                                                                                    
+                                                                                    @isset($test_is_rep_env)
+                                                                                    @isset($msg_is_rep_env)
                                                                                     <span class="badge text-bg-{{ $test_is_rep_env }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_is_rep_env }}"><i class='fa-solid {{ $test_icon[$test_is_rep_env] }}'></i></span>
-
+                                                                                    @endisset
+                                                                                    @endisset
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -383,6 +419,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        @endif
+                                                        @if(!empty($trame_can_rec))
                                                         <div class="col">
                                                             <div class="card text-bg-dark h-100" style="border:none;">
                                                                 <div class="card-body">
@@ -393,7 +431,11 @@
                                                                         onclick="afficherMasquerTrames('trame_can_rec_{{ $log->id }}')">
                                                                         <span class="ps-1">Trame CAN reçue
                                                                         </span>
+                                                                        @isset($test_trame_can_rec)
+                                                                        @isset($msg_trame_can_rec)
                                                                         <span class="badge text-bg-{{ $test_trame_can_rec }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_trame_can_rec }}"><i class='fa-solid {{ $test_icon[$test_trame_can_rec] }}'></i></span>
+                                                                        @endisset
+                                                                        @endisset
                                                                         <span
                                                                             class="text-muted fst-italic fw-normal"
                                                                             id="comment_trame_can_rec_{{ $log->id }}">Afficher</span>
@@ -418,7 +460,12 @@
                                                                                             {{ $convert_trame_can[$trame_can_rec->{"addr"}] }}
                                                                                         @endisset
                                                                                     @endisset
-                                                                                    @isset($test_emetteur) <span class="badge text-bg-{{ $test_emetteur }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_emetteur }}"><i class='fa-solid {{ $test_icon[$test_emetteur] }}'></i></span> @endisset
+                                                                                    
+                                                                                    @isset($test_emetteur)          
+                                                                                    @isset($msg_emetteur)
+                                                                                    <span class="badge text-bg-{{ $test_emetteur }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_emetteur }}"><i class='fa-solid {{ $test_icon[$test_emetteur] }}'></i></span>
+                                                                                    @endisset
+                                                                                    @endisset
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -439,7 +486,11 @@
                                                                                             {{ $convert_trame_can[$trame_can_rec->{"emetteur"}] }}
                                                                                         @endisset
                                                                                     @endisset
-                                                                                    @isset($test_addr) <span class="badge text-bg-{{ $test_addr }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_addr }}"><i class='fa-solid {{ $test_icon[$test_addr] }}'></i></span> @endisset
+                                                                                    @isset($test_addr) 
+                                                                                    @isset($msg_addr)
+                                                                                    <span class="badge text-bg-{{ $test_addr }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_addr }}"><i class='fa-solid {{ $test_icon[$test_addr] }}'></i></span>
+                                                                                    @endisset
+                                                                                    @endisset
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -462,7 +513,11 @@
                                                                                         @endisset
                                                                                     @endisset
 
-                                                                                    @isset($test_code_fct) <span class="badge text-bg-{{ $test_code_fct }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_code_fct }}"><i class='fa-solid {{ $test_icon[$test_code_fct] }}'></i></span> @endisset
+                                                                                    @isset($test_code_fct) 
+                                                                                    @isset($msg_code_fct) 
+                                                                                    <span class="badge text-bg-{{ $test_code_fct }}" data-bs-toggle="tooltip" data-bs-placement="right" @isset($msg_code_fct) data-bs-title="{{ $msg_code_fct }}" @endisset><i class='fa-solid {{ $test_icon[$test_code_fct] }}'></i></span>
+                                                                                    @endisset
+                                                                                    @endisset
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -476,7 +531,11 @@
                                                                                         {{ $trame_can_rec->{"id_rep"} }}</span>
                                                                                     @endisset
 
-                                                                                    @isset($test_id_rep) <span class="badge text-bg-{{ $test_id_rep }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_id_rep }}"><i class='fa-solid {{ $test_icon[$test_id_rep] }}'></i></span> @endisset
+                                                                                    @isset($test_id_rep) 
+                                                                                    @isset($msg_id_rep) 
+                                                                                    <span class="badge text-bg-{{ $test_id_rep }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_id_rep }}"><i class='fa-solid {{ $test_icon[$test_id_rep] }}'></i></span>
+                                                                                    @endisset
+                                                                                    @endisset
                                                                                 </div>
                                                                             </div>
                                                                         </li>
@@ -500,7 +559,11 @@
                                                                                         @endisset
                                                                                     @endisset
 
-                                                                                    @isset($test_is_rep_rec) <span class="badge text-bg-{{ $test_is_rep_rec }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_is_rep_rec }}"><i class='fa-solid {{ $test_icon[$test_is_rep_rec] }}'></i></span> @endisset
+                                                                                    @isset($test_is_rep_rec) 
+                                                                                    @isset($msg_is_rep_rec) 
+                                                                                    <span class="badge text-bg-{{ $test_is_rep_rec }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_is_rep_rec }}"><i class='fa-solid {{ $test_icon[$test_is_rep_rec] }}'></i></span>
+                                                                                    @endisset
+                                                                                    @endisset
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -520,6 +583,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        @endif
                                                         <div class="col">
                                                             <div class="card text-bg-dark h-100" style="border:none;">
                                                                 <div class="card-body">
@@ -528,7 +592,7 @@
                                                                             class="fa-solid fa-copy"></i></button>
                                                                     <span class="fw-bold" style="cursor: pointer;"
                                                                         onclick="afficherMasquerTrames('trame_php_{{ $log->id }}')">
-                                                                        <span class="ps-1">Trame PHP envoyée
+                                                                        <span class="ps-1">Trame PHP
                                                                         </span><span
                                                                             class="text-muted fst-italic fw-normal"
                                                                             id="comment_trame_php_{{ $log->id }}">Afficher</span>
@@ -628,6 +692,17 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                        @if(count($errors_json) > 0)
+                                                            <hr>
+                                                            <div class="mb-3">
+                                                                <p class="ps-3 text-muted"><i class="fa-solid fa-triangle-exclamation"></i> Des erreurs ont été détectées lors de la lecture du log : </p>
+                                                                <ul>
+                                                                @foreach($errors_json as $error_json)
+                                                                    <li class="text-danger fst-italic">{{ $error_json }}</li>
+                                                                @endforeach
+                                                                </ul>
+                                                            </div>
+                                                        @endif
                                                     @endif
                                                 </ul>
                                             </div>

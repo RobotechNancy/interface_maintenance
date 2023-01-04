@@ -134,8 +134,6 @@ class LogController extends Controller
             $contents = fread($handle, filesize($execoutput));
             $content_table = explode("\n",$contents);
 
-            $retval = 0;
-
             fclose($handle);
 
             if (FALSE !== $handle)
@@ -160,7 +158,7 @@ class LogController extends Controller
 
                 $response[$i]["trame_php"] = $trame_php;
 
-                if(count($content_table) > 2) {
+                if(count($content_table) >= 2) {
                     $response[$i]["status_description"] = $content_table[count($content_table)-2];
 
                     $trame_can_env_array = explode(" : ",$content_table[0]);
