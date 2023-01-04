@@ -174,17 +174,17 @@ class LogController extends Controller
                         }
                     }
 
-                    $response[$i]["trame_can_env"] = json_encode(["addr" => $trame_can_env_array[0],
-                                                                  "emetteur" => $trame_can_env_array[1],
+                    $response[$i]["trame_can_env"] = json_encode(["addr" => "COUOUC",
+                                                                  "emetteur" => "COUCOU",
                                                                   "code_fct" => $trame_can_env_array[2],
                                                                   "id_msg" => $trame_can_env_array[3],
                                                                   "is_rep" => $trame_can_env_array[4],
                                                                   "id_rep" => $trame_can_env_array[5],
                                                                   "data" => $trame_can_env_array[6]
-                                                                ], JSON_UNESCAPED_SLASHES);
+                                                                ]);
 
 
-                    if(count($content_table) >= 4){
+                    if(count($content_table) > 4){
 
                         $trame_can_rec_array = explode(" : ",$content_table[2]);
                         array_splice($trame_can_rec_array, 0, 2);
