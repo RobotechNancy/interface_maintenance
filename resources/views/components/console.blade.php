@@ -135,6 +135,8 @@
 
                                                     <?php
 
+                                                        if(!empty($trame_can_env) && !empty($trame_can_rec)){
+
                                                         if(isset($convert_trame_can[$trame_can_env->{"addr"}]) && isset($convert_trame_can[$trame_can_rec->{"emetteur"}])){
                                                             $test_addr = ($convert_trame_can[$trame_can_env->{"addr"}] == $convert_trame_can[$trame_can_rec->{"emetteur"}]) ? "success" : "warning";
                                                         }else{
@@ -222,6 +224,7 @@
                                                                 $msg_trame_can_env = "Certains élements contenus dans la trame sont inconnus et/ou incohérents";
                                                                 break;
                                                         }
+                                                    }
 
                                                         $test_icon = ["success" => "fa-check", "danger" => "fa-xmark", "warning" => "fa-triangle-exclamation"];
                                                     ?>
@@ -236,7 +239,7 @@
                                                                         onclick="afficherMasquerTrames('trame_can_env_{{ $log->id }}')">
                                                                         <span class="ps-1">Trame CAN envoyée
                                                                         </span>
-                                                                        <span class="badge text-bg-{{ $test_trame_can_env }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_trame_can_env }}"><i class='fa-solid {{ $test_icon[$test_trame_can_env] }}'></i></span>
+                                                                        @isset($test_trame_can_env) <span class="badge text-bg-{{ $test_trame_can_env }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_trame_can_env }}"><i class='fa-solid {{ $test_icon[$test_trame_can_env] }}'></i></span> @endisset 
                                                                         <span
                                                                             class="text-muted fst-italic fw-normal"
                                                                             id="comment_trame_can_env_{{ $log->id }}">Afficher</span>
@@ -248,15 +251,19 @@
                                                                             class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                             <div class="ms-2 me-auto">
                                                                                 <div class="">Adresse destination
+                                                                                    @isset($test_trame_can_env->{"addr"})
                                                                                     <span
                                                                                         class="badge bg-primary rounded-pill">
                                                                                         {{ $trame_can_env->{"addr"} }}</span>
+                                                                                    @endisset
                                                                                 </div>
                                                                                 <span class="text-white-50">
-                                                                                    @isset($convert_trame_can[$trame_can_env->{"addr"}])
-                                                                                        {{ $convert_trame_can[$trame_can_env->{"addr"}] }}
+                                                                                    @isset($trame_can_env->{"addr"})
+                                                                                        @isset($convert_trame_can[$trame_can_env->{"addr"}])
+                                                                                            {{ $convert_trame_can[$trame_can_env->{"addr"}] }}
+                                                                                        @endisset
                                                                                     @endisset
-                                                                                    <span class="badge text-bg-{{ $test_addr }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_addr }}"><i class='fa-solid {{ $test_icon[$test_addr] }}'></i></span>
+                                                                                    @isset($test_addr) <span class="badge text-bg-{{ $test_addr }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_addr }}"><i class='fa-solid {{ $test_icon[$test_addr] }}'></i></span> @endisset
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -264,15 +271,20 @@
                                                                             class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                             <div class="ms-2 me-auto">
                                                                                 <div class="">Adresse emetteur
+                                                                                    
+                                                                                    @isset($test_trame_can_env->{"emetteur"})
                                                                                     <span
                                                                                         class="badge bg-primary rounded-pill">
                                                                                         {{ $trame_can_env->{"emetteur"} }}</span>
+                                                                                    @endisset
                                                                                 </div>
                                                                                 <span class="text-white-50">
-                                                                                    @isset($convert_trame_can[$trame_can_env->{"emetteur"}])
-                                                                                        {{ $convert_trame_can[$trame_can_env->{"emetteur"}] }}
+                                                                                    @isset($test_trame_can_env->{"emetteur"})
+                                                                                        @isset($convert_trame_can[$trame_can_env->{"emetteur"}])
+                                                                                            {{ $convert_trame_can[$trame_can_env->{"emetteur"}] }}
+                                                                                        @endisset
                                                                                     @endisset
-                                                                                    <span class="badge text-bg-{{ $test_emetteur }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_emetteur }}"><i class='fa-solid {{ $test_icon[$test_emetteur] }}'></i></span>
+                                                                                    @isset($test_emetteur) <span class="badge text-bg-{{ $test_emetteur }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_emetteur }}"><i class='fa-solid {{ $test_icon[$test_emetteur] }}'></i></span> @endisset
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -280,27 +292,36 @@
                                                                             class="list-group-item bg-dark text-white  d-flex justify-content-between align-items-start">
                                                                             <div class="ms-2 me-auto">
                                                                                 <div class="">Code fonction
+                                                                                @isset($trame_can_env->{"code_fct"})
                                                                                     <span
                                                                                         class="badge bg-primary rounded-pill">
                                                                                         {{ $trame_can_env->{"code_fct"} }}</span>
+                                                                                @endisset
                                                                                 </div>
                                                                                 <span class="text-white-50">
-                                                                                    @isset($convert_trame_can[$trame_can_env->{"code_fct"}])
-                                                                                        {{ $convert_trame_can[$trame_can_env->{"code_fct"}] }}
+                                                                                    @isset($trame_can_env->{"code_fct"})
+                                                                                        @isset($convert_trame_can[$trame_can_env->{"code_fct"}])
+                                                                                            {{ $convert_trame_can[$trame_can_env->{"code_fct"}] }}
+                                                                                        @endisset
                                                                                     @endisset
+                                                                                    @isset($test_code_fct)                                                                                    
                                                                                     <span class="badge text-bg-{{ $test_code_fct }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_code_fct }}"><i class='fa-solid {{ $test_icon[$test_code_fct] }}'></i></span>
-                                                                                </span>
+                                                                                    @endisset
+                                                                                </span>                                                                        
                                                                             </div>
                                                                         </li>
                                                                         <li
                                                                             class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                             <div class="ms-2 me-auto">
                                                                                 <div class="">Priorité
+                                                                                    @isset($trame_can_env->{"id_msg"})
                                                                                     <span
                                                                                         class="badge bg-primary rounded-pill">
                                                                                         {{ $trame_can_env->{"id_msg"} }}
                                                                                     </span>
+                                                                                    @endisset
                                                                                 </div>
+                                                                                @isset($trame_can_env->{"id_msg"})
                                                                                 <span class="text-white-50">
                                                                                     @if ($trame_can_env->{"id_msg"} == 0)
                                                                                         Non prioritaire
@@ -308,33 +329,41 @@
                                                                                         Prioritaire
                                                                                     @endif
                                                                                 </span>
+                                                                                @endisset
                                                                             </div>
                                                                         </li>
                                                                         <li
                                                                             class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                             <div class="ms-2 me-auto">
                                                                                 <div class="">ID trame
+                                                                                    @isset($trame_can_env->{"id_rep"})
                                                                                     <span
                                                                                         class="badge bg-primary rounded-pill">
                                                                                         {{ $trame_can_env->{"id_rep"} }}</span>
                                                                                         <span class="badge text-bg-{{ $test_id_rep }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_id_rep }}"><i class='fa-solid {{ $test_icon[$test_id_rep] }}'></i></span>
-                                                                                </div>
+                                                                                    @endisset  
+                                                                                    </div>
                                                                             </div>
                                                                         </li>
                                                                         <li
                                                                             class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                             <div class="ms-2 me-auto">
                                                                                 <div class="">Type de trame
+                                                                                    @isset($trame_can_env->{"is_rep"})
                                                                                     <span
                                                                                         class="badge bg-primary rounded-pill">
                                                                                         {{ $trame_can_env->{"is_rep"} }}
                                                                                     </span>
+                                                                                    @endisset
                                                                                 </div>
                                                                                 <span class="text-white-50">
-                                                                                    @isset($convert_type_trame_can[$trame_can_env->{"is_rep"}])
-                                                                                        {{ $convert_type_trame_can[$trame_can_env->{"is_rep"}] }}
+                                                                                    @isset($trame_can_env->{"is_rep"})
+                                                                                        @isset($convert_type_trame_can[$trame_can_env->{"is_rep"}])
+                                                                                            {{ $convert_type_trame_can[$trame_can_env->{"is_rep"}] }}
+                                                                                        @endisset
                                                                                     @endisset
                                                                                     <span class="badge text-bg-{{ $test_is_rep_env }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_is_rep_env }}"><i class='fa-solid {{ $test_icon[$test_is_rep_env] }}'></i></span>
+
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -342,9 +371,11 @@
                                                                             class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                             <div class="ms-2 me-auto">
                                                                                 <div class="">Données
+                                                                                    @isset($trame_can_env->{"data"})
                                                                                     <span
                                                                                         class="badge bg-primary rounded-pill">
                                                                                         {{ $trame_can_env->{"data"} }}</span>
+                                                                                    @endisset
                                                                                 </div>
                                                                             </div>
                                                                         </li>
@@ -374,15 +405,20 @@
                                                                             class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                             <div class="ms-2 me-auto">
                                                                                 <div class="">Adresse destination
+
+                                                                                    @isset($trame_can_rec->{"addr"})
                                                                                     <span
                                                                                         class="badge bg-primary rounded-pill">
                                                                                         {{ $trame_can_rec->{"addr"} }}</span>
+                                                                                    @endisset
                                                                                 </div>
                                                                                 <span class="text-white-50">
-                                                                                    @isset($convert_trame_can[$trame_can_rec->{"addr"}])
-                                                                                        {{ $convert_trame_can[$trame_can_rec->{"addr"}] }}
+                                                                                    @isset($trame_can_rec->{"addr"})
+                                                                                        @isset($convert_trame_can[$trame_can_rec->{"addr"}])
+                                                                                            {{ $convert_trame_can[$trame_can_rec->{"addr"}] }}
+                                                                                        @endisset
                                                                                     @endisset
-                                                                                    <span class="badge text-bg-{{ $test_emetteur }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_emetteur }}"><i class='fa-solid {{ $test_icon[$test_emetteur] }}'></i></span>
+                                                                                    @isset($test_emetteur) <span class="badge text-bg-{{ $test_emetteur }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_emetteur }}"><i class='fa-solid {{ $test_icon[$test_emetteur] }}'></i></span> @endisset
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -390,15 +426,20 @@
                                                                             class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                             <div class="ms-2 me-auto">
                                                                                 <div class="">Adresse emetteur
+
+                                                                                    @isset($trame_can_rec->{"emetteur"})
                                                                                     <span
                                                                                         class="badge bg-primary rounded-pill">
                                                                                         {{ $trame_can_rec->{"emetteur"} }}</span>
+                                                                                    @endisset
                                                                                 </div>
                                                                                 <span class="text-white-50">
-                                                                                    @isset($convert_trame_can[$trame_can_rec->{"emetteur"}])
-                                                                                        {{ $convert_trame_can[$trame_can_rec->{"emetteur"}] }}
+                                                                                    @isset($trame_can_rec->{"emetteur"})
+                                                                                        @isset($convert_trame_can[$trame_can_rec->{"emetteur"}])
+                                                                                            {{ $convert_trame_can[$trame_can_rec->{"emetteur"}] }}
+                                                                                        @endisset
                                                                                     @endisset
-                                                                                    <span class="badge text-bg-{{ $test_addr }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_addr }}"><i class='fa-solid {{ $test_icon[$test_addr] }}'></i></span>
+                                                                                    @isset($test_addr) <span class="badge text-bg-{{ $test_addr }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_addr }}"><i class='fa-solid {{ $test_icon[$test_addr] }}'></i></span> @endisset
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -406,15 +447,22 @@
                                                                             class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                             <div class="ms-2 me-auto">
                                                                                 <div class="">Code fonction
+
+                                                                                    @isset($trame_can_rec->{"code_fct"})
                                                                                     <span
                                                                                         class="badge bg-primary rounded-pill">
                                                                                         {{ $trame_can_rec->{"code_fct"} }}</span>
+                                                                                    @endisset
+
                                                                                 </div>
                                                                                 <span class="text-white-50">
-                                                                                    @isset($convert_trame_can[$trame_can_rec->{"code_fct"}])
-                                                                                        {{ $convert_trame_can[$trame_can_rec->{"code_fct"}] }}
+                                                                                    @isset($trame_can_rec->{"code_fct"})
+                                                                                        @isset($convert_trame_can[$trame_can_rec->{"code_fct"}])
+                                                                                            {{ $convert_trame_can[$trame_can_rec->{"code_fct"}] }}
+                                                                                        @endisset
                                                                                     @endisset
-                                                                                    <span class="badge text-bg-{{ $test_code_fct }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_code_fct }}"><i class='fa-solid {{ $test_icon[$test_code_fct] }}'></i></span>
+
+                                                                                    @isset($test_code_fct) <span class="badge text-bg-{{ $test_code_fct }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_code_fct }}"><i class='fa-solid {{ $test_icon[$test_code_fct] }}'></i></span> @endisset
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -422,11 +470,13 @@
                                                                             class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                             <div class="ms-2 me-auto">
                                                                                 <div class="">ID trame
+                                                                                    @isset($trame_can_rec->{"id_rep"})
                                                                                     <span
                                                                                         class="badge bg-primary rounded-pill">
                                                                                         {{ $trame_can_rec->{"id_rep"} }}</span>
+                                                                                    @endisset
 
-                                                                                    <span class="badge text-bg-{{ $test_id_rep }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_id_rep }}"><i class='fa-solid {{ $test_icon[$test_id_rep] }}'></i></span>
+                                                                                    @isset($test_id_rep) <span class="badge text-bg-{{ $test_id_rep }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_id_rep }}"><i class='fa-solid {{ $test_icon[$test_id_rep] }}'></i></span> @endisset
                                                                                 </div>
                                                                             </div>
                                                                         </li>
@@ -434,16 +484,23 @@
                                                                             class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                             <div class="ms-2 me-auto">
                                                                                 <div class="">Type de trame
+
+                                                                                    @isset($trame_can_rec->{"is_rep"})
                                                                                     <span
                                                                                         class="badge bg-primary rounded-pill">
                                                                                         {{ $trame_can_rec->{"is_rep"} }}
                                                                                     </span>
+                                                                                    @endisset
+
                                                                                 </div>
                                                                                 <span class="text-white-50">
-                                                                                    @isset($convert_type_trame_can[$trame_can_rec->{"is_rep"}])
-                                                                                        {{ $convert_type_trame_can[$trame_can_rec->{"is_rep"}] }}
+                                                                                    @isset($trame_can_rec->{"is_rep"})
+                                                                                        @isset($convert_type_trame_can[$trame_can_rec->{"is_rep"}])
+                                                                                            {{ $convert_type_trame_can[$trame_can_rec->{"is_rep"}] }}
+                                                                                        @endisset
                                                                                     @endisset
-                                                                                    <span class="badge text-bg-{{ $test_is_rep_rec }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_is_rep_rec }}"><i class='fa-solid {{ $test_icon[$test_is_rep_rec] }}'></i></span>
+
+                                                                                    @isset($test_is_rep_rec) <span class="badge text-bg-{{ $test_is_rep_rec }}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $msg_is_rep_rec }}"><i class='fa-solid {{ $test_icon[$test_is_rep_rec] }}'></i></span> @endisset
                                                                                 </span>
                                                                             </div>
                                                                         </li>
@@ -451,9 +508,11 @@
                                                                             class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                             <div class="ms-2 me-auto">
                                                                                 <div class="">Données
+                                                                                    @isset($trame_can_rec->{"data"})
                                                                                     <span
                                                                                         class="badge bg-primary rounded-pill">
                                                                                         {{ $trame_can_rec->{"data"} }}</span>
+                                                                                    @endisset
                                                                                 </div>
                                                                             </div>
                                                                         </li>
@@ -481,13 +540,19 @@
                                                                             class="list-group-item bg-dark text-white d-flex justify-content-between align-items-start">
                                                                             <div class="ms-2 me-auto">
                                                                                 <div class="">Commande
-                                                                                    <span
+
+                                                                                    @isset($trame_php->{"commande"})
+                                                                                        <span
                                                                                         class="badge bg-primary rounded-pill">
                                                                                         {{ $trame_php->{"commande"} }}</span>
+                                                                                    @endisset
+
                                                                                 </div>
                                                                                 <span class="text-white-50">
-                                                                                    @isset($convert_trame_php[$trame_php->{"commande"}])
-                                                                                        {{ $convert_trame_php[$trame_php->{"commande"}] }}
+                                                                                    @isset($trame_php->{"commande"})
+                                                                                        @isset($convert_trame_php[$trame_php->{"commande"}])
+                                                                                            {{ $convert_trame_php[$trame_php->{"commande"}] }}
+                                                                                        @endisset
                                                                                     @endisset
                                                                                 </span>
                                                                             </div>
