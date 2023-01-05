@@ -129,6 +129,7 @@ class LogController extends Controller
 
             exec($execfile." ".$trame." > ".$execoutput, $output, $retval);
 
+
             $handle = fopen($execoutput, "r");
 
             $contents = fread($handle, filesize($execoutput));
@@ -174,8 +175,8 @@ class LogController extends Controller
                         }
                     }
 
-                    $response[$i]["trame_can_env"] = json_encode(["addr" => "COUOUC",
-                                                                  "emetteur" => "COUCOU",
+                    $response[$i]["trame_can_env"] = json_encode(["addr" => $trame_can_env_array[0],
+                                                                  "emetteur" => $trame_can_env_array[1],
                                                                   "code_fct" => $trame_can_env_array[2],
                                                                   "id_msg" => $trame_can_env_array[3],
                                                                   "is_rep" => $trame_can_env_array[4],
@@ -218,7 +219,7 @@ class LogController extends Controller
             }
         }
 
-        $log->response = json_encode($response, );
+        $log->response = json_encode($response, JSON_UNESCAPED_SLASHES);
 
         if($log->state == 1)
             return response()->json(["file" => $execfile, "exception" => "Fichier non trouvé", "message" => "Le fichier exécutable n'a pas été trouvé", "line" => 57], 404);
@@ -281,7 +282,7 @@ class LogController extends Controller
 
                 if(isset($trame_can_rec_str))
                 $custom_log .= "\r\t\t🔷 Trame CAN reçue : ".$trame_can_rec_str;
-                
+
                 $custom_log .= "\r\t\t🔷 Trame PHP envoyée : ".$trame_php_env_str;
             }
 
