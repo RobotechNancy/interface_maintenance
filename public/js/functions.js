@@ -25,6 +25,7 @@ function alertConsole(message, type){
 }
 
 function processRequestBtn(request_id, request_url){
+    var busy = true;
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -52,7 +53,10 @@ function processRequestBtn(request_id, request_url){
             if(request_id == 1 || request_id == 2){
 
                 try {
-                    var trame_can_rec = JSON.parse(data["rep"][0]["trame_can_rec"]);
+                    if(data["rep"][0]["trame_can_rec"] != "")
+                        var trame_can_rec = JSON.parse(data["rep"][0]["trame_can_rec"]);
+                    else 
+                        var trame_can_rec = "";
 
                     if(typeof trame_can_rec.data === 'undefined'){
                         var icon_autotest = "<i class='fa-solid fa-xmark'></i>";
@@ -115,6 +119,7 @@ function processRequestBtn(request_id, request_url){
             }
 
             refreshTooltips();
+            busy = false;
             $(".btn_form").attr("disabled", false);
         },
 
@@ -133,14 +138,19 @@ function processRequestBtn(request_id, request_url){
                 "danger");
 
             $(".btn_form").attr("disabled", false);
+            busy = false;
         },
     });
+
+    return busy;
 }
 
 function cycleAutotests(){
     var route_log = "/log";
-    processRequestBtn(1, route_log);
-    processRequestBtn(2, route_log);
+
+    if(!processRequestBtn(2, route_log)){
+    	setTimeout(processRequestBtn(1, route_log), 1000);
+    }
 }
 
 function addToClipboard(data, id, type) {
@@ -210,10 +220,23 @@ function checkRelaisStatus() {
         url: "/relais",
 
         success: function (data) {
-            console.log(data)
+            if((data == 1) && ($("#btn_12").hasClass("btn-danger"))) {
+
+                $("#btn_12").removeClass("btn-danger");
+                $("#btn_12").addClass("btn-success");
+
+            }else if((data != 1) && ($("#btn_12").hasClass("btn-success"))){
+
+                $("#btn_12").removeClass("btn-success");
+                $("#btn_12").addClass("btn-danger");
+            }
         },
 
         error: function(error) {
+
+            $("#btn_" + request_id).toggleClass("btn-danger");
+            $("#btn_" + request_id).toggleClass("btn-success");
+
             alertConsole("Error " +
                     error.status +
                     " : " +
@@ -315,7 +338,7 @@ $(document).ready(function () {
 
     setInterval(checkLogTable, 1000);
 
-    //setInterval(checkRelaisStatus, 1000);
+    setInterval(checkRelaisStatus, 1000);
 });
 
 function changeValueRange(type) {

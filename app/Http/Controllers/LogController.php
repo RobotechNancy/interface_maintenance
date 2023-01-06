@@ -159,7 +159,7 @@ class LogController extends Controller
 
                 $response[$i]["trame_php"] = $trame_php;
 
-                if(count($content_table) >= 2) {
+                if(count($content_table) > 2) {
                     $response[$i]["status_description"] = $content_table[count($content_table)-2];
 
                     $trame_can_env_array = explode(" : ",$content_table[0]);
