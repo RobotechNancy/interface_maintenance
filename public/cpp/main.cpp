@@ -5,6 +5,7 @@
 #include "logLib.h"
 #include "defineCan.h"
 #include <unistd.h>
+#include "xbeelib.h"
 
 
 using namespace std;
@@ -257,6 +258,32 @@ int move(string s)
     else return 106;
 }
 
+int BaseRoulante(string s)
+{
+
+    
+    if(int error = testComm("BR"), error != 0) return error;
+    string command = nextParameter(s);
+    
+
+    if(command == "Move")
+    {
+        return move(s);
+    }
+    else if(command == "Stop")
+    {
+        uint8_t data[1] = {0x00};
+        int retour_can = can.send(CAN_ADDR_BASE_ROULANTE, STOP, data, 1, false, 1,0);
+        return convertCanError(retour_can);
+    }
+    else if(command == "StopUrgent")
+    {
+        uint8_t data[1] = {0x00};
+        int retour_can = can.send(CAN_ADDR_BASE_ROULANTE, STOP_URGENT, data, 1, false, 1,0);
+        return convertCanError(retour_can);
+    }
+    else return 2;
+}
 
 
 
@@ -289,7 +316,7 @@ int main(int argc, char **argv)
     
     int id = 0;
 
-    if(param == "BR") id = move(input);    
+    if(param == "BR") id = BaseRoulante(input);    
     else if(param == "Relais") id = relais(input);    
     else if(param == "TestComm") id = testComm(input);    
     else id = 2;
