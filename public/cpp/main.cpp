@@ -5,7 +5,7 @@
 #include "logLib.h"
 #include "defineCan.h"
 #include <unistd.h>
-#include "xbeelib.h"
+//#include "xbeelib.h"
 
 
 using namespace std;
@@ -262,8 +262,8 @@ int move(string s)
 int BaseRoulante(string s)
 {
 
-    
-    if(int error = testComm("BR"), error != 0) return error;
+    int error = testComm("BR");
+    if(error != 0) return error;
     string command = nextParameter(s);
     
 
