@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-2 d-none d-md-block"></div>
             <div class="col ms-lg-4" id="container_dashboard">
-                @include('components.autotests')
+                @include('component.autotests')
                 @include('components.console')
             </div>
         </div>
