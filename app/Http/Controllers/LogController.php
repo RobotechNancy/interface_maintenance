@@ -11,28 +11,21 @@ use Illuminate\Support\Arr;
 class LogController extends Controller
 {
 
-    public function get_logtable_size(){
-
+    /**
+     * Count and return the length of the log database table.
+     *
+     * @return int $nb_logs : le nombre de logs contenu dans la table
+     */
+    public function getLogtableSize() : int
+    {
         $nb_logs = Log::get()->count();
-
         return $nb_logs;
     }
 
-    public function relais(){
-        $execfile = env('CUSTOM_EXECFILE');
-        $trame = "Relais,Test";
-
-        exec($execfile." ".$trame, $output, $retval);
-
-        if($retval == 0)
-            return true;
-
-        return false;
-    }
-
     /**
-     * Show the form for creating a new resource.
+     * Handle and process an incomming log creation request, create and add the associated new log in the database.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
@@ -129,15 +122,17 @@ class LogController extends Controller
 
             exec($execfile." ".$trame." > ".$execoutput, $output, $retval);
 
-
             $handle = fopen($execoutput, "r");
 
-            $contents = fread($handle, filesize($execoutput));
-            $content_table = explode("\n",$contents);
+            if(filesize($execoutput) > 0)
+            {
+                $contents = fread($handle, filesize($execoutput));
+                $content_table = explode("\n",$contents);
+            }
 
             fclose($handle);
 
-            if (FALSE !== $handle)
+            if ((FALSE !== $handle) && (filesize($execoutput) > 0))
             {
                 $response[$i] = ["id" => $custom_i, "data" => "", "status" => $retval, "status_description" => $content_table[0], "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => ""];
 
@@ -182,7 +177,7 @@ class LogController extends Controller
                                                                   "is_rep" => $trame_can_env_array[4],
                                                                   "id_rep" => $trame_can_env_array[5],
                                                                   "data" => $trame_can_env_array[6]
-                                                                ]);
+                                                                ],JSON_UNESCAPED_SLASHES);
 
 
                     if(count($content_table) > 4){
@@ -214,7 +209,7 @@ class LogController extends Controller
             }
             else
             {
-                $response[$i] = ["id" => $custom_i, "data" => "", "status" => 255, "status_description" => "Impossible d'accéder au fichier de logs", "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => $trame];
+                $response[$i] = ["id" => $custom_i, "data" => "", "status" => 255, "status_description" => "Impossible d'accéder au fichier contenant la réponse de la commande ou fichier vide", "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => $trame];
                 $log->state = 255;
             }
         }
@@ -225,13 +220,12 @@ class LogController extends Controller
             return response()->json(["file" => $execfile, "exception" => "Fichier non trouvé", "message" => "Le fichier exécutable n'a pas été trouvé", "line" => 57], 404);
 
         $log->saveOrFail();
-        return response()->json(["status" => 200, "rep" => json_decode($log->response)]);
+        return response()->json(["status" => 200, "rep" => json_decode($log->response, JSON_UNESCAPED_SLASHES)]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Delete all the logs from the log table in the database.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function clear()
@@ -240,6 +234,11 @@ class LogController extends Controller
         return response()->json(200);
     }
 
+    /**
+     * Export all the logs contained in the log table into the associated text file.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function export()
     {
         $logfile = env('CUSTOM_LOGFILE');
@@ -268,8 +267,10 @@ class LogController extends Controller
                     $trame_can_rec_str = $trame_can_rec["addr"].",".$trame_can_rec["emetteur"].",".$trame_can_rec["code_fct"].",".$trame_can_rec["is_rep"].",".$trame_can_rec["id_rep"].",".$trame_can_rec["data"];
                 }
 
-                $trame_php_env = json_decode($data["trame_php"], true);
-                $trame_php_env_str = (isset($trame_php_env["arg"])) ? $trame_php_env["commande"].",".$trame_php_env["arg"] : $trame_php_env["commande"].",".$trame_php_env["distance"].",".$trame_php_env["vitesse"].",".$trame_php_env["direction"];
+                if(isset($data["trame_can_rec"]) && !empty($data["trame_can_rec"])){
+                    $trame_php_env = json_decode($data["trame_php"], true);
+                    $trame_php_env_str = (isset($trame_php_env["arg"])) ? $trame_php_env["commande"].",".$trame_php_env["arg"] : $trame_php_env["commande"].",".$trame_php_env["distance"].",".$trame_php_env["vitesse"].",".$trame_php_env["direction"];
+                }
 
                 $icon_state_data = $data["status"] != 0 ? "🟥" : "🟩";
 
@@ -283,6 +284,7 @@ class LogController extends Controller
                 if(isset($trame_can_rec_str))
                 $custom_log .= "\r\t\t🔷 Trame CAN reçue : ".$trame_can_rec_str;
 
+                if(isset($trame_php_env_str))
                 $custom_log .= "\r\t\t🔷 Trame PHP envoyée : ".$trame_php_env_str;
             }
 

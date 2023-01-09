@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\RelaisController;
 use App\Models\Log;
 
 /*
@@ -28,13 +29,9 @@ Route::post('log', [LogController::class, 'create'])
 ->middleware(['auth'])
 ->name('log');
 
-Route::post('relais', [LogController::class, 'relais'])
+Route::post('get_logtable_size', [LogController::class, 'getLogtableSize'])
 ->middleware(['auth'])
-->name('relais');
-
-Route::post('get_logtable_size', [LogController::class, 'get_logtable_size'])
-->middleware(['auth'])
-->name('get_logtable_size');
+->name('getLogtableSize');
 
 Route::post('clearlogs', [LogController::class, 'clear'])
 ->middleware(['auth'])
@@ -43,5 +40,10 @@ Route::post('clearlogs', [LogController::class, 'clear'])
 Route::post('exportlogs', [LogController::class, 'export'])
 ->middleware(['auth'])
 ->name('exportlogs');
+
+Route::post('relais', [RelaisController::class, 'relaisStatus'])
+->middleware(['auth'])
+->name('relais');
+
 
 require __DIR__.'/auth.php';

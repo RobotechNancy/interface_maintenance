@@ -22,8 +22,8 @@
 
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/manage-notifications.js') }}"></script>
     <script src="{{ asset('js/functions.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
     <script src="{{ asset('fontawesome/js/all.js') }}"></script>
 </head>
 

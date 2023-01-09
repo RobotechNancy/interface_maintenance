@@ -55,6 +55,11 @@ class RegisteredUserController extends Controller
         return redirect(RouteServiceProvider::HOME)->with('message', "Bienvenue parmi nous, cher ".$user->name." ! Votre compte utilisateur a été créé avec succès !");
     }
 
+    /**
+     * Create the default admin account when none exists.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function defaultuser()
     {
         $name = "Admintout";
@@ -86,6 +91,12 @@ class RegisteredUserController extends Controller
 
     }
 
+    /**
+     * Find the user described by the given id (if exists) and display the edit user profile form.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
     public function edit($id)
     {
         $user = User::findOrFail($id);
@@ -97,6 +108,11 @@ class RegisteredUserController extends Controller
         ]);
     }
 
+    /**
+     * Display the view corresponding to login user profile page.
+     *
+     * @return \Illuminate\View\View
+     */
     public function show()
     {
         $user = Auth::User();
@@ -105,12 +121,26 @@ class RegisteredUserController extends Controller
         ]);
     }
 
+    /**
+    * Display the view corresponding of the presentation of all the website users.
+    *
+    * @return \Illuminate\View\View
+    */
     public function index()
     {
         $users = User::all();
         return view('auth.index', compact('users'));
     }
 
+    /**
+     * Handle and process the request of the given user profile edition and redirect to the original page.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function update(Request $request, User $user)
     {
         if(empty($request->role))
@@ -155,6 +185,12 @@ class RegisteredUserController extends Controller
         return back()->with('success', "Le compte utilisateur ". $user->name ." a été modifié avec succès !");
     }
 
+    /**
+    * Delete the given user account and redirect to the index page.
+    *
+    * @param  \App\Models\User  $user
+    * @return \Illuminate\Http\RedirectResponse
+    */
     public function destroy(User $user)
     {
         $user->deleteOrFail();

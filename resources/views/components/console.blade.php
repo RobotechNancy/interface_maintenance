@@ -630,7 +630,7 @@
                                                                                         <span
                                                                                             class="badge bg-primary rounded-pill">
                                                                                             {{ $trame_php->{"distance"} }}
-                                                                                            cm</span>
+                                                                                            mm</span>
                                                                                     </div>
                                                                                 </div>
                                                                             </li>

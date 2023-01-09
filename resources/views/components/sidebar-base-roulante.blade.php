@@ -3,7 +3,7 @@
 </li>
 
 <div class="vstack gap-1">
-    <label for="rangeDistance" class="form-label">Distance : <span id="valeurSliderDistance"></span> cm</label>
+    <label for="rangeDistance" class="form-label">Distance : <span id="valeurSliderDistance"></span> mm</label>
     <input type="range" class="form-range" value="20" min="0" max="200" step="1" id="rangeDistance"
         onchange="changeValueRange(0)">
 </div>

@@ -9,5 +9,5 @@
     </a>
 </li>
 <script>
-    tabs_manager("tab_{{ $id }}");
+    tabsManager("tab_{{ $id }}");
 </script>

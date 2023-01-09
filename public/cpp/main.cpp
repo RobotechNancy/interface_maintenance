@@ -22,8 +22,8 @@ map<int, string> error_codes {
     {5, "Impossible de modifier le relais"},
     {6, "Délais de réponse dépassé"},
     {101, "Envoi CAN impossible"},
-    {105, "Direction non reconnue"},
-    {106, "Relais désactivé"},
+    {105, "Direction base roulante non reconnue"},
+    {106, "Relais arrêt d'urgence désactivé"},
     {110, "Longueur DATA CAN trop grande"},
     {111, "Adresse destination CAN incorrecte"},
     {112, "Code fonction CAN incorrect"},
@@ -35,7 +35,7 @@ map<int, string> error_codes {
 
 //Tente d'executer la commande passée en paramètre
 int tryCommand(string c)
-{ 
+{
     FILE *fp;
     char path[1035];
     const char *command = c.c_str();
@@ -44,7 +44,7 @@ int tryCommand(string c)
     string output = "";
 
     if (fp == NULL) return 5;
-    
+
     while (fgets(path, sizeof(path), fp) != NULL) pclose(fp);
     //for (int i = 0; i < sizeof(path); i++) output += path[i];
     return 0;
@@ -52,7 +52,7 @@ int tryCommand(string c)
 
 //Lit l'état du relais avec la commande popen("gpio read 2", "r")
 bool readRelayPin()
-{ 
+{
     FILE *fp;
     char path[1035];
     fp = popen("gpio read 2", "r");
@@ -61,12 +61,12 @@ bool readRelayPin()
     pclose(fp);
 
     if(path[0] == '1') return true;
-    else return false;    
+    else return false;
 }
 
 // Retourne le prochain paramètre et le supprime de l'entrée
 string nextParameter(string & s)
-{ 
+{
     string delimiter = ",";
     size_t pos = 0;
     string token;
@@ -81,7 +81,7 @@ string nextParameter(string & s)
         return token;
     }
 
-} 
+}
 
 // Convertit les codes d'erreur CAN pour qu'ils soient positifs
 int convertCanError(int error){
@@ -128,7 +128,7 @@ int convertCanError(int error){
 
         case -552:
             return 152;
-            break;  
+            break;
 
         default:
             return 0;
@@ -138,7 +138,7 @@ int convertCanError(int error){
 
 // Gère les commandes pour le relais
 int relais(string s)
-{ 
+{
     string command = nextParameter(s);
     int id;
 
@@ -169,7 +169,7 @@ int relais(string s)
 }
 
 // Gère les commandes pour les tests communication
-int testComm(string s){ 
+int testComm(string s){
     string command = nextParameter(s);
     if(readRelayPin()){
         if(command == "Odo") //Envoie une trame de test de communication à l'odométrie et attend la réponse
@@ -182,7 +182,7 @@ int testComm(string s){
                 {
                     while(can.is_message(0)){
                         CanResponse_t msg = can.get_message(0);
-                        if(msg.codeFct == TEST_COMM && msg.addr == CAN_ADDR_ODOMETRIE_E){                         
+                        if(msg.codeFct == TEST_COMM && msg.addr == CAN_ADDR_ODOMETRIE_E){
                             return 0;
                         }
                     }
@@ -192,7 +192,7 @@ int testComm(string s){
             }
             else return convertCanError(retour_can);
         }
-    
+
         else if(command == "BR") //Même principe que pour l'odométrie
         {
             uint8_t data[1] = {0x00};
@@ -203,7 +203,7 @@ int testComm(string s){
                 {
                     while(can.is_message(0)){
                         CanResponse_t msg = can.get_message(0);
-                        if(msg.codeFct == TEST_COMM && msg.emetteur == CAN_ADDR_BASE_ROULANTE_E){                 
+                        if(msg.codeFct == TEST_COMM && msg.emetteur == CAN_ADDR_BASE_ROULANTE_E){
                             return 0;
                         }
                     }
@@ -228,13 +228,13 @@ int testComm(string s){
 int move(string s)
 // Trame de Base roulante : BR,Move,distance,vitesse,direction
 // Distance en mm, vitesse en mm/s, direction : Av, Re, AvD, AvG, ReD, ReG
-{ 
+{
     if(readRelayPin())
     {
         Trame_BR_dpt data;
-        Trame_Moteur_t trameMoteur;    
+        Trame_Moteur_t trameMoteur;
         data.fields.distance = (uint16_t)atoi(nextParameter(s).c_str());
-        data.fields.vitesse = (uint16_t)atoi(nextParameter(s).c_str()); 
+        data.fields.vitesse = (uint16_t)atoi(nextParameter(s).c_str());
         string dir = nextParameter(s);
         int retour_can;
 
@@ -246,7 +246,7 @@ int move(string s)
         else if(dir == "ReG") data.fields.direction = 3;
         else if(dir == "RotD") data.fields.direction = 7;
         else if(dir == "RotG") data.fields.direction = 8;
-        else return 105;       
+        else return 105;
 
 
         convertir(&data, &trameMoteur);
@@ -265,7 +265,7 @@ int BaseRoulante(string s)
     int error = testComm("BR");
     if(error != 0) return error;
     string command = nextParameter(s);
-    
+
 
     if(command == "Move")
     {
@@ -293,7 +293,7 @@ int initCan(Can & can)
     Log sysLog("systeme");
 
     int err = can.init(CAN_ADDR_RASPBERRY_E);//CAN_ADDR_RASPBERRY
-    
+
     if(err < 0)
     {
         can.logC << "erreur dans l'init du bus can. err n°" << dec << err << "\t\t c.f. #define" << mendl;
@@ -307,19 +307,19 @@ int initCan(Can & can)
     error_codes.insert(pair<int, string>(id, erreur));
 } */
 
-// Reçoit une trame du serveur web et la traite en fonction de son contenu 
-int main(int argc, char **argv) 
-{  
+// Reçoit une trame du serveur web et la traite en fonction de son contenu
+int main(int argc, char **argv)
+{
 
     initCan(can);
 
     string input = argv[argc-1], param = nextParameter(input);
-    
+
     int id = 0;
 
-    if(param == "BR") id = BaseRoulante(input);    
-    else if(param == "Relais") id = relais(input);    
-    else if(param == "TestComm") id = testComm(input);    
+    if(param == "BR") id = BaseRoulante(input);
+    else if(param == "Relais") id = relais(input);
+    else if(param == "TestComm") id = testComm(input);
     else id = 2;
 
     cout << error_codes[id] << endl;

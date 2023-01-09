@@ -10,7 +10,7 @@
 
 #include "xbee_define.h"
 #include "serialib.h"
-#include "loglib.h"
+#include "logLib.h"
 #include <string>
 #include <vector>
 #include <iomanip>
@@ -31,7 +31,7 @@ public:
 
     // Desctructeur de la classe
     ~XBee();
-    
+
     // Ouverture de la connexion série
     int openSerialConnection(int mode = 0);
 
@@ -44,7 +44,7 @@ public:
     // Lecture de la réponse du module à une commande AT
     bool readATResponse(const char *value = XB_AT_R_EMPTY, int mode = 0);
 
-    // Envoi d'une commande AT 
+    // Envoi d'une commande AT
     bool sendATCommand(const char *command, const char *value, unsigned int mode = XB_AT_M_SET);
 
     // Ecriture de la configuration AT dans la mémoire flash du module
@@ -52,7 +52,7 @@ public:
 
     // Création et envoi de la trame de message structurée
     int sendTrame(uint8_t ad_dest, uint8_t code_fct, char* data = 0x00);
-    
+
     // Envoi d'un objet string quelconque
     void sendMsg(std::string msg);
 
@@ -70,7 +70,7 @@ public:
 
     // Conversion string en char*
     char* stringToChar(std::string chaine);
-    
+
     // Affichage du contenu d'un vecteur d'entiers
     void print(const std::vector<int> &v);
 
@@ -79,7 +79,7 @@ private:
     /*!
      * \typedef Trame_t
      * \brief Format des trames reçues en fonction des paramètres de la trame
-     */  
+     */
     typedef struct{
       int start_seq; /*!< Caractère de début de trame */
       int adr_emetteur; /*!< Adresse de l'émetteur de la trame */
@@ -104,16 +104,16 @@ private:
     // Lance une découverte réseau des modules Xbee
     bool discoverXbeeNetwork();
 
-    // Vérifie si l'adresse de l'expéditeur existe 
+    // Vérifie si l'adresse de l'expéditeur existe
     bool isExpCorrect(int exp);
 
-    // Vérifie si l'adresse de destination existe 
+    // Vérifie si l'adresse de destination existe
     bool isDestCorrect(int dest);
 
-    // Vérifie si le code fonction existe 
+    // Vérifie si le code fonction existe
     bool isCodeFctCorrect(int code_fct);
 
-    // Vérifie si la taille de la trame est cohérente 
+    // Vérifie si la taille de la trame est cohérente
     bool isTrameSizeCorrect(std::vector<int> trame);
 
     // Découpe un ensemble de trames en trames uniques
@@ -122,7 +122,7 @@ private:
     // Interprète le code fonction et exécute les fonctions associées
     int processCodeFct(int code_fct, int exp);
 
-    // Affichage des différents paramètres d'une structure Trame_t 
+    // Affichage des différents paramètres d'une structure Trame_t
     void afficherTrameRecue(Trame_t trame);
 
     // Interprète et contrôle l'intégrité d'une trame reçue
@@ -136,7 +136,7 @@ private:
 
     // Calcul du CRC16 Modbus de la trame
     int crc16(int trame[], uint8_t taille);
-    
+
     // Vérifie si le caractère de début de trame est correct
     bool isStartSeqCorrect(int value);
 
@@ -149,7 +149,7 @@ private:
     // Retard de temporisation dans l'exécution du code
     void delay(unsigned int time);
 
-    // Découpe un vecteur d'entiers en un sous vecteur 
+    // Découpe un vecteur d'entiers en un sous vecteur
     std::vector<int> slice(const std::vector<int> &v, int a, int b);
 
     // Variable calculant l'ID de la trame
