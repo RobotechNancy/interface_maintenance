@@ -21,9 +21,13 @@ map<int, string> error_codes {
     {4, "Commande test comm inconnue"},
     {5, "Impossible de modifier le relais"},
     {6, "Délais de réponse dépassé"},
+    {7, "Erreur commande terminal"},
     {101, "Envoi CAN impossible"},
+    {102, "Erreur dans la lecture de la trame CAN depuis le buffer"},
+    {103, "Erreur dans l'ouverture du socket"},
+    {104, "Erreur dans la lecture du socket CAN"},
     {105, "Direction base roulante non reconnue"},
-    {106, "Relais arrêt d'urgence désactivé"},
+    {106, "Relais alimentation désactivé"},
     {110, "Longueur DATA CAN trop grande"},
     {111, "Adresse destination CAN incorrecte"},
     {112, "Code fonction CAN incorrect"},
@@ -33,24 +37,30 @@ map<int, string> error_codes {
     {152, "Code fonction CAN inconnu"}
 };
 
-//Tente d'executer la commande passée en paramètre
-int tryCommand(string c)
+
+/*!
+ *  \brief Tente d'executer la commande passée en paramètre
+ *  \param command Commande à executer
+ *  \retval 0 La commande s'est bien executée
+ *  \retval 7 Erreur dans l'execution de la commande
+*/
+int tryCommand(string command)
 {
     FILE *fp;
     char path[1035];
-    const char *command = c.c_str();
+    const char *command = command.c_str();
     fp = popen(command, "r");
-
-    string output = "";
-
-    if (fp == NULL) return 5;
-
+    if (fp == NULL) return 7; 
     while (fgets(path, sizeof(path), fp) != NULL) pclose(fp);
-    //for (int i = 0; i < sizeof(path); i++) output += path[i];
     return 0;
 }
 
-//Lit l'état du relais avec la commande popen("gpio read 2", "r")
+
+/*!
+ *  \brief Lit l'état du relais avec la commande popen("gpio read 2", "r")
+ *  \retval true Le relais est allumé
+ *  \retval false Le relais est éteint
+*/
 bool readRelayPin()
 {
     FILE *fp;
@@ -64,70 +74,89 @@ bool readRelayPin()
     else return false;
 }
 
-// Retourne le prochain paramètre et le supprime de l'entrée
-string nextParameter(string & s)
+
+/*!
+ *  \brief Retourne le prochain paramètre et le supprime de l'entrée
+ *  \param input Trame à traiter
+ *  \retval Prochain paramètre de la trame
+*/
+string nextParameter(string & input)
 {
     string delimiter = ",";
     size_t pos = 0;
     string token;
-    if ((pos = s.find(delimiter)) != string::npos) {
-        token = s.substr(0, pos);
-        s.erase(0, pos + delimiter.length());
+    if ((pos = input.find(delimiter)) != string::npos) {
+        token = input.substr(0, pos);
+        input.erase(0, pos + delimiter.length());
         return token;
     }
     else{
-        token = s;
-        s = "";
+        token = input;
+        input = "";
         return token;
     }
-
 }
 
-// Convertit les codes d'erreur CAN pour qu'ils soient positifs
+
+/*!
+ *  \brief Convertit les codes d'erreur CAN pour qu'ils soient positifs
+ *  \param error Le numéro d'erreur à convertir
+ *  \retval 101 Envoi CAN impossible
+ *  \retval 102 Erreur dans la lecture de la trame depuis le buffer
+ *  \retval 103 Erreur dans l'ouverture du socket
+ *  \retval 104 Erreur dans la lecture du socket
+ *  \retval 110 Longueur DATA CAN trop grande
+ *  \retval 111 Adresse destination CAN incorrecte
+ *  \retval 112 Code fonction CAN incorrect
+ *  \retval 113 Valeur REP NBR CAN incorrecte
+ *  \retval 114 Valeur DATA CAN incorrecte
+ *  \retval 151 Adresse destination CAN inconnue
+ *  \retval 152 Code fonction CAN inconnu
+*/
 int convertCanError(int error){
     switch (error){
         case -501:
-            return 101;
+            return 101; // Envoi CAN impossible
             break;
 
         case -502:
-            return 102;
+            return 102; // Erreur dans la lecture de la trame depuis le buffer
             break;
 
         case -503:
-            return 103;
+            return 103; // Erreur dans l'ouverture du socket
             break;
 
         case -504:
-            return 104;
+            return 104; // Erreur dans la lecture du socket
             break;
 
         case -510:
-            return 110;
+            return 110; // Longueur DATA CAN trop grande
             break;
 
         case -511:
-            return 111;
+            return 111; // Adresse destination CAN incorrecte
             break;
 
         case -512:
-            return 112;
+            return 112; // Code fonction CAN incorrect
             break;
 
         case -513:
-            return 113;
+            return 113; // Valeur REP NBR CAN incorrecte
             break;
 
         case -514:
-            return 114;
+            return 114; // Valeur DATA CAN incorrecte
             break;
 
         case -551:
-            return 151;
+            return 151; // Adresse destination CAN inconnue
             break;
 
         case -552:
-            return 152;
+            return 152; // Code fonction CAN inconnu
             break;
 
         default:
@@ -136,10 +165,17 @@ int convertCanError(int error){
     }
 }
 
-// Gère les commandes pour le relais
-int relais(string s)
+
+/*!
+ *  \brief Gère les commandes pour le relais
+ *  \param input Commande relais
+ *  \retval 0 La commande s'est bien executée
+ *  \retval 3 Commande relais inconnue
+ *  \retval 106 Relais alimentation désactivé
+*/
+int relais(string input)
 {
-    string command = nextParameter(s);
+    string command = nextParameter(input);
     int id;
 
     if(command == "ON")
@@ -168,13 +204,22 @@ int relais(string s)
     else return 3;
 }
 
-// Gère les commandes pour les tests communication
-int testComm(string s){
-    string command = nextParameter(s);
+
+/*!
+ *  \brief Gère les commandes pour les tests communication
+ *  \param input Commande test communication
+ *  \retval 0 La commande s'est bien executée
+ *  \retval 4 Commande test comm inconnue
+ *  \retval 6 Délais de réponse dépassé
+ *  \retval 106 Relais alimentation désactivé
+*/
+int testComm(string input){
+    string command = nextParameter(input);
     if(readRelayPin()){
         if(command == "Odo") //Envoie une trame de test de communication à l'odométrie et attend la réponse
         {
             uint8_t data[1] = {0x00};
+            // Destinataire : Odométrie, Code fonction : Test de communication, Data : 0x00, Rep Nbr : 1, Rep : false
             int retour_can = can.send(CAN_ADDR_ODOMETRIE, TEST_COMM, data, 1, false, 1,0);
             can.start_listen();
             if(retour_can == 0){
@@ -213,6 +258,7 @@ int testComm(string s){
             }
             else return convertCanError(retour_can);
         }
+        else return 4;
     }
     else return 106;
 
@@ -224,8 +270,27 @@ int testComm(string s){
 }
 
 
-// Déplace la base roulante en fonction des paramètres de la trame
-int move(string s)
+
+
+/*!
+ *  \brief Déplace la base roulante en fonction des paramètres de la trame
+ *  \param input Commande de déplacement : BR,Move,distance,vitesse,direction
+ *  \retval 0 La commande s'est bien executée
+ *  \retval 101 Envoi CAN impossible
+ *  \retval 102 Erreur dans la lecture de la trame depuis le buffer
+ *  \retval 103 Erreur dans l'ouverture du socket
+ *  \retval 104 Erreur dans la lecture du socket
+ *  \retval 105 Direction base roulante non reconnue
+ *  \retval 106 Relais alimentation désactivé
+ *  \retval 110 Longueur DATA CAN trop grande
+ *  \retval 111 Adresse destination CAN incorrecte
+ *  \retval 112 Code fonction CAN incorrect
+ *  \retval 113 Valeur REP NBR CAN incorrecte
+ *  \retval 114 Valeur DATA CAN incorrecte
+ *  \retval 151 Adresse destination CAN inconnue
+ *  \retval 152 Code fonction CAN inconnu
+*/
+int move(string input)
 // Trame de Base roulante : BR,Move,distance,vitesse,direction
 // Distance en mm, vitesse en mm/s, direction : Av, Re, AvD, AvG, ReD, ReG
 {
@@ -233,9 +298,9 @@ int move(string s)
     {
         Trame_BR_dpt data;
         Trame_Moteur_t trameMoteur;
-        data.fields.distance = (uint16_t)atoi(nextParameter(s).c_str());
-        data.fields.vitesse = (uint16_t)atoi(nextParameter(s).c_str());
-        string dir = nextParameter(s);
+        data.fields.distance = (uint16_t)atoi(nextParameter(input).c_str());
+        data.fields.vitesse = (uint16_t)atoi(nextParameter(input).c_str());
+        string dir = nextParameter(input);
         int retour_can;
 
         if(dir == "Av") data.fields.direction = 1;
@@ -258,18 +323,26 @@ int move(string s)
     else return 106;
 }
 
-// Gère les commandes pour la base roulante
-int BaseRoulante(string s)
+
+/*!
+ *  \brief Gère les commandes pour la base roulante
+ *  \param input Commande à executer pour la base roulante
+ *  \retval 0 La commande s'est bien executée
+ *  \retval 2 Commande générale inconnue
+ *  \retval 7 Erreur dans l'execution de la commande
+ *  \retval Autre : Erreur bus CAN
+*/
+int BaseRoulante(string input)
 {
 
     int error = testComm("BR");
     if(error != 0) return error;
-    string command = nextParameter(s);
+    string command = nextParameter(input);
 
 
     if(command == "Move")
     {
-        return move(s);
+        return move(input);
     }
     else if(command == "Stop")
     {
@@ -288,26 +361,29 @@ int BaseRoulante(string s)
 
 
 // Initialise le bus CAN
+/*!
+ *  \brief Initialise le bus CAN
+ *  \param can Objet Can à initialiser
+ *  \retval 0 L'initialisation s'est bien passée
+ *  \retval Autre : Erreur bus CAN
+*/
 int initCan(Can & can)
 {
     Log sysLog("systeme");
-
     int err = can.init(CAN_ADDR_RASPBERRY_E);//CAN_ADDR_RASPBERRY
-
     if(err < 0)
     {
         can.logC << "erreur dans l'init du bus can. err n°" << dec << err << "\t\t c.f. #define" << mendl;
-        return err;
+        return convertCanError(err);
     }
-
-    return err;
+    return convertCanError(err);
 }
 
-/* void ajoutCodeErreur(int id, string erreur){
-    error_codes.insert(pair<int, string>(id, erreur));
-} */
 
-// Reçoit une trame du serveur web et la traite en fonction de son contenu
+
+/*!
+ *  \brief Reçoit une trame du serveur web et la traite en fonction de son contenu
+*/
 int main(int argc, char **argv)
 {
 
