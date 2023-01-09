@@ -72,7 +72,9 @@ typedef enum {
     AVANCE4 =                       0x04000,
     AVANCE5 =                       0x05000,
     AVANCE6 =                       0x06000,
-    REP_AVANCE =                    0x81000,
+    STOP =                          0x02000, // Stop normal
+    STOP_URGENT =                   0x03000, // Stop d'urgence, pas de désceleration
+    REP_AVANCE =                    0x81000, // Confirmation de la fin de la commande
 
 
 	DEPLACEMENT_BRAS_RESISTANCE =   0x61000,

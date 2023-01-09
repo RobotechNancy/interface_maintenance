@@ -5,12 +5,12 @@
 #include "logLib.h"
 #include "defineCan.h"
 #include <unistd.h>
+#include "xbeelib.h"
 
 
 using namespace std;
 
 Can can;
-
 
 
 map<int, string> error_codes {
@@ -33,9 +33,9 @@ map<int, string> error_codes {
     {152, "Code fonction CAN inconnu"}
 };
 
-
+//Tente d'executer la commande passée en paramètre
 int tryCommand(string c)
-{ //Tente d'executer la commande passée en paramètre
+{ 
     FILE *fp;
     char path[1035];
     const char *command = c.c_str();
@@ -49,8 +49,8 @@ int tryCommand(string c)
     //for (int i = 0; i < sizeof(path); i++) output += path[i];
     return 0;
 }
-//Lit l'état du relais avec la commande popen("gpio read 2", "r")
 
+//Lit l'état du relais avec la commande popen("gpio read 2", "r")
 bool readRelayPin()
 { 
     FILE *fp;
@@ -64,9 +64,9 @@ bool readRelayPin()
     else return false;    
 }
 
-
+// Retourne le prochain paramètre et le supprime de l'entrée
 string nextParameter(string & s)
-{ // Retourne le prochain paramètre et le supprime de l'input
+{ 
     string delimiter = ",";
     size_t pos = 0;
     string token;
@@ -136,7 +136,7 @@ int convertCanError(int error){
     }
 }
 
-
+// Gère les commandes pour le relais
 int relais(string s)
 { 
     string command = nextParameter(s);
@@ -168,11 +168,11 @@ int relais(string s)
     else return 3;
 }
 
-
+// Gère les commandes pour les tests communication
 int testComm(string s){ 
     string command = nextParameter(s);
     if(readRelayPin()){
-        if(command == "Odo") //Même principe que pour l'odométrie
+        if(command == "Odo") //Envoie une trame de test de communication à l'odométrie et attend la réponse
         {
             uint8_t data[1] = {0x00};
             int retour_can = can.send(CAN_ADDR_ODOMETRIE, TEST_COMM, data, 1, false, 1,0);
@@ -224,15 +224,16 @@ int testComm(string s){
 }
 
 
-// Trame de Base roulante : BR, distance, vitesse, direction
-// Ex : BR,100,100,Av
+// Déplace la base roulante en fonction des paramètres de la trame
 int move(string s)
-{ // Trame de Base roulante : BR, distance, vitesse, direction
+// Trame de Base roulante : BR,Move,distance,vitesse,direction
+// Distance en mm, vitesse en mm/s, direction : Av, Re, AvD, AvG, ReD, ReG
+{ 
     if(readRelayPin())
     {
         Trame_BR_dpt data;
         Trame_Moteur_t trameMoteur;    
-        data.fields.distance = (uint16_t)atoi(nextParameter(s).c_str()); // or atoi(nextParameter(s).c_str());
+        data.fields.distance = (uint16_t)atoi(nextParameter(s).c_str());
         data.fields.vitesse = (uint16_t)atoi(nextParameter(s).c_str()); 
         string dir = nextParameter(s);
         int retour_can;
@@ -257,9 +258,36 @@ int move(string s)
     else return 106;
 }
 
+// Gère les commandes pour la base roulante
+int BaseRoulante(string s)
+{
+
+    
+    if(int error = testComm("BR"), error != 0) return error;
+    string command = nextParameter(s);
+    
+
+    if(command == "Move")
+    {
+        return move(s);
+    }
+    else if(command == "Stop")
+    {
+        uint8_t data[1] = {0x00};
+        int retour_can = can.send(CAN_ADDR_BASE_ROULANTE, STOP, data, 1, false, 1,0);
+        return convertCanError(retour_can);
+    }
+    else if(command == "StopUrgent")
+    {
+        uint8_t data[1] = {0x00};
+        int retour_can = can.send(CAN_ADDR_BASE_ROULANTE, STOP_URGENT, data, 1, false, 1,0);
+        return convertCanError(retour_can);
+    }
+    else return 2;
+}
 
 
-
+// Initialise le bus CAN
 int initCan(Can & can)
 {
     Log sysLog("systeme");
@@ -279,9 +307,9 @@ int initCan(Can & can)
     error_codes.insert(pair<int, string>(id, erreur));
 } */
 
+// Reçoit une trame du serveur web et la traite en fonction de son contenu 
 int main(int argc, char **argv) 
-{
-    
+{  
 
     initCan(can);
 
@@ -289,7 +317,7 @@ int main(int argc, char **argv)
     
     int id = 0;
 
-    if(param == "BR") id = move(input);    
+    if(param == "BR") id = BaseRoulante(input);    
     else if(param == "Relais") id = relais(input);    
     else if(param == "TestComm") id = testComm(input);    
     else id = 2;
