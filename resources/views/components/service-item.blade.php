@@ -1,0 +1,19 @@
+<div class="col">
+    <div class="card h-100 card text-bg-dark border border-light border-opacity-25">
+        <div class="card-body">
+            <h5 class="card-title">{{ $title }}</h5>
+            <p class="card-text">{{ $text }}</p>
+
+            @if (isset($btn_title) && isset($btn_id))
+                <a id="btn_test_service_{{ $btn_id }}" class="btn btn-primary">{{ $btn_title }} <i class="fa-solid fa-plug-circle-bolt"></i></a>
+            @endif
+        </div>
+
+        <div class="card-footer border-light border-opacity-25">
+            <p class="mt-2">Route utilisée : <span class="badge text-bg-info">{{ $route }}</span></p>
+            <p>Disponibilité : <span class="badge text-bg-secondary" id="dispo_test_service_{{ $btn_id }}">Inconnue <i class="fa-solid fa-question"></i></span></p>
+            <p>Fonctionnement : <span class="badge text-bg-secondary" id="result_test_service_{{ $btn_id }}">Inconnu <i class="fa-solid fa-question"></i></span></p>
+            <small class="text-muted">Dernier test <span id="date_test_service_{{ $btn_id }}">le XX/XX/XXX à xx:xx:xx</span></small>
+        </div>
+    </div>
+</div>

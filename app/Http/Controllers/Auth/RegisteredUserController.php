@@ -31,8 +31,13 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(Request $request, $test = false)
     {
+        if($test == true)
+        {
+            return $id_service_web["Création utilisateur"];
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'alpha_num', 'max:50', "min:5"],
             'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
@@ -60,8 +65,13 @@ class RegisteredUserController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function defaultuser()
+    public function defaultuser($test = false)
     {
+        if($test == true)
+        {
+            return $id_service_web["Compte administrateur par défaut"];
+        }
+
         $name = "Admintout";
         $password = env("MDP_ADMINTOUT");
         $email = env("EMAIL_ADMINTOUT");
@@ -97,8 +107,13 @@ class RegisteredUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit($id, $test = false)
     {
+        if($test == true)
+        {
+            return $id_service_web["Modification compte utilisateur"];
+        }
+
         $user = User::findOrFail($id);
         if($user->id != Auth::user()->id && Auth::user()->role != 2){
             return view('errors.403')->with('message', 'Erreur 403 : accès non autorisé');
@@ -126,8 +141,13 @@ class RegisteredUserController extends Controller
     *
     * @return \Illuminate\View\View
     */
-    public function index()
+    public function index($test = false)
     {
+        if($test == true)
+        {
+            return $id_service_web["Affichage utilisateurs"];
+        }
+
         $users = User::all();
         return view('auth.index', compact('users'));
     }

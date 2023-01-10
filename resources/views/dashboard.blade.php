@@ -8,6 +8,7 @@
             <div class="col ms-lg-4" id="container_dashboard">
                 @include('components.autotests')
                 @include('components.console')
+                @include('components.etat-services')
             </div>
         </div>
     </div>

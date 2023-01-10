@@ -214,6 +214,7 @@ return [
 
     'convert_trame_php' => [
         "BR" => "Base roulante",
+        "BR Move" => "Faire bouger la base roulante",
         "Odo" => "Odométrie",
         "TestComm" => "Test de la communication",
         "XB" => "XBee",
@@ -242,13 +243,29 @@ return [
         "0x2000000" => "Carte Base roulante",
         "0x3000000" => "Carte Odométrie",
         "0x4000000" => "Carte Actionneurs",
-        
+
         "0x100000" => "Carte Raspberry Pi",
         "0x200000" => "Carte Base roulante",
         "0x300000" => "Carte Odométrie",
         "0x400000" => "Carte Actionneurs",
 
         "0x8000" => "Test communication",
+    ],
+
+    'id_service_web' => [
+
+        "Export de logs" => 1,
+        "Suppression des logs" => 2,
+        "Création de logs" => 3,
+        "Relais arrêt d'urgence" => 4,
+        "Nombre de logs" => 5,
+        "Création utilisateur" => 6,
+        "Connexion utilisateur" => 7,
+        "Modification compte utilisateur" => 8,
+        "Suppression compte utilisateur" => 9,
+        "Affichage utilisateurs" => 10,
+        "Compte administrateur par défaut" => 11
+
     ],
 
 ];

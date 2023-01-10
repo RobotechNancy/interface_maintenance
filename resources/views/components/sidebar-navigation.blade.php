@@ -15,6 +15,11 @@
                                                 "name" => "Connectivité",
                                                 "icon" => "fa-solid fa-signal"])
 
+@include("components.sidebar-navigation-item", ["id" => "services",
+                                                "name" => "État des services",
+                                                "icon" => "fa-solid fa-microchip"])
+
+
 @elseif(Auth::user()->role != 2)
 
 <ul class="nav nav-pills flex-column mb-auto gap-2 mt-none">

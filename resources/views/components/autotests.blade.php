@@ -13,13 +13,13 @@
             <span class="badge bg-white text-dark fs-6">
                 Bus CAN
             </span>
-            <div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-5 p-3">
+            <div class="row row-cols-1 row-cols-lg-2 row-cols-md-2 g-5 p-3">
                 <div class="col">
                     <img src="{{ asset('img/carte_stm32.png') }}" height="70" /><br>
                     <span class="mt-3 mb-3 d-block">Base roulante</span>
                     @if (Auth::user()->role != 0)
                         <div class="hstack gap-2">
-                            <x-button title="Tester" icon="fa-solid fa-plug-circle-bolt" id="2" url="{{ route('log') }}"/>
+                            <x-button title="Tester l'inter-connectivité" icon="fa-solid fa-plug-circle-bolt" id="2" url="{{ route('log') }}"/>
                             <span id="result_test_br" class="badge" data-bs-toggle="tooltip" data-bs-placement="right"></span>
                         </div>
 
@@ -31,16 +31,12 @@
                     <span class="mt-3 mb-3 d-block">Odométrie</span>
                     @if (Auth::user()->role != 0)
                         <div class="hstack gap-2">
-                            <x-button title="Tester" icon="fa-solid fa-plug-circle-bolt" id="1" url="{{ route('log') }}"/>
+                            <x-button title="Tester l'inter-connectivité" icon="fa-solid fa-plug-circle-bolt" id="1" url="{{ route('log') }}"/>
                             <span id="result_test_odo" class="badge" data-bs-toggle="tooltip" data-bs-placement="right"></span>
                         </div>
 
                         <p class="fs-6 mt-3 text-muted d-none" id="container_test_odo_datetime"><small><i class="fa-solid fa-circle-info"></i> Dernier test le <span id="maj_test_odo_datetime">XX/XX/XXXX à xx:xx:xx</span></small></p>
                     @endif
-                </div>
-                <div class="col" style="cursor: not-allowed">
-                    <img src="{{ asset('img/carte_stm32.png') }}" height="70" /><br>
-                    <span class="mt-3 mb-3 d-block">Actionneurs</span>
                 </div>
             </div>
         </div>

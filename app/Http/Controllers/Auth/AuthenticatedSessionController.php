@@ -28,8 +28,13 @@ class AuthenticatedSessionController extends Controller
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(LoginRequest $request)
+    public function store(LoginRequest $request, $test = false)
     {
+        if($test == true)
+        {
+            return $id_service_web["Connexion utilisateur"];
+        }
+
         if(Cache::has('user-is-online-' . $request->email)){
             return back()->with('warning', "Impossible d'accéder au compte car l'utilisateur ".$request->email." est déjà connecté !");
         }

@@ -16,8 +16,13 @@ class LogController extends Controller
      *
      * @return int $nb_logs : le nombre de logs contenu dans la table
      */
-    public function getLogtableSize() : int
+    public function getLogtableSize($test = false) : int
     {
+        if($test == true)
+        {
+            return $id_service_web["Nombre de logs"];
+        }
+
         $nb_logs = Log::get()->count();
         return $nb_logs;
     }
@@ -28,8 +33,13 @@ class LogController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request, $test = false) : mixed
     {
+        if($test == true)
+        {
+            return $id_service_web["Création de logs"];
+        }
+
         $command_name = $custom_i = "";
         $response = [];
         $output = $retval = null;
@@ -132,27 +142,29 @@ class LogController extends Controller
 
             fclose($handle);
 
-            if ((FALSE !== $handle) && (filesize($execoutput) > 0))
-            {
-                $response[$i] = ["id" => $custom_i, "data" => "", "status" => $retval, "status_description" => $content_table[0], "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => ""];
+            $trame_php_array = explode(",", $trame);
 
-                $trame_php_array = explode(",", $trame);
-
-                if(count($trame_php_array) == 2){
-
+                if(count($trame_php_array) == 2)
+                {
                     $trame_php = json_encode(["commande" => $trame_php_array[0], "arg" => $trame_php_array[1]], JSON_UNESCAPED_SLASHES);
+                }
 
-                }else if(count($trame_php_array) == 4){
+                else if(count($trame_php_array) == 5)
+                {
+                    $trame_php = json_encode(["commande" => $trame_php_array[0]." ".$trame_php_array[1],
+                                              "distance" => $trame_php_array[2],
+                                              "vitesse" => $trame_php_array[3],
+                                              "direction" => $trame_php_array[4]], JSON_UNESCAPED_SLASHES);
+                }
 
-                    $trame_php = json_encode(["commande" => $trame_php_array[0],
-                                              "distance" => $trame_php_array[1],
-                                              "vitesse" => $trame_php_array[2],
-                                              "direction" => $trame_php_array[3]], JSON_UNESCAPED_SLASHES);
-                }else{
+                else
+                {
                     $trame_php = "Trame corrompue ou incorrecte";
                 }
 
-                $response[$i]["trame_php"] = $trame_php;
+            if ((FALSE !== $handle) && (filesize($execoutput) > 0))
+            {
+                $response[$i] = ["id" => $custom_i, "data" => "", "status" => $retval, "status_description" => $content_table[0], "trame_can_env" => "", "trame_can_rec" => "", "trame_php" =>  $trame_php];
 
                 if(count($content_table) > 2) {
                     $response[$i]["status_description"] = $content_table[count($content_table)-2];
@@ -210,13 +222,13 @@ class LogController extends Controller
 
             else if (filesize($execoutput) > 0)
             {
-                $response[$i] = ["id" => $custom_i, "data" => "", "status" => 255, "status_description" => "Impossible d'accéder au fichier contenant la réponse de la commande. Vérfier les droits et l'emplacement du fichier. [".$execoutput."]", "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => $trame];
+                $response[$i] = ["id" => $custom_i, "data" => "", "status" => 255, "status_description" => "Impossible d'accéder au fichier contenant la réponse de la commande. Vérfier les droits et l'emplacement du fichier. [".$execoutput."]", "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => $trame_php];
                 $log->state = 255;
             }
 
             else
             {
-                $response[$i] = ["id" => $custom_i, "data" => "", "status" => 254, "status_description" => "Impossible de lire le fichier contenant la réponse de la commande car celui-ci est vide. Vérfier l'intégrité et l'emplacement de l'exécutable C++. [".$execfile."]", "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => $trame];
+                $response[$i] = ["id" => $custom_i, "data" => "", "status" => 254, "status_description" => "Impossible de lire le fichier contenant la réponse de la commande car celui-ci est vide. Vérfier l'intégrité et l'emplacement de l'exécutable C++. [".$execfile."]", "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => $trame_php];
                 $log->state = 254;
             }
         }
@@ -235,8 +247,13 @@ class LogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function clear()
+    public function clear($test = false) : mixed
     {
+        if($test == true)
+        {
+            return $id_service_web["Suppression des logs"];
+        }
+
         Log::truncate();
         return response()->json(200);
     }
@@ -246,8 +263,13 @@ class LogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function export()
+    public function export($test = false) : mixed
     {
+        if($test == true)
+        {
+            return $id_service_web["Export de logs"];
+        }
+
         $logfile = env('CUSTOM_LOGFILE');
         $logs = Log::orderBy('id', 'desc')->get();
         $current_content = "";
@@ -260,23 +282,29 @@ class LogController extends Controller
             $custom_log = "[Le ".$log->created_at->format("d/m/Y")." à ".$log->created_at->format("H:i:s")."]\r\r\t🔵 Commande : ".$log->command_name."\r\t".$icon_state_log." Retour : ".$log->state;
             $custom_log .= "\r\t🔵 Réponse : \r";
 
-            $datas = json_decode($log->response, true);
+            $datas = json_decode($log->response, JSON_UNESCAPED_SLASHES);
 
             foreach ($datas as $data) {
 
                 if(isset($data["trame_can_env"]) && !empty($data["trame_can_env"])){
-                    $trame_can_env = json_decode($data["trame_can_env"], true);
-                    $trame_can_env_str = $trame_can_env["addr"].",".$trame_can_env["emetteur"].",".$trame_can_env["code_fct"].",".$trame_can_env["id_msg"].",".$trame_can_env["is_rep"].",".$trame_can_env["id_rep"].",".$trame_can_env["data"];
+                    $trame_can_env = json_decode($data["trame_can_env"], JSON_UNESCAPED_SLASHES);
+
+                    if(json_last_error() == JSON_ERROR_NONE)
+                        $trame_can_env_str = $trame_can_env["addr"].",".$trame_can_env["emetteur"].",".$trame_can_env["code_fct"].",".$trame_can_env["id_msg"].",".$trame_can_env["is_rep"].",".$trame_can_env["id_rep"].",".$trame_can_env["data"];
                 }
 
                 if(isset($data["trame_can_rec"]) && !empty($data["trame_can_rec"])){
-                    $trame_can_rec = json_decode($data["trame_can_rec"], true);
-                    $trame_can_rec_str = $trame_can_rec["addr"].",".$trame_can_rec["emetteur"].",".$trame_can_rec["code_fct"].",".$trame_can_rec["is_rep"].",".$trame_can_rec["id_rep"].",".$trame_can_rec["data"];
+                    $trame_can_rec = json_decode($data["trame_can_rec"], JSON_UNESCAPED_SLASHES);
+
+                    if(json_last_error() == JSON_ERROR_NONE)
+                        $trame_can_rec_str = $trame_can_rec["addr"].",".$trame_can_rec["emetteur"].",".$trame_can_rec["code_fct"].",".$trame_can_rec["is_rep"].",".$trame_can_rec["id_rep"].",".$trame_can_rec["data"];
                 }
 
-                if(isset($data["trame_can_rec"]) && !empty($data["trame_can_rec"])){
-                    $trame_php_env = json_decode($data["trame_php"], true);
-                    $trame_php_env_str = (isset($trame_php_env["arg"])) ? $trame_php_env["commande"].",".$trame_php_env["arg"] : $trame_php_env["commande"].",".$trame_php_env["distance"].",".$trame_php_env["vitesse"].",".$trame_php_env["direction"];
+                if(isset($data["trame_php"]) && !empty($data["trame_php"])){
+                    $trame_php_env = json_decode($data["trame_php"], JSON_UNESCAPED_SLASHES);
+
+                    if(json_last_error() == JSON_ERROR_NONE)
+                        $trame_php_env_str = (isset($trame_php_env["arg"])) ? $trame_php_env["commande"].",".$trame_php_env["arg"] : $trame_php_env["commande"].",".$trame_php_env["distance"].",".$trame_php_env["vitesse"].",".$trame_php_env["direction"];
                 }
 
                 $icon_state_data = $data["status"] != 0 ? "🟥" : "🟩";
