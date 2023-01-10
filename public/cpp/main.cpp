@@ -47,11 +47,8 @@ map<int, string> error_codes {
 int tryCommand(string command)
 {
     FILE *fp;
-    char path[1035];
-    const char *command = command.c_str();
-    fp = popen(command, "r");
-    if (fp == NULL) return 7; 
-    while (fgets(path, sizeof(path), fp) != NULL) pclose(fp);
+    fp = popen(command.c_str(), "r");
+    if (fp == NULL) return 7;
     return 0;
 }
 
@@ -67,9 +64,7 @@ bool readRelayPin()
     char path[1035];
     fp = popen("gpio read 2", "r");
     if (fp == NULL) return false;
-    while (fgets(path, sizeof(path), fp) !=NULL)
-    pclose(fp);
-
+    while (fgets(path, sizeof(path), fp) !=NULL);
     if(path[0] == '1') return true;
     else return false;
 }
@@ -292,35 +287,29 @@ int testComm(string input){
 */
 int move(string input)
 // Trame de Base roulante : BR,Move,distance,vitesse,direction
-// Distance en mm, vitesse en mm/s, direction : Av, Re, AvD, AvG, ReD, ReG
+// Distance en mm, vitesse en mm/s, direction : Av, Re, AvD, AvG, ReD, ReG, RotD, RotG
 {
-    if(readRelayPin())
-    {
-        Trame_BR_dpt data;
-        Trame_Moteur_t trameMoteur;
-        data.fields.distance = (uint16_t)atoi(nextParameter(input).c_str());
-        data.fields.vitesse = (uint16_t)atoi(nextParameter(input).c_str());
-        string dir = nextParameter(input);
-        int retour_can;
+    Trame_BR_dpt data;
+    Trame_Moteur_t trameMoteur;
+    data.fields.distance = (uint16_t)atoi(nextParameter(input).c_str());
+    data.fields.vitesse = (uint16_t)atoi(nextParameter(input).c_str());
+    string dir = nextParameter(input);
+    int retour_can;
 
-        if(dir == "Av") data.fields.direction = 1;
-        else if(dir == "Re") data.fields.direction = 4;
-        else if(dir == "AvD") data.fields.direction = 6;
-        else if(dir == "AvG") data.fields.direction = 2;
-        else if(dir == "ReD") data.fields.direction = 5;
-        else if(dir == "ReG") data.fields.direction = 3;
-        else if(dir == "RotD") data.fields.direction = 7;
-        else if(dir == "RotG") data.fields.direction = 8;
-        else return 105;
+    if(dir == "Av") data.fields.direction = 1;
+    else if(dir == "Re") data.fields.direction = 4;
+    else if(dir == "AvD") data.fields.direction = 6;
+    else if(dir == "AvG") data.fields.direction = 2;
+    else if(dir == "ReD") data.fields.direction = 5;
+    else if(dir == "ReG") data.fields.direction = 3;
+    else if(dir == "RotD") data.fields.direction = 7;
+    else if(dir == "RotG") data.fields.direction = 8;
+    else return 105;
 
 
-        convertir(&data, &trameMoteur);
-        retour_can = can.send(CAN_ADDR_BASE_ROULANTE, AVANCE, trameMoteur.raw_data, 8, false, 1,0);
-        return convertCanError(retour_can);
-
-    }
-
-    else return 106;
+    convertir(&data, &trameMoteur);
+    retour_can = can.send(CAN_ADDR_BASE_ROULANTE, AVANCE, trameMoteur.raw_data, 8, false, 1,0);
+    return convertCanError(retour_can);
 }
 
 

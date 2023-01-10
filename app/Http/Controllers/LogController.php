@@ -55,42 +55,42 @@ class LogController extends Controller
 
             case 4:
                 $command_name = "Tourne à droite";
-                $trame = "BR,".$request->distance.",".$request->vitesse.",RotD";
+                $trame = "BR,Move,".$request->distance.",".$request->vitesse.",RotD";
                 break;
 
             case 5:
                 $command_name = "Avance à gauche";
-                $trame = "BR,".$request->distance.",".$request->vitesse.",AvG";
+                $trame = "BR,Move,".$request->distance.",".$request->vitesse.",AvG";
                 break;
 
             case 6:
                 $command_name = "Recule à gauche";
-                $trame = "BR,".$request->distance.",".$request->vitesse.",ReG";
+                $trame = "BR,Move,".$request->distance.",".$request->vitesse.",ReG";
                 break;
 
             case 7:
                 $command_name = "Avance";
-                $trame = "BR,".$request->distance.",".$request->vitesse.",Av";
+                $trame = "BR,Move,".$request->distance.",".$request->vitesse.",Av";
                 break;
 
             case 8:
                 $command_name = "Recule";
-                $trame = "BR,".$request->distance.",".$request->vitesse.",Re";
+                $trame = "BR,Move,".$request->distance.",".$request->vitesse.",Re";
                 break;
 
             case 9:
                 $command_name = "Avance à droite";
-                $trame = "BR,".$request->distance.",".$request->vitesse.",AvD";
+                $trame = "BR,Move,".$request->distance.",".$request->vitesse.",AvD";
                 break;
 
             case 10:
                 $command_name = "Recule à droite";
-                $trame = "BR,".$request->distance.",".$request->vitesse.",ReD";
+                $trame = "BR,Move,".$request->distance.",".$request->vitesse.",ReD";
                 break;
 
             case 11:
                 $command_name = "Tourne à gauche";
-                $trame = "BR,".$request->distance.",".$request->vitesse.",RotG";
+                $trame = "BR,Move,".$request->distance.",".$request->vitesse.",RotG";
                 break;
 
             case 12:
