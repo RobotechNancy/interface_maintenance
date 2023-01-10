@@ -207,10 +207,17 @@ class LogController extends Controller
 
                 if($retval != 0) $log->state = $retval;
             }
+
+            else if (filesize($execoutput) > 0)
+            {
+                $response[$i] = ["id" => $custom_i, "data" => "", "status" => 255, "status_description" => "Impossible d'accéder au fichier contenant la réponse de la commande. Vérfier les droits et l'emplacement du fichier. [".$execoutput."]", "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => $trame];
+                $log->state = 255;
+            }
+
             else
             {
-                $response[$i] = ["id" => $custom_i, "data" => "", "status" => 255, "status_description" => "Impossible d'accéder au fichier contenant la réponse de la commande ou fichier vide", "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => $trame];
-                $log->state = 255;
+                $response[$i] = ["id" => $custom_i, "data" => "", "status" => 254, "status_description" => "Impossible de lire le fichier contenant la réponse de la commande car celui-ci est vide. Vérfier l'intégrité et l'emplacement de l'exécutable C++. [".$execfile."]", "trame_can_env" => "", "trame_can_rec" => "", "trame_php" => $trame];
+                $log->state = 254;
             }
         }
 

@@ -357,10 +357,10 @@ function checkRelaisStatus() {
  * Retour la date et l'heure courante sous la forme "jj/MM/AAAA à hh:mm:ss".
  */
 function getCurrentDatetime() {
-    var now = new Date(Date.now());
+    var now = new Date();
 
-    var jour = now.getDate() < 10 ? "0" + now.getDate() : now.getDate();
-    var mois = now.getMonth() < 10 ? "0" + now.getMonth() : now.getMonth();
+    var jour = String(now.getDate()).padStart(2, '0');
+    var mois = String(now.getMonth() + 1).padStart(2, '0');
 
     var heures = now.getHours() < 10 ? "0" + now.getHours() : now.getHours();
     var minutes =
