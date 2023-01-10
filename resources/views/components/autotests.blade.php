@@ -9,51 +9,32 @@
                 <button role="button" type="button" id="btn_autotests" class="btn btn-warning btn_form"><span class="d-none d-md-inline">Autotests</span> <i class="fa-solid fa-wrench"></i></button>
             @endif
         </div>
-        <div>
-            <span class="badge bg-white text-dark fs-6">
-                Bus CAN
-            </span>
-            <div class="row row-cols-1 row-cols-lg-2 row-cols-md-2 g-5 p-3">
-                <div class="col">
-                    <img src="{{ asset('img/carte_stm32.png') }}" height="70" /><br>
-                    <span class="mt-3 mb-3 d-block">Base roulante</span>
-                    @if (Auth::user()->role != 0)
-                        <div class="hstack gap-2">
-                            <x-button title="Tester l'inter-connectivité" icon="fa-solid fa-plug-circle-bolt" id="2" url="{{ route('log') }}"/>
-                            <span id="result_test_br" class="badge" data-bs-toggle="tooltip" data-bs-placement="right"></span>
-                        </div>
 
-                        <p class="fs-6 mt-3 text-muted d-none" id="container_test_br_datetime"><small><i class="fa-solid fa-circle-info"></i> Dernier test le <span id="maj_test_br_datetime">XX/XX/XXXX à xx:xx:xx</span></small></p>
-                    @endif
-                </div>
-                <div class="col">
-                    <img src="{{ asset('img/carte_stm32.png') }}" height="70" /><br>
-                    <span class="mt-3 mb-3 d-block">Odométrie</span>
-                    @if (Auth::user()->role != 0)
-                        <div class="hstack gap-2">
-                            <x-button title="Tester l'inter-connectivité" icon="fa-solid fa-plug-circle-bolt" id="1" url="{{ route('log') }}"/>
-                            <span id="result_test_odo" class="badge" data-bs-toggle="tooltip" data-bs-placement="right"></span>
-                        </div>
+        <span class="badge bg-white text-dark fs-6">
+            Bus CAN
+        </span>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
-                        <p class="fs-6 mt-3 text-muted d-none" id="container_test_odo_datetime"><small><i class="fa-solid fa-circle-info"></i> Dernier test le <span id="maj_test_odo_datetime">XX/XX/XXXX à xx:xx:xx</span></small></p>
-                    @endif
-                </div>
-            </div>
+                @include("components.autotests-item", ["title" => "Odométrie",
+                                                    "btn_title" => "Test inter-connectivité",
+                                                    "img" => "img/carte_stm32.png",
+                                                    "carte_id" => 1])
+
+                @include("components.autotests-item", ["title" => "Base roulante",
+                                                    "btn_title" => "Test inter-connectivité",
+                                                    "img" => "img/carte_stm32.png",
+                                                    "carte_id" => 2])
         </div>
-        <div>
-            <span class="badge bg-white text-dark fs-6">
-                Xbee
-            </span>
-            <div class="row row-cols-2 row-cols-lg-4 row-cols-md-2 g-4 p-3">
-                <div class="col">
-                    <img src="{{ asset('img/xbee.png') }}" style="transform:rotateY(180deg);" width="130" /><br>
-                    <span class="mt-3 mb-3 d-block">Robot 1 <i class="fa-solid fa-tower-cell"></i></span>
-                </div>
-                <div class="col">
-                    <img src="{{ asset('img/xbee.png') }}" width="130" /><br>
-                    <span class="mt-3 mb-3 d-block">Robot 2 <i class="fa-solid fa-tower-cell"></i></span>
-                </div>
-            </div>
+        <span class="badge bg-white text-dark fs-6">
+            Xbee
+        </span>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+                @include("components.autotests-item", ["title" => "Robot actuel (n°1)",
+                                                    "btn_title" => "Autotest du module",
+                                                    "img" => "img/xbee.png",
+                                                    "config" => true,
+                                                    "carte_id" => 3])
         </div>
     </div>
 </div>

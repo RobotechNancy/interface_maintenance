@@ -60,9 +60,9 @@ function processRequestBtn(request_id, request_url) {
     $(".btn_form").attr("disabled", true);
 
     final_id =
-        $("#btn_12").hasClass("btn-success") && request_id == 12
-            ? 13
-            : request_id;
+        $("#btn_12").hasClass("btn-success") && request_id == 12 ?
+        13 :
+        request_id;
 
     $.ajax({
         type: "POST",
@@ -74,7 +74,7 @@ function processRequestBtn(request_id, request_url) {
         },
 
         success: function (data) {
-            if (request_id == 1 || request_id == 2) {
+            if (request_id == 1 || request_id == 2 || request_id == 3) {
                 try {
                     if (data["rep"][0]["trame_can_rec"] != "")
                         var trame_can_rec = JSON.parse(
@@ -83,49 +83,70 @@ function processRequestBtn(request_id, request_url) {
                     else var trame_can_rec = "";
 
                     if (typeof trame_can_rec.data === "undefined") {
-                        var icon_autotest = "<i class='fa-solid fa-xmark'></i>";
-                        var color_autotest = "danger";
-                        var msg_tooltip =
-                            "Connexion non établie avec la carte - Vérifiez l'alimentation de la carte et le code implémenté";
+                        var icon_autotest_access = "<i class='fa-solid fa-triangle-exclamation'></i>";
+                        var color_autotest_access = "warning";
+
+                        var icon_autotest_config = "<i class='fa-solid fa-xmark'></i>";
+                        var color_autotest_config = "danger";
+
+                        var icon_autotest_response = "<i class='fa-solid fa-xmark'></i>";
+                        var color_autotest_response = "danger";
+
                     } else {
-                        var icon_autotest =
-                            trame_can_rec.data == "0x1"
-                                ? "<i class='fa-solid fa-check'></i>"
-                                : "<i class='fa-solid fa-triangle-exclamation'></i>";
-                        var color_autotest =
-                            trame_can_rec.data == "0x1" ? "success" : "warning";
-                        var msg_tooltip =
-                            trame_can_rec.data == "0x1"
-                                ? "Connexion établie avec succès - La carte est alimentée correctement - La réponse de la carte est cohérente"
-                                : "Connexion établie avec succes - La carte est alimentée correctement - La réponse de la carte est incohérente";
+                        if(trame_can_rec.data == "0x1"){
+                            var icon_autotest_access = "<i class='fa-solid fa-check'></i>";
+                            var color_autotest_access = "success";
+
+                            var icon_autotest_config = "<i class='fa-solid fa-check'></i>";
+                            var color_autotest_config = "success";
+
+                            var icon_autotest_response = "<i class='fa-solid fa-check'></i>";
+                            var color_autotest_response = "success";
+                        }else{
+                            var icon_autotest_access = "<i class='fa-solid fa-check'></i>";
+                            var color_autotest_access = "success";
+
+                            var icon_autotest_config = "<i class='fa-solid fa-triangle-exclamation'></i>";
+                            var color_autotest_config = "warning";
+
+                            var icon_autotest_response = "<i class='fa-solid fa-xmark'></i>";
+                            var color_autotest_response = "danger";
+                        }
                     }
                 } catch (error) {
                     alertConsole(error, "danger");
-                    var icon_autotest = "<i class='fa-solid fa-xmark'></i>";
-                    var color_autotest = "danger";
-                    var msg_tooltip =
-                        "Connexion non établie avec la carte - Vérifiez l'état du BUS CAN, l'alimentation de la carte et le code implémenté";
+                    var icon_autotest_access = "<i class='fa-solid fa-xmark'></i>";
+                    var color_autotest_access = "danger";
+
+                    var icon_autotest_config = "<i class='fa-solid fa-xmark'></i>";
+                    var color_autotest_config = "danger";
+
+                    var icon_autotest_response = "<i class='fa-solid fa-xmark'></i>";
+                    var color_autotest_response = "danger";
                 }
 
-                if (request_id == 1) {
-                    $("#result_test_odo").html(icon_autotest);
-                    $("#result_test_odo").removeClass("text-bg-success");
-                    $("#result_test_odo").removeClass("text-bg-danger");
-                    $("#result_test_odo").addClass("text-bg-" + color_autotest);
-                    $("#result_test_odo").attr("data-bs-title", msg_tooltip);
-                    new bootstrap.Tooltip("#result_test_odo");
-                    $("#container_test_odo_datetime").removeClass("d-none");
-                    $("#maj_test_odo_datetime").text(getCurrentDatetime);
-                } else {
-                    $("#result_test_br").html(icon_autotest);
-                    $("#result_test_br").removeClass("text-bg-success");
-                    $("#result_test_br").removeClass("text-bg-danger");
-                    $("#result_test_br").addClass("text-bg-" + color_autotest);
-                    $("#result_test_br").attr("data-bs-title", msg_tooltip);
-                    new bootstrap.Tooltip("#result_test_br");
-                    $("#container_test_br_datetime").removeClass("d-none");
-                    $("#maj_test_br_datetime").text(getCurrentDatetime);
+                $("#access_autotest_carte_" + request_id).html(icon_autotest_access);
+                $("#access_autotest_carte_" + request_id).removeClass("text-bg-success");
+                $("#access_autotest_carte_" + request_id).removeClass("text-bg-danger");
+                $("#access_autotest_carte_" + request_id).removeClass("text-bg-warning");
+                $("#access_autotest_carte_" + request_id).addClass("text-bg-" + color_autotest_access);
+
+                $("#response_autotest_carte_" + request_id).html(icon_autotest_response);
+                $("#response_autotest_carte_" + request_id).removeClass("text-bg-success");
+                $("#response_autotest_carte_" + request_id).removeClass("text-bg-danger");
+                $("#response_autotest_carte_" + request_id).removeClass("text-bg-warning");
+                $("#response_autotest_carte_" + request_id).addClass("text-bg-" + color_autotest_response);
+
+                if (request_id == 3) {
+                    $("#config_autotest_carte_" + request_id).html(icon_autotest_config);
+                    $("#config_autotest_carte_" + request_id).removeClass("text-bg-success");
+                    $("#config_autotest_carte_" + request_id).removeClass("text-bg-danger");
+                    $("#config_autotest_carte_" + request_id).removeClass("text-bg-warning");
+                    $("#config_autotest_carte_" + request_id).addClass("text-bg-" + color_autotest_config);
                 }
+
+                $("#date_autotest_carte_" + request_id).text(getCurrentDatetime);
+
             }
 
             if (request_id == 0)
@@ -156,7 +177,7 @@ function processRequestBtn(request_id, request_url) {
 
             if (error.responseJSON["exception"] != undefined)
                 msg_error +=
-                    "<br><br> Exception : " + error.responseJSON["exception"];
+                "<br><br> Exception : " + error.responseJSON["exception"];
 
             if (error.responseJSON["file"] != undefined)
                 msg_error += "<br><br> File : " + error.responseJSON["file"];
@@ -169,7 +190,7 @@ function processRequestBtn(request_id, request_url) {
                 error.responseJSON["exception"] == undefined
             )
                 msg_error +=
-                    "<br><br> Vérifier l'emplacement et l'intégrité de l'exécutable C++.";
+                "<br><br> Vérifier l'emplacement et l'intégrité de l'exécutable C++.";
 
             alertConsole(msg_error, "danger");
 
@@ -291,9 +312,8 @@ function processTestServices(id_service) {
 function cycleAutotests() {
     var route_log = "/log";
 
-    if (!processRequestBtn(2, route_log)) {
-        setTimeout(processRequestBtn(1, route_log), 1000);
-    }
+    processRequestBtn(2, route_log);
+    processRequestBtn(1, route_log);
 }
 
 /**
@@ -341,15 +361,15 @@ function addToClipboard(data, id, type) {
     } else if (type == 2) {
         type_trame = "PHP envoyée";
         trame =
-            obj.arg != undefined
-                ? obj.commande + "," + obj.arg
-                : obj.commande +
-                "," +
-                obj.distance +
-                "," +
-                obj.vitesse +
-                "," +
-                obj.direction;
+            obj.arg != undefined ?
+            obj.commande + "," + obj.arg :
+            obj.commande +
+            "," +
+            obj.distance +
+            "," +
+            obj.vitesse +
+            "," +
+            obj.direction;
     }
 
     navigator.clipboard

@@ -13,7 +13,7 @@
             <p class="mt-2">Route utilisée : <span class="badge text-bg-info">{{ $route }}</span></p>
             <p>Disponibilité : <span class="badge text-bg-secondary" id="dispo_test_service_{{ $btn_id }}">Inconnue <i class="fa-solid fa-question"></i></span></p>
             <p>Fonctionnement : <span class="badge text-bg-secondary" id="result_test_service_{{ $btn_id }}">Inconnu <i class="fa-solid fa-question"></i></span></p>
-            <small class="text-muted">Dernier test le <span id="date_test_service_{{ $btn_id }}">XX/XX/XXX à xx:xx:xx</span></small>
+            <small class="text-muted"><i class="fa-solid fa-circle-info"></i> Dernier test le <span id="date_test_service_{{ $btn_id }}">XX/XX/XXX à xx:xx:xx</span></small>
         </div>
     </div>
 </div>

@@ -63,7 +63,6 @@ class LogController extends Controller
             case 3:
                 $command_name = "Test xbee";
                 $trame = "TestComm,XB";
-                $count = 100;
                 break;
 
             case 4:
