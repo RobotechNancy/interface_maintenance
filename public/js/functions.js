@@ -131,8 +131,8 @@ function processRequestBtn(request_id, request_url) {
             if (request_id == 0)
                 alertConsole(
                     "Les logs ont correctement été exportés vers le fichier <a class='alert-link' href='logs.txt' target='_blank'>" +
-                        data["file"] +
-                        "</a>",
+                    data["file"] +
+                    "</a>",
                     "success"
                 );
             else if (request_id == 12) {
@@ -179,6 +179,110 @@ function processRequestBtn(request_id, request_url) {
     });
 
     return busy;
+}
+
+/**
+ * Lancement du cycle de test de l'ensemble des services web.
+ */
+function cycleTestServices() {
+    processTestServices(1);
+    processTestServices(2);
+    processTestServices(3);
+    processTestServices(4);
+    processTestServices(5);
+}
+
+/**
+ * Traitement de la requête de test du service précisé par son identifiant.
+ *
+ * @param int id_service : l'identifiant unique de référence du service web
+ */
+function processTestServices(id_service) {
+    var route = "";
+
+    switch (id_service) {
+        case 1:
+            route = "/exportlogs";
+            break;
+
+        case 2:
+            route = "/clearlogs";
+            break;
+
+        case 3:
+            route = "/log";
+            break;
+
+        case 4:
+            route = "/relais";
+            break;
+
+        case 5:
+            route = "/get_logtable_size";
+            break;
+
+        default:
+            route = "";
+            break;
+    }
+
+    if (route != "") {
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+
+        $.ajax({
+            type: "POST",
+            url: route + "/true",
+
+            success: function (data) {
+
+                if (data == id_service) {
+                    $("#dispo_test_service_" + id_service).text("OK");
+                    $("#dispo_test_service_" + id_service).removeClass("text-bg-secondary");
+                    $("#dispo_test_service_" + id_service).addClass("text-bg-success");
+
+                    $("#result_test_service_" + id_service).text("OK");
+                    $("#result_test_service_" + id_service).removeClass("text-bg-secondary");
+                    $("#result_test_service_" + id_service).addClass("text-bg-success");
+                } else {
+                    $("#dispo_test_service_" + id_service).text("OK");
+                    $("#dispo_test_service_" + id_service).removeClass("text-bg-secondary");
+                    $("#dispo_test_service_" + id_service).addClass("text-bg-success");
+
+                    $("#result_test_service_" + id_service).text("ERREUR");
+                    $("#result_test_service_" + id_service).removeClass("text-bg-secondary");
+                    $("#result_test_service_" + id_service).addClass("text-bg-warning");
+                }
+
+                $("#date_test_service_" + id_service).text(getCurrentDatetime());
+            },
+
+            error: function (error) {
+
+                $("#dispo_test_service_" + id_service).text("ERREUR");
+                $("#result_test_service_" + id_service).text("ERREUR");
+                $("#date_test_service_" + id_service).text(getCurrentDatetime());
+
+                alertConsole(
+                    "Error " +
+                    error.status +
+                    " : " +
+                    error.responseJSON["message"] +
+                    "<br><br> Exception : " +
+                    error.responseJSON["exception"] +
+                    "<br><br>File : " +
+                    error.responseJSON["file"] +
+                    ", line " +
+                    error.responseJSON["line"],
+                    "danger"
+                );
+            },
+        });
+    }
 }
 
 /**
@@ -240,12 +344,12 @@ function addToClipboard(data, id, type) {
             obj.arg != undefined
                 ? obj.commande + "," + obj.arg
                 : obj.commande +
-                  "," +
-                  obj.distance +
-                  "," +
-                  obj.vitesse +
-                  "," +
-                  obj.direction;
+                "," +
+                obj.distance +
+                "," +
+                obj.vitesse +
+                "," +
+                obj.direction;
     }
 
     navigator.clipboard
@@ -253,26 +357,26 @@ function addToClipboard(data, id, type) {
         .then(() => {
             alertConsole(
                 "Le contenu de la <b>trame " +
-                    type_trame +
-                    " n°" +
-                    id +
-                    "</b> a été copié avec succès dans le presse-papier.<br/><i>Trame : " +
-                    trame +
-                    "</i>",
+                type_trame +
+                " n°" +
+                id +
+                "</b> a été copié avec succès dans le presse-papier.<br/><i>Trame : " +
+                trame +
+                "</i>",
                 "success"
             );
         })
         .catch((err) => {
             alertConsole(
                 "Impossible d'ajouter le contenu de la <b>trame " +
-                    type_trame +
-                    " n°" +
-                    id +
-                    "</b> au presse-papier.<br/>Détail de l'erreur : " +
-                    err +
-                    "<br/><i>Trame : " +
-                    trame +
-                    "</i>",
+                type_trame +
+                " n°" +
+                id +
+                "</b> au presse-papier.<br/>Détail de l'erreur : " +
+                err +
+                "<br/><i>Trame : " +
+                trame +
+                "</i>",
                 "danger"
             );
         });
@@ -338,15 +442,15 @@ function checkRelaisStatus() {
 
             alertConsole(
                 "Error " +
-                    error.status +
-                    " : " +
-                    error.responseJSON["message"] +
-                    "<br><br> Exception : " +
-                    error.responseJSON["exception"] +
-                    "<br><br>File : " +
-                    error.responseJSON["file"] +
-                    ", line " +
-                    error.responseJSON["line"],
+                error.status +
+                " : " +
+                error.responseJSON["message"] +
+                "<br><br> Exception : " +
+                error.responseJSON["exception"] +
+                "<br><br>File : " +
+                error.responseJSON["file"] +
+                ", line " +
+                error.responseJSON["line"],
                 "danger"
             );
         },
@@ -413,15 +517,15 @@ function checkLogTable() {
             error: function (error) {
                 alertConsole(
                     "Error " +
-                        error.status +
-                        " : " +
-                        error.responseJSON["message"] +
-                        "<br><br> Exception : " +
-                        error.responseJSON["exception"] +
-                        "<br><br>File : " +
-                        error.responseJSON["file"] +
-                        ", line " +
-                        error.responseJSON["line"],
+                    error.status +
+                    " : " +
+                    error.responseJSON["message"] +
+                    "<br><br> Exception : " +
+                    error.responseJSON["exception"] +
+                    "<br><br>File : " +
+                    error.responseJSON["file"] +
+                    ", line " +
+                    error.responseJSON["line"],
                     "danger"
                 );
             },

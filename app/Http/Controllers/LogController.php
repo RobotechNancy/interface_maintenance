@@ -16,8 +16,10 @@ class LogController extends Controller
      *
      * @return int $nb_logs : le nombre de logs contenu dans la table
      */
-    public function getLogtableSize($test = false) : int
+    public function getLogtableSize(bool $test = false) : int
     {
+        $id_service_web = config("app.id_service_web");
+
         if($test == true)
         {
             return $id_service_web["Nombre de logs"];
@@ -33,8 +35,9 @@ class LogController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, $test = false) : mixed
+    public function create(Request $request, bool $test = false) : mixed
     {
+        $id_service_web = config("app.id_service_web");
         if($test == true)
         {
             return $id_service_web["Création de logs"];
@@ -247,8 +250,9 @@ class LogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function clear($test = false) : mixed
+    public function clear(bool $test = false) : mixed
     {
+        $id_service_web = config("app.id_service_web");
         if($test == true)
         {
             return $id_service_web["Suppression des logs"];
@@ -263,8 +267,9 @@ class LogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function export($test = false) : mixed
+    public function export(bool $test = false) : mixed
     {
+        $id_service_web = config("app.id_service_web");
         if($test == true)
         {
             return $id_service_web["Export de logs"];

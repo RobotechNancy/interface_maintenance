@@ -31,12 +31,8 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request, $test = false)
+    public function store(Request $request)
     {
-        if($test == true)
-        {
-            return $id_service_web["Création utilisateur"];
-        }
 
         $request->validate([
             'name' => ['required', 'string', 'alpha_num', 'max:50', "min:5"],
@@ -65,12 +61,8 @@ class RegisteredUserController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function defaultuser($test = false)
+    public function defaultuser()
     {
-        if($test == true)
-        {
-            return $id_service_web["Compte administrateur par défaut"];
-        }
 
         $name = "Admintout";
         $password = env("MDP_ADMINTOUT");
@@ -107,13 +99,8 @@ class RegisteredUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\View\View
      */
-    public function edit($id, $test = false)
+    public function edit($id)
     {
-        if($test == true)
-        {
-            return $id_service_web["Modification compte utilisateur"];
-        }
-
         $user = User::findOrFail($id);
         if($user->id != Auth::user()->id && Auth::user()->role != 2){
             return view('errors.403')->with('message', 'Erreur 403 : accès non autorisé');
@@ -141,8 +128,9 @@ class RegisteredUserController extends Controller
     *
     * @return \Illuminate\View\View
     */
-    public function index($test = false)
+    public function index(bool $test = false)
     {
+        $id_service_web = config("app.id_service_web");
         if($test == true)
         {
             return $id_service_web["Affichage utilisateurs"];
@@ -161,7 +149,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user = null)
     {
         if(empty($request->role))
             $request->role = $user->role;
@@ -213,6 +201,7 @@ class RegisteredUserController extends Controller
     */
     public function destroy(User $user)
     {
+
         $user->deleteOrFail();
 
         if($user->id == Auth::user()->id){

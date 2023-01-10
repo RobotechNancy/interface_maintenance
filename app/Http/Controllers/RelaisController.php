@@ -12,8 +12,10 @@ class RelaisController extends Controller
      * @return true if relay status is ON
      * @return false if relay status is OFF
      */
-    public function relaisStatus($test = false) : mixed
+    public function relaisStatus(bool $test = false) : mixed
     {
+        $id_service_web = config("app.id_service_web");
+        
         if($test == true)
         {
             return $id_service_web["Relais arrêt d'urgence"];

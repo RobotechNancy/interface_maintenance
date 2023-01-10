@@ -6,7 +6,7 @@
             </span>
             @if (Auth::user()->role != 0)
             <div class="vr"></div>
-                <button role="button" type="button" class="btn btn-warning btn_form"><span class="d-none d-md-inline">Tester tous les services</span> <i class="fa-solid fa-wrench"></i></button>
+                <button role="button" type="button" onclick="cycleTestServices()" id="btn_test_services" class="btn btn-warning btn_form">Tester tous les services <i class="fa-solid fa-wrench"></i></button>
             @endif
         </div>
         <div class="row row-cols-1 row-cols-md-2 g-4">
@@ -42,41 +42,5 @@
                                                 "btn_title" => "Tester le service",
                                                 "route" => "[LogController::class, 'getLogtableSize']",
                                                 "btn_id" => $id_service_web["Nombre de logs"]])
-
-            @include("components.service-item", ["title" => "Création d'un compte utilisateur",
-                                                "text" => "Gère l'ajout d'un nouveau compte utilisateur dans la base de données.",
-                                                "btn_title" => "Tester le service",
-                                                "route" => "[RegisteredUserController::class, 'store']",
-                                                "btn_id" => $id_service_web["Création utilisateur"]])
-
-            @include("components.service-item", ["title" => "Connexion d'un compte utilisateur",
-                                                "text" => "Gère la connexion d'un utilisateur au site.",
-                                                "btn_title" => "Tester le service",
-                                                "route" => "[AuthenticatedSessionController::class, 'store']",
-                                                "btn_id" => $id_service_web["Connexion utilisateur"]])
-
-            @include("components.service-item", ["title" => "Modification d'un compte utilisateur",
-                                                "text" => "Gère la modification d'un compte utilisateur et la mise à jour des informations associées dans la base de données.",
-                                                "btn_title" => "Tester le service",
-                                                "route" => "[RegisteredUserController::class, 'update']",
-                                                "btn_id" => $id_service_web["Modification compte utilisateur"]])
-
-            @include("components.service-item", ["title" => "Suppression d'un compte utilisateur",
-                                                "text" => "Gère la suppression définitive dans la base de données d'un compte utilisateur.",
-                                                "btn_title" => "Tester le service",
-                                                "route" => "[RegisteredUserController::class, 'destroy']",
-                                                "btn_id" => $id_service_web["Suppression compte utilisateur"]])
-
-            @include("components.service-item", ["title" => "Affichage de tous les comptes utilisateurs",
-                                                "text" => "Gère l'affichage de l'ensemble des comptes utilisateurs.",
-                                                "btn_title" => "Tester le service",
-                                                "route" => "[RegisteredUserController::class, 'index']",
-                                                "btn_id" => $id_service_web["Affichage utilisateurs"]])
-
-            @include("components.service-item", ["title" => "Création du compte administrateur par défaut",
-                                                "text" => "Gère la création et l'ajout dans la base de données du compte administrateur.",
-                                                "btn_title" => "Tester le service",
-                                                "route" => "[RegisteredUserController::class, 'defaultuser']",
-                                                "btn_id" => $id_service_web["Compte administrateur par défaut"]])
     </div>
 </div>

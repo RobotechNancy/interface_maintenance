@@ -5,7 +5,7 @@
             <p class="card-text">{{ $text }}</p>
 
             @if (isset($btn_title) && isset($btn_id))
-                <a id="btn_test_service_{{ $btn_id }}" class="btn btn-primary">{{ $btn_title }} <i class="fa-solid fa-plug-circle-bolt"></i></a>
+                <a class="btn btn-primary" onclick="processTestServices({{ $btn_id }})">{{ $btn_title }} <i class="fa-solid fa-plug-circle-bolt"></i></a>
             @endif
         </div>
 
@@ -13,7 +13,7 @@
             <p class="mt-2">Route utilisée : <span class="badge text-bg-info">{{ $route }}</span></p>
             <p>Disponibilité : <span class="badge text-bg-secondary" id="dispo_test_service_{{ $btn_id }}">Inconnue <i class="fa-solid fa-question"></i></span></p>
             <p>Fonctionnement : <span class="badge text-bg-secondary" id="result_test_service_{{ $btn_id }}">Inconnu <i class="fa-solid fa-question"></i></span></p>
-            <small class="text-muted">Dernier test <span id="date_test_service_{{ $btn_id }}">le XX/XX/XXX à xx:xx:xx</span></small>
+            <small class="text-muted">Dernier test le <span id="date_test_service_{{ $btn_id }}">XX/XX/XXX à xx:xx:xx</span></small>
         </div>
     </div>
 </div>
