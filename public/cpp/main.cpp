@@ -5,13 +5,11 @@
 #include "logLib.h"
 #include "defineCan.h"
 #include <unistd.h>
-//#include "xbeelib.h"
-
+#include "xbeelib.h"
 
 using namespace std;
 
 Can can;
-
 
 map<int, string> error_codes {
     {0, "Succès de la commande"},
@@ -37,7 +35,6 @@ map<int, string> error_codes {
     {152, "Code fonction CAN inconnu"}
 };
 
-
 /*!
  *  \brief Tente d'executer la commande passée en paramètre
  *  \param command Commande à executer
@@ -51,7 +48,6 @@ int tryCommand(string command)
     if (fp == NULL) return 7;
     return 0;
 }
-
 
 /*!
  *  \brief Lit l'état du relais avec la commande popen("gpio read 2", "r")
@@ -68,7 +64,6 @@ bool readRelayPin()
     if(path[0] == '1') return true;
     else return false;
 }
-
 
 /*!
  *  \brief Retourne le prochain paramètre et le supprime de l'entrée
@@ -91,7 +86,6 @@ string nextParameter(string & input)
         return token;
     }
 }
-
 
 /*!
  *  \brief Convertit les codes d'erreur CAN pour qu'ils soient positifs
@@ -160,7 +154,6 @@ int convertCanError(int error){
     }
 }
 
-
 /*!
  *  \brief Gère les commandes pour le relais
  *  \param input Commande relais
@@ -198,7 +191,6 @@ int relais(string input)
     }
     else return 3;
 }
-
 
 /*!
  *  \brief Gère les commandes pour les tests communication
@@ -264,9 +256,6 @@ int testComm(string input){
     else return 4;
 }
 
-
-
-
 /*!
  *  \brief Déplace la base roulante en fonction des paramètres de la trame
  *  \param input Commande de déplacement : BR,Move,distance,vitesse,direction
@@ -312,7 +301,6 @@ int move(string input)
     return convertCanError(retour_can);
 }
 
-
 /*!
  *  \brief Gère les commandes pour la base roulante
  *  \param input Commande à executer pour la base roulante
@@ -348,7 +336,6 @@ int BaseRoulante(string input)
     else return 2;
 }
 
-
 // Initialise le bus CAN
 /*!
  *  \brief Initialise le bus CAN
@@ -368,13 +355,16 @@ int initCan(Can & can)
     return convertCanError(err);
 }
 
-
-
 /*!
  *  \brief Reçoit une trame du serveur web et la traite en fonction de son contenu
 */
 int main(int argc, char **argv)
 {
+    XBee xbee;
+
+    int status = xbee.openSerialConnection();
+    if(status != XB_SER_E_SUCCESS)
+        return status;
 
     initCan(can);
 
@@ -388,5 +378,12 @@ int main(int argc, char **argv)
     else id = 2;
 
     cout << error_codes[id] << endl;
+
+    thread heartbeat(&XBee::sendHeartbeat, xbee);
+    thread waitingtrame(&XBee::waitForATrame, xbee);
+    thread reponse(&XBee::isXbeeResponding, xbee);
+    while(true){}
+
+    xbee.closeSerialConnection();
     return id;
 }
