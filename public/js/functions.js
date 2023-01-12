@@ -93,7 +93,7 @@ function processRequestBtn(request_id, request_url) {
                         var color_autotest_response = "danger";
 
                     } else {
-                        if(trame_can_rec.data == "0x1"){
+                        if (trame_can_rec.data == "0x1") {
                             var icon_autotest_access = "<i class='fa-solid fa-check'></i>";
                             var color_autotest_access = "success";
 
@@ -102,7 +102,7 @@ function processRequestBtn(request_id, request_url) {
 
                             var icon_autotest_response = "<i class='fa-solid fa-check'></i>";
                             var color_autotest_response = "success";
-                        }else{
+                        } else {
                             var icon_autotest_access = "<i class='fa-solid fa-check'></i>";
                             var color_autotest_access = "success";
 
@@ -561,4 +561,81 @@ function checkLogTable() {
 function changeValueRange(id_slider) {
     if (id_slider == 0) $("#valeurSliderDistance").text($("#rangeDistance").val());
     else $("#valeurSliderVitesse").text($("#rangeVitesse").val());
+}
+
+/**
+ * Gère les évènements clavier et lance les commandes de déplacement de la base roulante en conséquence.
+ */
+function handleKeyBoardEvent() {
+
+    $("#btn_info_keyboard_shortcuts").click(function (){
+        alertConsole(
+            "Liste des raccourcis clavier pour commander la base roulante :"+
+            "<ul>"+
+            "<li><code>flèche droite</code> : Tourne à droite</li>"+
+            "<li><code>flèche gauche</code> : Tourne à gauche</li>"+
+            "<li><code>flèche haut</code> : Avance</li>"+
+            "<li><code>flèche bas</code> : Recule</li>"+
+            "<li><code>Ctrl + flèche haut</code> : Avance à gauche</li>"+
+            "<li><code>Ctrl + flèche bas</code> : Recule à gauche</li>"+
+            "<li><code>Ctrl + Alt + flèche haut</code> : Avance à droite</li>"+
+            "<li><code>Ctrl + Alt + flèche bas</code> : Recule à droite</li>"+
+            "</ul>",
+            "info"
+        );
+    });
+
+    $(document).keydown(function (event)
+    {
+        if(!$("#switch_keyboard_shortcuts").prop('checked'))
+            return 0;
+
+        var touche = event.which;
+        var touche_alt = event.altKey;
+        var touche_ctrl = event.ctrlKey;
+        var id_fleche_haut = 38;
+        var id_fleche_bas = 40;
+        var id_fleche_gauche = 37;
+        var id_fleche_droite = 39;
+
+        request_url = "/log";
+
+        switch (touche)
+        {
+            case id_fleche_gauche:
+                request_id = 11;
+                break;
+
+            case id_fleche_haut:
+                request_id = 7;
+                break;
+
+            case id_fleche_droite:
+                request_id = 4;
+                break;
+
+            case id_fleche_bas:
+                request_id = 8;
+                break;
+
+            default:
+                request_id = -1;
+                break;
+        }
+
+        if (touche == id_fleche_haut && touche_ctrl && touche_alt)
+            request_id = 9;
+
+        else if (touche == id_fleche_haut && touche_ctrl)
+            request_id = 5;
+
+        else if (touche == id_fleche_bas && touche_ctrl && touche_alt)
+            request_id = 10;
+
+        else if (touche == id_fleche_bas && touche_ctrl)
+            request_id = 6;
+
+        if (request_id != -1)
+            processRequestBtn(request_id, request_url);
+    });
 }

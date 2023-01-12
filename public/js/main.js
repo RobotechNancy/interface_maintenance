@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
     refreshTooltips();
+    handleKeyBoardEvent()
 
     $(".btn_sidebar").click(function () {
         $("#sidebar").toggleClass("d-none");
