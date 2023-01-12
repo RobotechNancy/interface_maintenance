@@ -46,20 +46,20 @@ XBee::~XBee(){ }
 int XBee::openSerialConnection(int mode){
     int errorOpening;
     if(mode == 1){
-        errorOpening = serial.openDevice(XB_SERIAL_PORT_DEFAULT, XB_BAUDRATE_DEFAULT, XB_DATABITS_DEFAULT, XB_PARITY_DEFAULT, XB_STOPBITS_DEFAULT);      
+        errorOpening = serial.openDevice(XB_SERIAL_PORT_DEFAULT, XB_BAUDRATE_DEFAULT, XB_DATABITS_DEFAULT, XB_PARITY_DEFAULT, XB_STOPBITS_DEFAULT);
 
         if (errorOpening != XB_SER_E_SUCCESS)
             logXbee << "(serial) /!\\ erreur " << errorOpening << " : impossible d'ouvrir le port " << XB_SERIAL_PORT_DEFAULT  << " - baudrate : " << XB_BAUDRATE_DEFAULT << " - parité : " << XB_PARITY_DEFAULT << mendl;
         else{
             logXbee << "(serial) connexion ouverte avec succès sur le port " << XB_SERIAL_PORT_DEFAULT << " - baudrate : " << XB_BAUDRATE_DEFAULT << " - parité : " << XB_PARITY_DEFAULT << mendl;
 	        if (MODE != 2) checkATConfig();
-	    }    
+	    }
     } else if(mode == 0) {
-        errorOpening = serial.openDevice(XB_SERIAL_PORT_PRIMARY, XB_BAUDRATE_PRIMARY, XB_DATABITS_PRIMARY, XB_PARITY_PRIMARY, XB_STOPBITS_PRIMARY);      
-        
+        errorOpening = serial.openDevice(XB_SERIAL_PORT_PRIMARY, XB_BAUDRATE_PRIMARY, XB_DATABITS_PRIMARY, XB_PARITY_PRIMARY, XB_STOPBITS_PRIMARY);
+
         if (errorOpening != XB_SER_E_SUCCESS)
-            logXbee << "(serial) /!\\ erreur " << errorOpening << " : impossible d'ouvrir le port " << XB_SERIAL_PORT_PRIMARY  << " - baudrate : " << XB_BAUDRATE_PRIMARY << " - parités : " << XB_PARITY_PRIMARY << mendl;
-        
+            logXbee << "(serial) /!\\ erreur " << errorOpening << " : impossible d'ouvrir le port " << XB_SERIAL_PORT_PRIMARY  << " - baudrate : " << XB_BAUDRATE_PRIMARY << " - parité : " << XB_PARITY_PRIMARY << mendl;
+
 	    else{
             logXbee << "(serial) connexion ouverte avec succès sur le port " << XB_SERIAL_PORT_PRIMARY << " - baudrate : " << XB_BAUDRATE_PRIMARY << " - parité : " << XB_PARITY_PRIMARY << mendl;
     	    if(MODE != 2) checkATConfig();
@@ -75,7 +75,7 @@ int XBee::openSerialConnection(int mode){
 void XBee::closeSerialConnection(){
     serial.flushReceiver();
     logXbee << "(serial) buffer Rx nettoyé avec succès" << mendl;
-    
+
     serial.closeDevice();
     logXbee << "(serial) connexion série fermée avec succès" << mendl;
 }
@@ -90,7 +90,7 @@ void XBee::closeSerialConnection(){
     \return -402 impossible de configurer le mode API
     \return -403 impossible de configurer le baudrate
     \return -404 impossible de configurer le paramètre de chiffrement AES
-    \return -405 impossible de configurer la clé de chiffrement AES 
+    \return -405 impossible de configurer la clé de chiffrement AES
     \return -406 impossible de configurer le canal de découverte réseau
     \return -407 impossible de configurer l'ID du réseau
     \return -408 impossible de configurer le mode coordinateur
@@ -254,7 +254,7 @@ void XBee::delay(unsigned int time){ std::this_thread::sleep_for(std::chrono::mi
     \return false la réponse du module XBee n'est pas celle attendue
  */
 bool XBee::readATResponse(const char *value, int mode){
-    
+
     string reponse;
 
     if(value == XB_AT_V_DISCOVER_NETWORK){
@@ -275,8 +275,8 @@ bool XBee::readATResponse(const char *value, int mode){
     }
 
     if(mode == 0)
-        if(reponse == value) return true;  
-    
+        if(reponse == value) return true;
+
     return false;
 }
 
@@ -345,7 +345,7 @@ bool XBee::sendATCommand(const char *command, const char *value, unsigned int mo
         return readATResponse(value);
     }else{
         serial.writeString(command);
-        serial.writeString(value);    
+        serial.writeString(value);
         logXbee << "(config AT) envoi de la commande AT : " << command << "=" << value << mendl;
         return readATResponse(XB_AT_R_SUCCESS);
     }
@@ -380,7 +380,7 @@ int XBee::crc16(int trame[], uint8_t taille){
         }
         count++;
         octet_a_traiter = trame[count];
-        
+
     }while(count < taille);
 
     return crc;
@@ -394,7 +394,7 @@ int XBee::crc16(int trame[], uint8_t taille){
     \return {XB_TRAME_E_SUCCESS} succès
  */
 int XBee::sendTrame(uint8_t ad_dest, uint8_t code_fct, char* data){
-   
+
     cout << hex << showbase;
 
     uint8_t length_trame = strlen(data)+10;
@@ -411,12 +411,12 @@ int XBee::sendTrame(uint8_t ad_dest, uint8_t code_fct, char* data){
     trame[4] = id_trame_high+4;
     trame[5] = strlen(data)+4;
     trame[6] = code_fct;
- 
+
     for(size_t i = 0; i < strlen(data); i++){
-        trame[i+7] = data[i]; 
+        trame[i+7] = data[i];
     }
-    
-    
+
+
     for(int i=0; i < length_trame; i++){
     	trame_int[i] = int(trame[i]);
     }
@@ -429,7 +429,7 @@ int XBee::sendTrame(uint8_t ad_dest, uint8_t code_fct, char* data){
     trame[strlen(data)+9] = XB_V_END;
 
     serial.writeBytes(trame, length_trame);
-    logXbee << "(sendTrame) envoi de la trame n°" << dec << id_trame_low+id_trame_high  << " effectué avec succès" << mendl; 
+    logXbee << "(sendTrame) envoi de la trame n°" << dec << id_trame_low+id_trame_high  << " effectué avec succès" << mendl;
 
     trames_envoyees[code_fct] = trames_envoyees[code_fct]+1;
 
@@ -447,7 +447,7 @@ int XBee::sendTrame(uint8_t ad_dest, uint8_t code_fct, char* data){
  *  \return -206 adresse du destinataire incorrecte ou inconnue
  */
 int XBee::processTrame(vector<int> trame_recue){
-    
+
     if(!isTrameSizeCorrect(trame_recue)){
         logXbee << "/!\\ (process trame) erreur " << XB_TRAME_E_SIZE << " : taille de la trame incorrecte ou non concordante " << mendl;
         return XB_TRAME_E_SIZE;
@@ -466,9 +466,9 @@ int XBee::processTrame(vector<int> trame_recue){
     };
 
     vector<int> data {};
-    
+
     for(uint8_t i = 0; i < trame.nb_octets_msg; i++){
-       data.push_back(trame_recue[7+i]); 
+       data.push_back(trame_recue[7+i]);
     }
 
     trame.param = data;
@@ -509,7 +509,7 @@ int XBee::processTrame(vector<int> trame_recue){
     processCodeFct(trame.code_fct, trame.adr_emetteur);
 
     logXbee << "(process trame) trame n°" << trame.id_trame_high+trame.id_trame_low << "a été traitée avec succès " << mendl;
-	
+
     return XB_TRAME_E_SUCCESS;
 }
 
@@ -517,7 +517,7 @@ int XBee::processTrame(vector<int> trame_recue){
  *  \brief Interprète le code fonction issu d'une trame reçue
  *  \return 100 succès
  *  \return -101 code fonction incorrect
- *  \return -102 code fonction existant mais ne déclenchant aucune action  
+ *  \return -102 code fonction existant mais ne déclenchant aucune action
  */
 int XBee::processCodeFct(int code_fct, int exp){
     if(!isCodeFctCorrect(code_fct)){
@@ -709,12 +709,12 @@ string XBee::readString() {
  */
 void XBee::waitForATrame(){
    vector<int> rep;
-   
+
    while(true){
      rep.clear();
 
      delay(1/100);
-     
+
      if(serial.available() > 0){
        rep = readBuffer();
        subTrame(rep);
@@ -723,7 +723,7 @@ void XBee::waitForATrame(){
 }
 
 /*!
- *  \brief Découpe le résultat de la lecture du buffer en différentes trames avant le traitement 
+ *  \brief Découpe le résultat de la lecture du buffer en différentes trames avant le traitement
  *
  *  \param msg_recu : le résultat de la lecture du buffer
  *  \return 300 succès
@@ -778,20 +778,20 @@ int XBee::subTrame(vector<int> msg_recu){
         logXbee << "/!\\ (découpe trame) erreur " << XB_SUB_TRAME_E_START << " : le premier caractère lu dans le buffer n'est pas celui d'un début de trame " << mendl;
         return XB_SUB_TRAME_E_START;
     }
-    
+
     if(list_end_seq[list_end_seq.size()-1] != msg_recu.size()-1){
         logXbee << "/!\\ (découpe trame) erreur " << XB_SUB_TRAME_E_END << " : le dernier caractère lu dans le buffer n'est pas celui d'une fin de trame " << mendl;
         return XB_SUB_TRAME_E_END;
     }
-    
+
     for(uint8_t i = 0; i < list_start_seq.size(); i++){
        decoupe.clear();
-       decoupe = slice(msg_recu, list_start_seq[i], list_end_seq[i]); 
+       decoupe = slice(msg_recu, list_start_seq[i], list_end_seq[i]);
        decoupe_retour = processTrame(decoupe);
-    }   
+    }
 
     logXbee << "(découpe trame) découpage des trames effectué avec succès" << mendl;
-    return XB_SUB_TRAME_E_SUCCESS;  
+    return XB_SUB_TRAME_E_SUCCESS;
 }
 
 /*!
@@ -804,7 +804,7 @@ void XBee::sendHeartbeat(){
     while(true){
       delay(3);
       sendTrame(XB_ADR_ROBOT_02, XB_FCT_TEST_ALIVE, msg);
-   } 
+   }
 }
 
 /*!
@@ -813,7 +813,7 @@ void XBee::sendHeartbeat(){
 int XBee::isXbeeResponding(){
     int size_list_code_fct = sizeof(XB_LIST_CODE_FCT)/sizeof(XB_LIST_CODE_FCT[0]);
     while(true){
-      delay(3);  
+      delay(3);
       for(int i = 0; i < size_list_code_fct; i++){
           if(trames_envoyees[XB_LIST_CODE_FCT[i]] == 0){
               logXbee << "(verif reponse) les trames envoyées portant le code fonction " << XB_LIST_CODE_FCT[i] << " ont toutes reçues une réponse" << mendl;
@@ -821,7 +821,7 @@ int XBee::isXbeeResponding(){
               logXbee << "(verif reponse) /!\\ les trames envoyées portant le code fonction " << XB_LIST_CODE_FCT[i] << " n'ont pas toutes reçues une réponse" << mendl;
           }
       }
-   } 
+   }
 }
 
 /*!
