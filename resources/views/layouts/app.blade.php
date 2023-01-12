@@ -8,7 +8,7 @@
     <meta name="author" content="Robotech Nancy">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="color-scheme" content="dark">
-    <link rel="icon" href="{{ asset('img/favicon.ico') }}">
+    <link rel="icon" href="/img/favicon.ico">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     @if (isset($title))
@@ -17,14 +17,14 @@
         <title>Robotech Nancy | Interface de maintenance</title>
     @endif
 
-    <link href="{{ asset('css/bootstrap.min.css') }}" type="text/css" rel="stylesheet">
-    <link href="{{ asset('fontawesome/css/all.css') }}" type="text/css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/fontawesome/css/all.css" type="text/css" rel="stylesheet">
 
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/functions.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
-    <script src="{{ asset('fontawesome/js/all.js') }}"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/functions.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/fontawesome/js/all.js"></script>
 </head>
 
 <body class="bg-dark text-white">

@@ -12,7 +12,7 @@
             <x-button id="0" icon="fa-solid fa-file-export" url="{{ route('exportlogs') }}" addons="btn-sm" />
             @endif
 
-            <a href="{{ asset('logs.txt') }}" target="_blank">
+            <a href="/logs.txt" target="_blank">
                 <button class="btn btn-secondary btn-sm">
                     <span class="icon">
                         <i class="fa-solid fa-eye"></i>

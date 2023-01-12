@@ -21,11 +21,11 @@
         @endauth
 
         <a class="navbar-brand d-none d-lg-inline" href="/">
-            <img src="{{ asset('img/logo.png') }}" width="120">
+            <img src="img/logo.png" width="120">
         </a>
 
         <a class="navbar-brand d-inline d-lg-none ms-2" href="/">
-            <img src="{{ asset('img/logo_court_couleur.jpg') }}" width="50">
+            <img src="img/logo_court_couleur.jpg" width="50">
         </a>
 
         <div class="collapse navbar-collapse">

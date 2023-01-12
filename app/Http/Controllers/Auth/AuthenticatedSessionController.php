@@ -41,7 +41,7 @@ class AuthenticatedSessionController extends Controller
         $expiresAt = date('Y-m-d H:i:s', strtotime("+5 min"));
         Cache::put('user-is-online-' . Auth::user()->email, true, $expiresAt);
 
-        return redirect("/dashboard")->with('message', "Content de vous revoir cher ".Auth::user()->name." !");
+        return redirect("/dashboard")->with('message', "Content de vous revoir cher(e) ".Auth::user()->name." !");
     }
 
     /**

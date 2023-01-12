@@ -53,7 +53,7 @@ class RegisteredUserController extends Controller
         $expiresAt = date('Y-m-d H:i:s', strtotime("+5 min"));
         Cache::put('user-is-online-' . Auth::user()->email, true, $expiresAt);
 
-        return redirect(RouteServiceProvider::HOME)->with('message', "Bienvenue parmi nous, cher ".$user->name." ! Votre compte utilisateur a été créé avec succès !");
+        return redirect(RouteServiceProvider::HOME)->with('message', "Bienvenue parmi nous, cher(e) ".$user->name." ! Votre compte utilisateur a été créé avec succès !");
     }
 
     /**

@@ -170,9 +170,9 @@ int relais(string input)
     {
         id = tryCommand("gpio mode 3 output");
 
-        if(id == 0)
-            id = tryCommand("gpio write 3 1");
-
+        if(id == 0){
+		id = tryCommand("gpio write 3 1");
+	}
         return id;
     }
     else if(command == "OFF")
@@ -360,11 +360,11 @@ int initCan(Can & can)
 */
 int main(int argc, char **argv)
 {
-    XBee xbee;
+    //XBee xbee;
 
-    int status = xbee.openSerialConnection();
-    if(status != XB_SER_E_SUCCESS)
-        return status;
+    //int status = xbee.openSerialConnection();
+    //if(status != XB_SER_E_SUCCESS)
+    //    return status;
 
     initCan(can);
 
@@ -379,11 +379,11 @@ int main(int argc, char **argv)
 
     cout << error_codes[id] << endl;
 
-    thread heartbeat(&XBee::sendHeartbeat, xbee);
-    thread waitingtrame(&XBee::waitForATrame, xbee);
-    thread reponse(&XBee::isXbeeResponding, xbee);
-    while(true){}
+    //thread heartbeat(&XBee::sendHeartbeat, xbee);
+    //thread waitingtrame(&XBee::waitForATrame, xbee);
+    //thread reponse(&XBee::isXbeeResponding, xbee);
+    //while(true){}
 
-    xbee.closeSerialConnection();
+    //xbee.closeSerialConnection();
     return id;
 }

@@ -5,7 +5,7 @@
     <div class="d-grid gap-3 m-1">
 
         <a href="/" class="mb-4">
-            <img src="{{ asset('img/logo.png') }}" width="120">
+            <img src="img/logo.png" width="120">
         </a>
 
         @if ($_SERVER["REQUEST_URI"] == "/dashboard")
