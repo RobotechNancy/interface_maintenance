@@ -59,14 +59,20 @@ php artisan serve
 - PHP (version `^8.0.2`)
 > Fichiers de téléchargement : https://www.php.net/downloads
 
-- Apache (version `>=2.4.54`) ou autre serveur local
-> Tutoriel d'installation multi-plateformes : https://laravel.com/docs/9.x/installation
+- Composer (version `^2.5.1`)
+> Tutoriel d'installation multi-plateformes : https://getcomposer.org/download/
 
+- Apache (version `>=2.4.54`) ou autre serveur web local
 
+- MySQL (version `>=5.7.33`)
+
+> Vous pouvez combiner l'installation d'Apache et de MySQL en utilisant une pile logicielle dédiée : LAMP (ubuntu) https://doc.ubuntu-fr.org/lamp - Laragon (windows) https://laragon.org/docs/install.html
 
 ### **`TECHNOLOGIES UTILISEES`**  ###
 
 [PHP](https://www.php.net/) : `8.1.1`
+
+[Composer](https://getcomposer.org/) : `2.5.1`
 
 [Laravel](https://laravel.com/) : `9.19`
 
