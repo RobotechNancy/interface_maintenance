@@ -5,6 +5,7 @@ yarn-error.log
 public/logs.txt
 public/log.log
 public/cpp/log.log
+/.vscode/
 
 # Laravel 4 specific
 bootstrap/compiled.php
