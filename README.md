@@ -8,7 +8,7 @@ Dépot officiel de l'équipe Robotech Nancy pour le projet Coupe de France de Ro
 
 Le présent dépôt contient le code de l'interface de gestion, d'aide au diagnostic et à la maintenance prédictive à distance des robots collaboratifs de l'équipe Robotech Nancy.
 
-> *Vestion actuelle de l'interface :* **v 1.0.0 (build 14/01/2023)**
+> *Vestion actuelle de l'interface :* **v1.0.0 RELEASE (build 14/01/2023)**
 
 ### **`FONCTIONNALITES IMPLEMENTEES`**  ###
 
@@ -29,6 +29,12 @@ Clonage du dépôt :
 
 ```bash
 git clone https://github.com/RobotechNancy/interface_maintenance.git
+```
+
+Accès au dossier :
+
+```bash
+cd interface_maintenance/
 ```
 
 Installation des dépendances :
@@ -88,11 +94,11 @@ php artisan serve
 
 ### **`ARBORESCENCE DE NAVIGATION`**  ###
 
-![image](https://user-images.githubusercontent.com/69252728/212481247-c52fce46-b397-4d32-a586-a91f83bf966d.png)
+<img src="https://github.com/RobotechNancy/interface_maintenance/blob/main/images/architecture_fonctionnelle.png" width="500"/>
 
 ### **`ARCHITECTURE GLOBALE DE L'APPLICATION`**  ###
 
-![image](https://user-images.githubusercontent.com/69252728/212481301-23b79489-1d78-4abd-9966-9fad93eaf0b7.png)
+<img src="https://github.com/RobotechNancy/interface_maintenance/blob/main/images/architecture_globale.png"/>
 
 ### **`DOCUMENTATION`**  ###
 
