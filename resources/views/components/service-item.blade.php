@@ -5,7 +5,7 @@
             <p class="card-text">{{ $text }}</p>
 
             @if (isset($btn_title) && isset($btn_id))
-                <a class="btn btn-primary" onclick="processTestServices({{ $btn_id }})">{{ $btn_title }} <i class="fa-solid fa-plug-circle-bolt"></i></a>
+                <button class="btn btn-primary btn_form" onclick="processTestServices({{ $btn_id }})">{{ $btn_title }} <i class="fa-solid fa-plug-circle-bolt"></i></button>
             @endif
         </div>
 

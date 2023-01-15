@@ -4,12 +4,20 @@ namespace App\Http\Controllers;
 
 error_reporting(E_ALL);
 
+use App\Events\ChangeLog;
 use Illuminate\Http\Request;
 use App\Models\Log;
 use Illuminate\Support\Arr;
+use App\Http\Controllers\Session;
 
 class LogController extends Controller
 {
+
+    public function display(){
+
+        $logs = Log::orderBy('id', 'desc')->get();
+        return view('dashboard', compact('logs'));
+    }
 
     /**
      * Count and return the length of the log database table.
@@ -25,7 +33,7 @@ class LogController extends Controller
             return $id_service_web["Nombre de logs"];
         }
 
-        $nb_logs = Log::get()->count();
+        $nb_logs = Log::count();
         return $nb_logs;
     }
 
@@ -43,11 +51,10 @@ class LogController extends Controller
             return $id_service_web["Création de logs"];
         }
 
-        $command_name = $custom_i = "";
+        $command_name = $custom_i = $trame = "";
         $response = [];
         $output = $retval = null;
         $count = 1;
-        $trame = "";
 
         switch ($request->id) {
             case 1:
@@ -125,7 +132,8 @@ class LogController extends Controller
         $log->command_name = $command_name;
         $log->state = 0;
 
-        for($i = 0; $i < $count; $i++){
+        for($i = 0; $i < $count; $i++)
+        {
 
             $custom_i = ($i < 10) ? "0".strval($i) : strval($i);
 
@@ -241,7 +249,12 @@ class LogController extends Controller
             return response()->json(["file" => $execfile, "exception" => "Fichier non trouvé", "message" => "Le fichier exécutable n'a pas été trouvé", "line" => 57], 404);
 
         $log->saveOrFail();
-        return response()->json(["status" => 200, "rep" => json_decode($log->response, JSON_UNESCAPED_SLASHES)]);
+
+        if(($request->id == 1) || ($request->id == 2) || ($request->id == 3))
+            return response()->json(["status" => 200, "rep" => json_decode($log->response, JSON_UNESCAPED_SLASHES)]);
+
+
+        return response()->json(["status" => 200, "rep" => $log]);
     }
 
     /**

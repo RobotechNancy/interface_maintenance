@@ -20,28 +20,26 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/dashboard', function () {
-    $logs = Log::orderBy('id', 'desc')->limit(100)->get();
-    return view('dashboard', compact('logs'));
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [LogController::class, 'display'])
+->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::post('log/{test?}', [LogController::class, 'create'])
+Route::post('log', [LogController::class, 'create'])
 ->middleware(['auth'])
 ->name('log');
 
-Route::post('get_logtable_size/{test?}', [LogController::class, 'getLogtableSize'])
+Route::post('get_logtable_size', [LogController::class, 'getLogtableSize'])
 ->middleware(['auth'])
 ->name('getLogtableSize');
 
-Route::post('clearlogs/{test?}', [LogController::class, 'clear'])
+Route::post('clearlogs', [LogController::class, 'clear'])
 ->middleware(['auth'])
 ->name('clearlogs');
 
-Route::post('exportlogs/{test?}', [LogController::class, 'export'])
+Route::post('exportlogs', [LogController::class, 'export'])
 ->middleware(['auth'])
 ->name('exportlogs');
 
-Route::post('relais/{test?}', [RelaisController::class, 'relaisStatus'])
+Route::post('relais', [RelaisController::class, 'relaisStatus'])
 ->middleware(['auth'])
 ->name('relais');
 

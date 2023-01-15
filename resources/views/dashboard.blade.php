@@ -2,6 +2,11 @@
     <x-slot name="addons"></x-slot>
     <x-slot name="title"> @lang('Dashboard') </x-slot>
 
+    <?php
+        //$displayed_logs = config("app.displayed_logs");
+        //$logs = [];
+    ?>
+
     <div class="container">
         <div class="row">
             <div class="col-2 d-none d-md-block"></div>

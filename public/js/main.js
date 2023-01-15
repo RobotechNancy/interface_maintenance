@@ -26,6 +26,6 @@ $(document).ready(function () {
         cycleAutotests();
     });
 
-    setInterval(checkLogTable, 1000);
+    //setInterval(checkLogTable, 1000);
     setInterval(checkRelaisStatus, 1000);
 });

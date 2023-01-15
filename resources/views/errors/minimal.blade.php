@@ -3,9 +3,9 @@
 
 
     <section class="section is-small ms-lg-5 ps-lg-5">
-        <div class="alert alert-danger fs-5" role="alert">Erreur @yield('code') (code erreur : {{ $exception->getCode() }}) :
+        <div class="alert alert-danger fs-5 ms-5" role="alert">Erreur @yield('code') (code erreur : {{ $exception->getCode() }}) :
             @yield('title')</div>
-        <h5 class="mt-3 p-3 fs-5">
+        <h5 class="mt-3 p-3 ps-5 fs-5">
 
             <div class="alert alert-primary" role="alert">@yield('message')</div><br>
 

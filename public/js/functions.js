@@ -11,7 +11,7 @@ function sendData(request_url, request_id) {
     $(document).ready(function () {
         $("#form_" + request_id).submit(function (e) {
             e.preventDefault();
-            processRequestBtn(request_id, request_url);
+            if(!busy) processRequestBtn(request_id, request_url);
         });
     });
 }
@@ -40,6 +40,8 @@ function alertConsole(message, type) {
     $(".title_console").prepend(wrapper);
 }
 
+var busy = false;
+
 /**
  * Traitement de la requête associée aux boutons d'évènements et transmise depuis la fonction sendData.
  *
@@ -50,7 +52,7 @@ function alertConsole(message, type) {
  * @return true : la tâche est en cours ou ne peut pas se terminer
  */
 function processRequestBtn(request_id, request_url) {
-    var busy = true;
+    busy = true;
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -588,6 +590,9 @@ function handleKeyBoardEvent() {
     $(document).keydown(function (event)
     {
         if(!$("#switch_keyboard_shortcuts").prop('checked'))
+            return 0;
+
+        if(busy)
             return 0;
 
         var touche = event.which;
