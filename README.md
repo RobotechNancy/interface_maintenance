@@ -41,7 +41,10 @@ Installation des dépendances :
 
 ```bash
 composer install 
+sudo apt-get install wiringpi
 ```
+Installer les utilitaires CAN :
+https://github.com/RobotechNancy/2022-2023/tree/main/informatique/communication/intra-robots
 
 Création des tables de la base de données :
 
